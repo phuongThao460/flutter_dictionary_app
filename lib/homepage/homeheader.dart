@@ -1,7 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_dictionary_app/homepage/homepage-items.dart';
 
 class HomeHeader extends StatefulWidget {
 
@@ -48,9 +47,6 @@ class _HomeHeaderState extends State<HomeHeader> {
                         prefixIcon: const Icon(Icons.search)),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 10,
               ),
             ],
           ),

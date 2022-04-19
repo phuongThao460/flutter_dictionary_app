@@ -12,7 +12,7 @@ class Homepage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: ListView(
-          children: [HomeHeader(), HomepageItems()],
+          children: [HomeHeader(),HomepageItems()],
         ),
       ),
     );
