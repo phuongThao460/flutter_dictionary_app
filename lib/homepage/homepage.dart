@@ -1,29 +1,18 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dictionary_app/homepage/homeheader.dart';
+import 'package:flutter_dictionary_app/homepage/homepage-items.dart';
+//import 'package:flutter_dictionary_app/homepage/homepage-items.dart';
 
-class Homepage extends StatefulWidget {
-  static String routeName = "/homepage";
-
-  @override
-  State<Homepage> createState() => _HomepageState();
-}
-
-class _HomepageState extends State<Homepage> {
+class Homepage extends StatelessWidget {
+  static String routeName = '/homepage';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: 159,
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                colors: [
-              Color.fromRGBO(95, 114, 190, 1),
-              Color.fromRGBO(153, 33, 232, 1)
-            ])),
-        child: AppBar(
-          backgroundColor: Colors.transparent,
-          title: const Text('Cat Dictionary'),
+      body: SafeArea(
+        child: ListView(
+          children: [HomeHeader(), HomepageItems()],
         ),
       ),
     );

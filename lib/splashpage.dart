@@ -18,10 +18,13 @@ class Slpashpage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               decoration: const BoxDecoration(
-                  gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-                Color.fromRGBO(95, 114, 190, 1),
-                Color.fromRGBO(153, 33, 232, 1)
-              ])),
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                    Color.fromRGBO(95, 114, 190, 1.0),
+                    Color.fromRGBO(153, 33, 232, 1.0)
+                  ])),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
