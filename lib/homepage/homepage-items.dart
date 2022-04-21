@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/modules/card.dart';
+import 'package:flutter_dictionary_app/word/word_details.dart';
 
 class HomepageItems extends StatelessWidget {
   @override
@@ -10,7 +11,7 @@ class HomepageItems extends StatelessWidget {
     return GridView.builder(
       physics: const ScrollPhysics(),
       scrollDirection: Axis.vertical,
-      padding: const EdgeInsets.only(right: 10, left: 10, top: 10),
+      padding: const EdgeInsets.only(right: 10, left: 10, top: 10, bottom: 50),
       primary: false,
       shrinkWrap: true,
       itemCount: items.length,
@@ -21,11 +22,34 @@ class HomepageItems extends StatelessWidget {
         mainAxisSpacing: 23,
       ),
       itemBuilder: (context, index) {
-        return CardItems(card: items[index]);
+        return GestureDetector(
+            onTap: () {
+              if (index == 0) {
+                Navigator.pushNamed(context, WordDetails.routeName);
+              } else if (index == 1){
+                //Navigator.pushNamed(context, routeName)
+              }else if (index == 2){
+                //Navigator.pushNamed(context, routeName)
+              }else if (index == 3){
+                //Navigator.pushNamed(context, routeName)
+              }else if (index == 4){
+                //Navigator.pushNamed(context, routeName)
+              }else if (index == 5){
+                //Navigator.pushNamed(context, routeName)
+              }else if (index == 6){
+                //Navigator.pushNamed(context, routeName)
+              }else if (index == 7){
+                //Navigator.pushNamed(context, routeName)
+              }
+            },
+            child: CardItems(card: items[index]));
       },
     );
   }
 }
+
+Widget buildButton({required String text, required VoidCallback onClicked}) =>
+    ElevatedButton(onPressed: onClicked, child: Text(text));
 
 class CardItems extends StatelessWidget {
   final CardDetail card;
@@ -58,9 +82,12 @@ class CardItems extends StatelessWidget {
               fit: BoxFit.fill,
             ),
           ),
+          const SizedBox(
+            height: 25,
+          ),
           Text(
             card.nameCard,
-            style: TextStyle(),
+            style: const TextStyle(fontSize: 15),
           )
         ],
       ),
