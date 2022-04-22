@@ -21,7 +21,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [Color(0xFF5F72BE), Color(0xFF9921E8)])),
-          child: Column(
+          child: Column( 
             children: [
               AppBar(
                 elevation: 0,
