@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/routes.dart';
 import 'package:flutter_dictionary_app/splashpage.dart';
-import 'package:flutter_dictionary_app/word/word_details.dart';
 
 void main() {
   runApp(const MyApp());
