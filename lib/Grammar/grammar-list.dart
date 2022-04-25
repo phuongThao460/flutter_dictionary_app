@@ -22,7 +22,7 @@ class GrammarList extends StatelessWidget {
             child: ListTile(
           title: Text("Grammar 3"), leading: Icon(Icons.star_border)
         )),
-         Card(
+        Card(
             child: ListTile(
           title: Text("Grammar 4"), leading: Icon(Icons.star_border)
         )),

@@ -1,0 +1,31 @@
+Column(
+        children: [
+          ElevatedButton(
+              child: const Text('Show'),
+              onPressed: () {
+                _helper!.getDictionary().then((value) {
+                  setState(() {
+                    _listDict!.clear();
+                    _listDict!.addAll(value);
+                  });
+                });
+              }),
+          ListView.builder(
+              shrinkWrap: true,
+              itemCount: _listDict!.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    ListTile(
+                      title: Text(_listDict![index].word),
+                      subtitle: Text(_listDict![index].pronounce),
+                    ),
+                    const Divider(
+                      thickness: 0.5,
+                      color: Colors.blue,
+                    ),
+                  ],
+                );
+              }),
+        ],
+      )),

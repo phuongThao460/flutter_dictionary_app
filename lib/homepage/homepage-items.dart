@@ -1,6 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors_in_immutables, file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dictionary_app/Grammar/grammar.dart';
 import 'package:flutter_dictionary_app/modules/card.dart';
 import 'package:flutter_dictionary_app/word/word_details.dart';
 
@@ -26,20 +27,20 @@ class HomepageItems extends StatelessWidget {
             onTap: () {
               if (index == 0) {
                 Navigator.pushNamed(context, WordDetails.routeName);
-              } else if (index == 1){
+              } else if (index == 1) {
                 //Navigator.pushNamed(context, routeName)
-              }else if (index == 2){
+              } else if (index == 2) {
                 //Navigator.pushNamed(context, routeName)
-              }else if (index == 3){
+              } else if (index == 3) {
                 //Navigator.pushNamed(context, routeName)
-              }else if (index == 4){
+              } else if (index == 4) {
                 //Navigator.pushNamed(context, routeName)
-              }else if (index == 5){
+              } else if (index == 5) {
                 //Navigator.pushNamed(context, routeName)
-              }else if (index == 6){
+              } else if (index == 6) {
                 //Navigator.pushNamed(context, routeName)
-              }else if (index == 7){
-                //Navigator.pushNamed(context, routeName)
+              } else if (index == 7) {
+                Navigator.pushNamed(context, Grammar.routeName);
               }
             },
             child: CardItems(card: items[index]));
