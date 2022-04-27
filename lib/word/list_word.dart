@@ -66,7 +66,7 @@ class _ListWordState extends State<ListWord> {
               var data = snapshot.data;
               return snapshot.hasData
                   ? DictionaryList(dicts: data as List<Dictionary>)
-                  : const Center(child: Text('No word found'));
+                  : Container();
             },
           )
         ],
@@ -84,12 +84,27 @@ class DictionaryList extends StatelessWidget {
       child: ListView.builder(
           itemCount: dicts.length,
           itemBuilder: (context, index) {
-            return Card(
-              margin: const EdgeInsets.all(8.0),
-              child: ListTile(
-                title: Text('${dicts[index].word}'),
-                subtitle: Text('${dicts[index].description}'),
-              ),
+            return ListBody(
+              children: [
+                Card(
+                  elevation: 8,
+                  
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          '${dicts[index].word}',
+                          style: const TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        Text('${dicts[index].description}'),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             );
           }),
     );

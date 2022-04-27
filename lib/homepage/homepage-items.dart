@@ -1,7 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors_in_immutables, file_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter_dictionary_app/Grammar/grammar.dart';
+//import 'package:flutter_dictionary_app/Grammar/grammar.dart';
 import 'package:flutter_dictionary_app/modules/card.dart';
 import 'package:flutter_dictionary_app/word/word_details.dart';
 
@@ -40,7 +40,7 @@ class HomepageItems extends StatelessWidget {
               } else if (index == 6) {
                 //Navigator.pushNamed(context, routeName)
               } else if (index == 7) {
-                Navigator.pushNamed(context, Grammar.routeName);
+                //Navigator.pushNamed(context, Grammar.routeName);
               }
             },
             child: CardItems(card: items[index]));
@@ -72,7 +72,7 @@ class CardItems extends StatelessWidget {
         ],
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
@@ -82,9 +82,6 @@ class CardItems extends StatelessWidget {
               card.img,
               fit: BoxFit.fill,
             ),
-          ),
-          const SizedBox(
-            height: 25,
           ),
           Text(
             card.nameCard,

@@ -17,13 +17,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      //initialRoute: Slpashpage.routeName,
-      //routes: routes,
+      initialRoute: Slpashpage.routeName,
+      routes: routes,
       title: 'Cat Dictionary',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ListWord(),
+      //home: ListWord(),
     );
   }
 }
