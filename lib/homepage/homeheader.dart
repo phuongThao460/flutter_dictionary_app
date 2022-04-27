@@ -1,8 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors, must_be_immutable, unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
-import 'package:flutter_dictionary_app/homepage/homepage-items.dart';
-import 'package:flutter_dictionary_app/homepage/homepage.dart';
 import 'package:flutter_dictionary_app/modules/dbHelper.dart';
 import 'package:flutter_dictionary_app/modules/dictionary.dart';
 import 'package:flutter_dictionary_app/word/word_details.dart';
@@ -14,8 +12,6 @@ class HomeHeader extends StatefulWidget {
 }
 
 class _HomeHeaderState extends State<HomeHeader> {
-  final TextEditingController _searchingTextController =
-      TextEditingController();
   DBHelper? _helper;
 
   var items = [];
@@ -26,7 +22,6 @@ class _HomeHeaderState extends State<HomeHeader> {
     super.initState();
     _helper = DBHelper();
     _helper!.copyDB();
-    //_listDict = <Dictionary>[];
     _helper!.getDictionary().then((value) {
       setState(() {
         items = value;
@@ -36,7 +31,6 @@ class _HomeHeaderState extends State<HomeHeader> {
 
   @override
   Widget build(BuildContext context) {
-    FocusScopeNode currentFocus = FocusScope.of(context);
     return Column(children: [
       Container(
         height: 160,
@@ -64,7 +58,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                 height: 40,
                 alignment: Alignment.bottomCenter,
                 child: TypeAheadField<Dictionary>(
-                    debounceDuration: Duration(milliseconds: 500),
+                    debounceDuration: const Duration(milliseconds: 500),
                     textFieldConfiguration: TextFieldConfiguration(
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -77,10 +71,23 @@ class _HomeHeaderState extends State<HomeHeader> {
                     ),
                     suggestionsCallback: _helper!.getSearchingWord,
                     itemBuilder: (context, Dictionary? dicts) {
-                      final word = dicts!;
-                      return ListTile(
-                        title: Text(word.word),
-                      );
+                      final getWord = dicts!;
+                      return Card(
+                          elevation: 8,
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  '${getWord.word}',
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                Text('${getWord.description}'),
+                              ],
+                            ),
+                          ));
                     },
                     onSuggestionSelected: (Dictionary? dicts) {
                       final dictionary = dicts!;
@@ -89,18 +96,6 @@ class _HomeHeaderState extends State<HomeHeader> {
                     }),
               ),
             ),
-            // FutureBuilder(
-            //   future: _helper!.getSearchingWord(keywords),
-            //   builder: (context, snapshot) {
-            //     if (snapshot.hasError) {
-            //       print('error');
-            //     }
-            //     var data = snapshot.data;
-            //     return snapshot.hasData
-            //         ? DictionaryList(dicts: data as List<Dictionary>)
-            //         : Container();
-            //   },
-            // )
           ],
         ),
       ),

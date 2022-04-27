@@ -1,9 +1,11 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors_in_immutables, file_names
 
 import 'package:flutter/material.dart';
-//import 'package:flutter_dictionary_app/Grammar/grammar.dart';
+import 'package:flutter_dictionary_app/Grammar/grammar-list.dart';
+import 'package:flutter_dictionary_app/favouriteword/favourite-list.dart';
+import 'package:flutter_dictionary_app/idiom/idiom-list.dart';
 import 'package:flutter_dictionary_app/modules/card.dart';
-import 'package:flutter_dictionary_app/word/word_details.dart';
+import 'package:flutter_dictionary_app/translatetext/translate-text-page.dart';
 
 class HomepageItems extends StatelessWidget {
   @override
@@ -26,21 +28,21 @@ class HomepageItems extends StatelessWidget {
         return GestureDetector(
             onTap: () {
               if (index == 0) {
-                Navigator.pushNamed(context, WordDetails.routeName);
+                //Navigator.pushNamed(context, WordDetails.routeName);
               } else if (index == 1) {
-                //Navigator.pushNamed(context, routeName)
+                Navigator.pushNamed(context, TranslateText.routeName);
               } else if (index == 2) {
                 //Navigator.pushNamed(context, routeName)
               } else if (index == 3) {
-                //Navigator.pushNamed(context, routeName)
+                Navigator.pushNamed(context, FavouriteList.routeName);
               } else if (index == 4) {
                 //Navigator.pushNamed(context, routeName)
               } else if (index == 5) {
-                //Navigator.pushNamed(context, routeName)
+                Navigator.pushNamed(context, IdiomList.routeName);
               } else if (index == 6) {
                 //Navigator.pushNamed(context, routeName)
               } else if (index == 7) {
-                //Navigator.pushNamed(context, Grammar.routeName);
+                Navigator.pushNamed(context, GrammarList.routeName);
               }
             },
             child: CardItems(card: items[index]));

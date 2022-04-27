@@ -53,3 +53,16 @@ Column(
                         prefixIcon: const Icon(Icons.search)),
                   ),
                 )
+
+                // FutureBuilder(
+            //   future: _helper!.getSearchingWord(keywords),
+            //   builder: (context, snapshot) {
+            //     if (snapshot.hasError) {
+            //       print('error');
+            //     }
+            //     var data = snapshot.data;
+            //     return snapshot.hasData
+            //         ? DictionaryList(dicts: data as List<Dictionary>)
+            //         : Container();
+            //   },
+            // )
