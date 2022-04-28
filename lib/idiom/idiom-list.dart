@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/modules/dbHelper.dart';
 import 'package:flutter_dictionary_app/modules/idiom-data.dart';
+
 List<IdiomDataDetail> idioms = [];
+
 class IdiomList extends StatefulWidget {
   static String routeName = "/idioms";
 
@@ -46,7 +48,10 @@ class _IdiomListState extends State<IdiomList> {
                   colors: [Color(0xFF5F72BE), Color(0xFF9921E8)])),
         ),
       ),
-      body: ListView.builder(
+      body: ListView.separated(
+          separatorBuilder: (context, index) {
+            return const Divider();
+          },
           itemCount: idioms.length,
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
@@ -54,7 +59,10 @@ class _IdiomListState extends State<IdiomList> {
                   const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               leading: IconButton(
                 icon: isPress
-                    ? const Icon(Icons.star, color: Colors.yellow,)
+                    ? const Icon(
+                        Icons.star,
+                        color: Colors.yellow,
+                      )
                     : const Icon(Icons.star_border),
                 onPressed: () {
                   setState(() {
@@ -62,8 +70,8 @@ class _IdiomListState extends State<IdiomList> {
                   });
                 },
               ),
-              title:
-                  Text(idioms[index].text, style: const TextStyle(fontSize: 16)),
+              title: Text(idioms[index].text,
+                  style: const TextStyle(fontSize: 16)),
               subtitle: Text(idioms[index].meaning),
             );
           }),
