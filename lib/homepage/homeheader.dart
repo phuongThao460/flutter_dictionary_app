@@ -5,6 +5,7 @@ import 'package:flutter_dictionary_app/modules/dbHelper.dart';
 import 'package:flutter_dictionary_app/modules/dictionary.dart';
 import 'package:flutter_dictionary_app/word/word_details.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeHeader extends StatefulWidget {
   @override
@@ -13,20 +14,31 @@ class HomeHeader extends StatefulWidget {
 
 class _HomeHeaderState extends State<HomeHeader> {
   DBHelper? _helper;
-
+  List<String> historySearch = [];
   var items = [];
   String keywords = "";
-
+  SharedPreferences? prefs;
   @override
   void initState() {
     super.initState();
     _helper = DBHelper();
     _helper!.copyDB();
-    _helper!.getDictionary().then((value) {
+    _helper!.getAVDictionary().then((value) {
       setState(() {
         items = value;
       });
     });
+  }
+
+  _addSearchingWordToHistory(String words) async {
+    prefs = await SharedPreferences.getInstance();
+    historySearch.add(words);
+    prefs!.setStringList("Words", historySearch);
+  }
+
+  _getHistorySearching() async {
+    prefs = await SharedPreferences.getInstance();
+    historySearch = prefs!.getStringList("Words")!;
   }
 
   @override
@@ -69,7 +81,9 @@ class _HomeHeaderState extends State<HomeHeader> {
                           hintText: "Enter ",
                           prefixIcon: const Icon(Icons.search)),
                     ),
-                    suggestionsCallback: _helper!.getSearchingWord,
+                    suggestionsCallback: historySearch.isNotEmpty
+                        ? _getHistorySearching()
+                        : _helper!.getSearchingWordFromAV,
                     itemBuilder: (context, Dictionary? dicts) {
                       final getWord = dicts!;
                       return Card(
@@ -91,6 +105,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                     },
                     onSuggestionSelected: (Dictionary? dicts) {
                       final dictionary = dicts!;
+                      _addSearchingWordToHistory(dicts.word);
                       Navigator.pushNamed(context, WordDetails.routeName,
                           arguments: GetDetailFromList(dicts: dictionary));
                     }),

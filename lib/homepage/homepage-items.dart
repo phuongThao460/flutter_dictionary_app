@@ -6,6 +6,7 @@ import 'package:flutter_dictionary_app/favouriteword/favourite-list.dart';
 import 'package:flutter_dictionary_app/idiom/idiom-list.dart';
 import 'package:flutter_dictionary_app/modules/card.dart';
 import 'package:flutter_dictionary_app/translatetext/translate-text-page.dart';
+import 'package:flutter_dictionary_app/translateVA/translate_va.dart';
 
 class HomepageItems extends StatelessWidget {
   @override
@@ -28,7 +29,7 @@ class HomepageItems extends StatelessWidget {
         return GestureDetector(
             onTap: () {
               if (index == 0) {
-                //Navigator.pushNamed(context, WordDetails.routeName);
+                Navigator.pushNamed(context, TranslateVA.routeName);
               } else if (index == 1) {
                 Navigator.pushNamed(context, TranslateText.routeName);
               } else if (index == 2) {

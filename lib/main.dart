@@ -1,9 +1,10 @@
 // ignore_for_file: unused_import
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dictionary_app/idiom/idiom-list.dart';
 import 'package:flutter_dictionary_app/routes.dart';
 import 'package:flutter_dictionary_app/splashpage.dart';
-import 'package:flutter_dictionary_app/word/list_word.dart';
+import 'package:flutter_dictionary_app/translateVA/translate_va.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      //home: ListWord(),
+      //home: IdiomList(),
     );
   }
 }

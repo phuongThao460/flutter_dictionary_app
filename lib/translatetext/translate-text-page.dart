@@ -13,7 +13,14 @@ class TranslateText extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: ListView(
-          children: [(TranslateHeader()), const TranslateTextBody(), const TranslateTextField()],
+          children: [
+            (TranslateHeader()),
+            const SizedBox(
+              height: 20,
+            ),
+            const TranslateTextBody(),
+            const TranslateTextField()
+          ],
         ),
       ),
     );

@@ -13,20 +13,16 @@ class _Translatetextfield extends State<TranslateTextField> {
   @override
   Widget build(BuildContext context) {
     return Column(
-       
-       children: <Widget>[
-          
-          Padding(
+      children: <Widget>[
+        Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           child: TextFormField(
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),
-             
             ),
           ),
         ),
-         
-       ],
+      ],
     );
   }
 }

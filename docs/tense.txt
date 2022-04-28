@@ -1,0 +1,29 @@
+(+) S + Vo \n (-) S + don't/ doesn't Vo \n (?) Do/ Does + S + Vo
+(+) S + be + V_ing (be: am, is are) \n (-) S + be + not + V_ing \n (?) Am/Is/Are + S + V_ing
+(+) S + have/has + V3/ed \n (-) S + haven't/ hasn't + V3/ed \n (?) Have/Has + S + V3/ed
+(+) S + have/has + been +V_ing \n (-) S + haven't/ hasn't + V_ing \n (?) Have/Has been + S + Vo
+
+(+) S + V2/ed \n (-) S + didn't Vo \n (?) Did + S + Vo
+(+) S + was/were +V_ing \n (-) S + wasn't/ were not + V_ing \n (?) Was/Were + S + V_ing
+(+) S + + had + V3 \n (-) S + hadn't + V3 \n (?) Had + S + V3
+(+) S + had been + V_ing \n (-) S + hadn't been + V_ing \n (?) Had + S + been + V_ing
+
+(+) S + will + Vo \n (-) S + won't Vo \n (?) Will + S + Vo
+(+) S + will be + V_ing \n (-) S + won't + V_ing \n (?) Will + S + be + V_ing
+(+) S + will have + V3/ed \n (-) S + won't have + V3/ed \n (?) Will + S + have + V3/ed
+(+) S + will have + been + V_ing \n (-) S + won't have + V_ing \n (?) Will + S + have been + V_ing
+
+
+Present Continuous/Progressive I: am traveling right now. \n You, We, They: are traveling right now. \n He, She, It: is traveling right now.
+Present Perfect I, You, We, They: have traveled to France. \n He, She, It: has traveled to France.
+Present Perfect Continuous/Progressive I, You, We, They: have been traveling for a day. \n He, She, It: has been traveling for a day.
+
+Past Simple I, You, We, They, He, She, It: traveled to France yesterday.
+Past Continuous/Progressive I, He, She, It: was traveling by bus when the deer crossed the road. \n You, We, They: were traveling when the deer crossed the road.
+Past Perfect I, You, We, They, He, She, It: had traveled by car when the bus arrived.
+Past Perfect Continuous/Progressive I, You, We, They, He, She, It: had been traveling for one hour when the car broke down.
+
+Future Simple I, You, We, They, He, She, It: will travel to France tomorrow.
+Future Continuous/Progressive I, You, We, They, He, She, It: will be traveling when you arrive.
+Future Perfect I, You, We, They, He, She, It: will have traveled to France by the time you arrive.
+Future Perfect Continuous/Progressive I, You, We, They, He, She, It: will have been traveling for one hour when you arrive.

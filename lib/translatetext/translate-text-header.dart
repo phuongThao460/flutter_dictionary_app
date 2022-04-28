@@ -12,11 +12,7 @@ class _TranslatetextState extends State<TranslateHeader> {
   @override
   Widget build(BuildContext context) {
     return Container(
-          height: 160,
           decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15)),
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -28,12 +24,6 @@ class _TranslatetextState extends State<TranslateHeader> {
                 backgroundColor: Colors.transparent,
                 title: const Text('Cat Dictionary: Translate text'),
               ),
-              const SizedBox(
-                height: 35,
-              ),
-              
-                
-              
             ],
           ),
     );
