@@ -52,9 +52,6 @@ class HomepageItems extends StatelessWidget {
   }
 }
 
-Widget buildButton({required String text, required VoidCallback onClicked}) =>
-    ElevatedButton(onPressed: onClicked, child: Text(text));
-
 class CardItems extends StatelessWidget {
   final CardDetail card;
   CardItems({required this.card});

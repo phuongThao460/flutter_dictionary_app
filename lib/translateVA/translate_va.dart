@@ -25,11 +25,11 @@ class _TranslateVAState extends State<TranslateVA> {
     super.initState();
     _helper = DBHelper();
     _helper!.copyDB();
-    _helper!.getVADictionary().then((value) {
-      setState(() {
-        items = value;
-      });
-    });
+    // _helper!.getVADictionary().then((value) {
+    //   setState(() {
+    //     items = value;
+    //   });
+    // });
   }
 
   @override
@@ -59,10 +59,9 @@ class _TranslateVAState extends State<TranslateVA> {
                 });
               },
               decoration: const InputDecoration(
-                hintText: 'Search...',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder()
-              ),
+                  hintText: 'Search...',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder()),
             ),
           ),
           FutureBuilder(
@@ -72,7 +71,8 @@ class _TranslateVAState extends State<TranslateVA> {
                 print('error');
               }
               var data = snapshot.data;
-              return snapshot.hasData && _searchingTextController.text.isNotEmpty
+              return snapshot.hasData &&
+                      _searchingTextController.text.isNotEmpty
                   ? DictionaryList(dicts: data as List<Dictionary>)
                   : Container();
             },

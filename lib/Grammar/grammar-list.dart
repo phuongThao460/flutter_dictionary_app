@@ -1,10 +1,13 @@
-// ignore_for_file: file_names, use_key_in_widget_constructors
+// ignore_for_file: file_names, use_key_in_widget_constructors, unnecessary_new
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dictionary_app/Grammar/grammar-list-detail.dart';
 import 'package:flutter_dictionary_app/modules/dbHelper.dart';
 import 'package:flutter_dictionary_app/modules/grammar-data.dart';
+
 //import 'package:flutter_slidable/flutter_slidable.dart';
-  List<GrammarDataDetail> grammar = [];
+List<Grammar> grammar = [];
+
 class GrammarList extends StatefulWidget {
   static String routeName = "/grammar";
 
@@ -13,7 +16,7 @@ class GrammarList extends StatefulWidget {
 }
 
 class _GrammarListState extends State<GrammarList> {
-  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   DBHelper? _helper;
   bool isPress = false;
 
@@ -26,10 +29,10 @@ class _GrammarListState extends State<GrammarList> {
   void _getData() async {
     _helper = DBHelper();
     _helper!.copyDB();
-    List<GrammarDataDetail> grammar_list = await _helper!.getGrammarData();
-    if (grammar_list.isNotEmpty) {
+    List<Grammar> grammarList = await _helper!.getGrammarData();
+    if (grammarList.isNotEmpty) {
       setState(() {
-        grammar = grammar_list;
+        grammar = grammarList;
       });
     } else {
       grammar = [];
@@ -38,7 +41,6 @@ class _GrammarListState extends State<GrammarList> {
 
   @override
   Widget build(BuildContext context) {
-    print("Data: $grammar");
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -52,20 +54,27 @@ class _GrammarListState extends State<GrammarList> {
                   colors: [Color(0xFF5F72BE), Color(0xFF9921E8)])),
         ),
       ),
-      body: ListView.builder(
+      body: ListView.separated(
+          separatorBuilder: (context, index) {
+            return const Divider(
+              color: Colors.black26,
+            );
+          },
           itemCount: grammar.length,
           itemBuilder: (BuildContext context, int index) {
-            return ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-
-              //nhap code add favourite tai day
-              leading: IconButton(
-                icon: const Icon(Icons.star_border),
-                onPressed: () {/* Your code */},
+            return GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, GrammarListDetail.routeName,
+                    arguments: GrammarArgument(grammar: grammar[index]));
+              },
+              child: ListTile(
+                leading: IconButton(
+                  icon: const Icon(Icons.star_border),
+                  onPressed: () {/* Your code */},
+                ),
+                title: Text(grammar[index].title,
+                    style: const TextStyle(fontSize: 16)),
               ),
-              title: Text(grammar[index].title,
-                  style: const TextStyle(fontSize: 16)),
             );
           }),
     );

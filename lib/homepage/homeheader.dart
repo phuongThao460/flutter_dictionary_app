@@ -23,11 +23,11 @@ class _HomeHeaderState extends State<HomeHeader> {
     super.initState();
     _helper = DBHelper();
     _helper!.copyDB();
-    _helper!.getAVDictionary().then((value) {
-      setState(() {
-        items = value;
-      });
-    });
+    // _helper!.getAVDictionary().then((value) {
+    //   setState(() {
+    //     items = value;
+    //   });
+    // });
   }
 
   _addSearchingWordToHistory(String words) async {

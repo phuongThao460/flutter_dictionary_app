@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/modules/dbHelper.dart';
+import 'package:flutter_dictionary_app/modules/favourite-data.dart';
 import 'package:flutter_dictionary_app/modules/idiom-data.dart';
 
 List<IdiomDataDetail> idioms = [];
@@ -25,10 +26,10 @@ class _IdiomListState extends State<IdiomList> {
   void _getData() async {
     _helper = DBHelper();
     _helper!.copyDB();
-    List<IdiomDataDetail> idiom_list = await _helper!.getIdiomsData();
-    if (idiom_list.isNotEmpty) {
+    List<IdiomDataDetail> idiomList = await _helper!.getIdiomsData();
+    if (idiomList.isNotEmpty) {
       setState(() {
-        idioms = idiom_list;
+        idioms = idiomList;
       });
     } else {
       idioms = [];
@@ -65,9 +66,21 @@ class _IdiomListState extends State<IdiomList> {
                       )
                     : const Icon(Icons.star_border),
                 onPressed: () {
-                  setState(() {
-                    isPress = true;
-                  });
+                  if (FavouriteDataDetail.data.isEmpty) {
+                    FavouriteDataDetail.data.add(idioms[index]);
+                    setState(() {
+                      isPress = true;
+                    });
+                  } else {
+                    for (var i = 0; i < FavouriteDataDetail.data.length; i++) {
+                      if (FavouriteDataDetail.data.contains(idioms[index]) == false) {
+                        FavouriteDataDetail.data.add(idioms[index]);
+                        setState(() {
+                          isPress = true;
+                        });
+                      }
+                    }
+                  }
                 },
               ),
               title: Text(idioms[index].text,

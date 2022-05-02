@@ -2,30 +2,33 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/modules/favourite-data.dart';
+import 'package:flutter_dictionary_app/modules/idiom-data.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
 
 class FavouriteList extends StatelessWidget {
   static String routeName = "/favorites";
   @override
   Widget build(BuildContext context) {
-    List<FavouriteDataDetail> favouritedatadetails = FavouriteDataDetail.init();
+    List<IdiomDataDetail> favouritedatadetails = FavouriteDataDetail.data;
     return Scaffold(
       appBar: AppBar(
-        title: const Align(child: Text("Favourite"),)
+        title: const Text("Favorites"),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0xFF5F72BE), Color(0xFF9921E8)])),
+        ),
       ),
       body: ListView.builder(
           itemCount: favouritedatadetails.length,
           itemBuilder: (BuildContext context, int index) {
-            FavouriteDataDetail idiomdatadetail = favouritedatadetails[index];
             return Slidable(
               actionPane: const SlidableDrawerActionPane(),
-              actions: const <Widget>[
-
-                
-              ],
+              actions: const <Widget>[],
               //tab phải
-              secondaryActions:const <Widget> [
+              secondaryActions: const <Widget>[
                 IconSlideAction(
                   caption: 'Remove',
                   color: Color(0xFF9921E8),
@@ -37,8 +40,8 @@ class FavouriteList extends StatelessWidget {
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 leading: const Icon(Icons.note),
-                title:
-                    Text(idiomdatadetail.text, style: const TextStyle(fontSize: 16)),
+                title: Text(favouritedatadetails[index].text,
+                    style: const TextStyle(fontSize: 16)),
               ),
             );
           }),
@@ -48,5 +51,3 @@ class FavouriteList extends StatelessWidget {
   // The child of the Slidable is what the user sees when the
   // component is not dragge
 }
-
-  

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dictionary_app/Grammar/grammar-list-detail.dart';
 import 'package:flutter_dictionary_app/Grammar/grammar-list.dart';
 import 'package:flutter_dictionary_app/favouriteword/favourite-list.dart';
 import 'package:flutter_dictionary_app/homepage/homepage.dart';
@@ -15,6 +16,7 @@ final Map<String, WidgetBuilder> routes = {
   TranslateVA.routeName: (context) => TranslateVA(),
   IdiomList.routeName: (context) => IdiomList(),
   GrammarList.routeName: (context) => GrammarList(),
+  GrammarListDetail.routeName:(context) => GrammarListDetail(),
   FavouriteList.routeName: (context) => FavouriteList(),
   TranslateText.routeName: (context) => TranslateText(),
 };
