@@ -13,13 +13,14 @@ class _Translatetextfield extends State<TranslateTextField> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
+      children: const [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: TextFormField(
-            decoration: const InputDecoration(
-              border: UnderlineInputBorder(),
-            ),
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          child: TextField(
+            maxLines: 3,
+            keyboardType: TextInputType.multiline,
+            decoration: InputDecoration(
+                hintText: 'Enter the text here', border: OutlineInputBorder()),
           ),
         ),
       ],

@@ -22,7 +22,7 @@ class _TranslatetextState extends State<TranslateHeader> {
               AppBar(
                 elevation: 0,
                 backgroundColor: Colors.transparent,
-                title: const Text('Cat Dictionary: Translate text'),
+                title: const Text('Translate text'),
               ),
             ],
           ),

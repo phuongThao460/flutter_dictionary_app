@@ -51,13 +51,13 @@ class _IdiomListState extends State<IdiomList> {
       ),
       body: ListView.separated(
           separatorBuilder: (context, index) {
-            return const Divider();
+            return const Divider(
+              color: Colors.black26,
+            );
           },
           itemCount: idioms.length,
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               leading: IconButton(
                 icon: isPress
                     ? const Icon(
@@ -73,7 +73,8 @@ class _IdiomListState extends State<IdiomList> {
                     });
                   } else {
                     for (var i = 0; i < FavouriteDataDetail.data.length; i++) {
-                      if (FavouriteDataDetail.data.contains(idioms[index]) == false) {
+                      if (FavouriteDataDetail.data.contains(idioms[index]) ==
+                          false) {
                         FavouriteDataDetail.data.add(idioms[index]);
                         setState(() {
                           isPress = true;
