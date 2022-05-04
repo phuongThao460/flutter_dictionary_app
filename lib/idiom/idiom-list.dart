@@ -1,11 +1,11 @@
-// ignore_for_file: file_names, use_key_in_widget_constructors, prefer_typing_uninitialized_variables
+// ignore_for_file: file_names, use_key_in_widget_constructors, prefer_typing_uninitialized_variables, iterable_contains_unrelated_type
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/modules/dbHelper.dart';
 import 'package:flutter_dictionary_app/modules/favourite-data.dart';
 import 'package:flutter_dictionary_app/modules/idiom-data.dart';
 
-List<IdiomDataDetail> idioms = [];
+List<Idiom> idioms = [];
 
 class IdiomList extends StatefulWidget {
   static String routeName = "/idioms";
@@ -26,7 +26,7 @@ class _IdiomListState extends State<IdiomList> {
   void _getData() async {
     _helper = DBHelper();
     _helper!.copyDB();
-    List<IdiomDataDetail> idiomList = await _helper!.getIdiomsData();
+    List<Idiom> idiomList = await _helper!.getIdiomsData();
     if (idiomList.isNotEmpty) {
       setState(() {
         idioms = idiomList;
@@ -56,33 +56,22 @@ class _IdiomListState extends State<IdiomList> {
             );
           },
           itemCount: idioms.length,
-          itemBuilder: (BuildContext context, int index) {
+          itemBuilder: (context, index) {
+            Idiom data = idioms[index];
+            bool isSaved = Favourite.dataIdioms.contains(data);
             return ListTile(
-              leading: IconButton(
-                icon: isPress
-                    ? const Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                      )
-                    : const Icon(Icons.star_border),
-                onPressed: () {
-                  if (FavouriteDataDetail.data.isEmpty) {
-                    FavouriteDataDetail.data.add(idioms[index]);
-                    setState(() {
-                      isPress = true;
-                    });
+              onTap: () {
+                setState(() {
+                  if (isSaved) {
+                    Favourite.dataIdioms.remove(data);
                   } else {
-                    for (var i = 0; i < FavouriteDataDetail.data.length; i++) {
-                      if (FavouriteDataDetail.data.contains(idioms[index]) ==
-                          false) {
-                        FavouriteDataDetail.data.add(idioms[index]);
-                        setState(() {
-                          isPress = true;
-                        });
-                      }
-                    }
+                    Favourite.dataIdioms.add(data);
                   }
-                },
+                });
+              },
+              leading: Icon(
+                isSaved ? Icons.star : Icons.star_border_outlined,
+                color: isSaved ? Colors.yellow : null,
               ),
               title: Text(idioms[index].text,
                   style: const TextStyle(fontSize: 16)),

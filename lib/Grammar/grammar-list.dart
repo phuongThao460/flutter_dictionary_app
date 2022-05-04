@@ -54,12 +54,7 @@ class _GrammarListState extends State<GrammarList> {
                   colors: [Color(0xFF5F72BE), Color(0xFF9921E8)])),
         ),
       ),
-      body: ListView.separated(
-          separatorBuilder: (context, index) {
-            return const Divider(
-              color: Colors.black26,
-            );
-          },
+      body: ListView.builder(
           itemCount: grammar.length,
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
@@ -67,14 +62,20 @@ class _GrammarListState extends State<GrammarList> {
                 Navigator.pushNamed(context, GrammarListDetail.routeName,
                     arguments: GrammarArgument(grammar: grammar[index]));
               },
-              child: ListTile(
+              child: Card(
+                  child: ListTile(
+                //nhap code add favourite tai day
                 leading: IconButton(
                   icon: const Icon(Icons.star_border),
                   onPressed: () {/* Your code */},
                 ),
                 title: Text(grammar[index].title,
                     style: const TextStyle(fontSize: 16)),
-              ),
+
+                //subtitle: Text(
+                //  grammardatadetail.define, style: const TextStyle(fontSize: 14),
+                //  ),
+              )),
             );
           }),
     );

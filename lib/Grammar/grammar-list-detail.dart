@@ -24,29 +24,29 @@ class GrammarListDetail extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
+            physics: const ScrollPhysics(),
             children: [
               const Text("***Define***",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               Padding(
                 padding: const EdgeInsets.only(bottom: 18.0),
                 child: Text(grammarArgument.grammar.define,
-                    style: const TextStyle(fontSize: 16)),
+                    style: const TextStyle(fontSize: 14)),
               ),
               const Text("***Structure***",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               Padding(
                 padding: const EdgeInsets.only(bottom: 18.0),
                 child: Text(grammarArgument.grammar.structure,
-                    style: const TextStyle(fontSize: 16)),
+                    style: const TextStyle(height: 1.5)),
               ),
               const Text("***Examples***",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Text(grammarArgument.grammar.examples,
-                    style: const TextStyle(fontSize: 16)),
+                    style: const TextStyle(fontSize: 14)),
               )
             ],
           ),
