@@ -13,8 +13,8 @@ class _Translatetextfield extends State<TranslateTextField> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
-        Padding(
+      children: [
+        const Padding(
           padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           child: TextField(
             maxLines: 3,
@@ -23,6 +23,24 @@ class _Translatetextfield extends State<TranslateTextField> {
                 hintText: 'Enter the text here', border: OutlineInputBorder()),
           ),
         ),
+        TextButton(
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(Color(0xFF9921E8)),
+              overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.hovered))
+                    return Color(0xFF9921E8);
+                  if (states.contains(MaterialState.focused) ||
+                      states.contains(MaterialState.pressed))
+                    return Color(0xFF9921E8);
+                  return null; // Defer to the widget's default.
+                },
+              ),
+            ),
+            onPressed: () {},
+            child: Text('Translate'))
       ],
     );
   }
