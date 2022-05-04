@@ -27,20 +27,22 @@ class _Translatetextfield extends State<TranslateTextField> {
             style: ButtonStyle(
               foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
               backgroundColor:
-                  MaterialStateProperty.all<Color>(Color(0xFF9921E8)),
+                  MaterialStateProperty.all<Color>(const Color(0xFF9921E8)),
               overlayColor: MaterialStateProperty.resolveWith<Color?>(
                 (Set<MaterialState> states) {
-                  if (states.contains(MaterialState.hovered))
-                    return Color(0xFF9921E8);
+                  if (states.contains(MaterialState.hovered)) {
+                    return const Color(0xFF9921E8);
+                  }
                   if (states.contains(MaterialState.focused) ||
-                      states.contains(MaterialState.pressed))
-                    return Color(0xFF9921E8);
+                      states.contains(MaterialState.pressed)) {
+                    return const Color(0xFF9921E8);
+                  }
                   return null; // Defer to the widget's default.
                 },
               ),
             ),
             onPressed: () {},
-            child: Text('Translate'))
+            child: const Text('Translate'))
       ],
     );
   }

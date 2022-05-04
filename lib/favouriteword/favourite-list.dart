@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dictionary_app/modules/dictionary.dart';
 import 'package:flutter_dictionary_app/modules/favourite-data.dart';
 import 'package:flutter_dictionary_app/modules/idiom-data.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -17,8 +18,8 @@ class FavouriteList extends StatefulWidget {
 
 class _FavouriteListState extends State<FavouriteList> {
   List<Idiom> favouritedatadetails = Favourite.dataIdioms;
-  var list = [];
-  List<Idiom> arr = [];
+  List<Dictionary> favoriteWord = Favourite.dataDict;
+
   @override
   void initState() {
     super.initState();
@@ -68,7 +69,7 @@ class _FavouriteListState extends State<FavouriteList> {
             labelColor: Color(0xFFFFFFFF),
             indicatorColor: Color(0xFFDCAEFA),
             tabs: [
-              Tab(text: 'Vocabulary'),
+              Tab(text: 'Word'),
               Tab(text: 'Grammar'),
               Tab(text: 'Idiom'),
             ],

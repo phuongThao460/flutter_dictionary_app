@@ -16,12 +16,7 @@ class _WordDetailsState extends State<WordDetails> {
   Widget build(BuildContext context) {
     final GetDetailFromList data =
         ModalRoute.of(context)!.settings.arguments as GetDetailFromList;
-    final List<Tab> myTabs = <Tab>[
-      const Tab(text: 'Eng - Viet'),
-      const Tab(text: 'Eng - Eng'),
-      const Tab(text: 'Grammar'),
-      const Tab(text: 'Synonym'),
-    ];
+
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -53,26 +48,12 @@ class _WordDetailsState extends State<WordDetails> {
                     end: Alignment.bottomCenter,
                     colors: [Color(0xFF5F72BE), Color(0xFF9921E8)])),
           ),
-          bottom: TabBar(
-            tabs: myTabs,
-            labelStyle: const TextStyle(fontWeight: FontWeight.bold),
-            unselectedLabelColor: const Color(0xFFDCAEFA),
-            labelColor: const Color(0xFFFFFFFF),
-            indicatorColor: const Color(0xFFDCAEFA),
-            indicatorWeight: 5,
-          ),
         ),
         body: SafeArea(
           child: Container(
-            width: double.maxFinite,
-            height: double.infinity,
-            child: TabBarView(children: [
-              _buildTab1(data.dicts.html),
-              const Text('this is tab 2'),
-              const Text('this is tab 3'),
-              const Text('this is tab 4'),
-            ]),
-          ),
+              width: double.maxFinite,
+              height: double.infinity,
+              child: _buildTab1(data.dicts.html)),
         ),
       ),
     );
