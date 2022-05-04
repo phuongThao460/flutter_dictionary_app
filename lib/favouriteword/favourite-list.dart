@@ -41,7 +41,6 @@ class _FavouriteListState extends State<FavouriteList> {
     if (prefs.getStringList('idioms') != null) {
       print(prefs.getStringList('idioms'));
       var data = (prefs.getStringList('idioms')) as List;
-      print(data);
       setState(() {
         favouritedatadetails =
             data.map((e) => Idiom.fromJson(json.decode(e))).toList();
