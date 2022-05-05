@@ -5,9 +5,7 @@ import 'package:flutter_dictionary_app/Grammar/grammar-list.dart';
 import 'package:flutter_dictionary_app/favouriteword/favourite-list.dart';
 import 'package:flutter_dictionary_app/idiom/idiom-list.dart';
 import 'package:flutter_dictionary_app/modules/card.dart';
-import 'package:flutter_dictionary_app/translatetext/translate-text-page.dart';
 import 'package:flutter_dictionary_app/translateVA/translate_va.dart';
-import 'package:flutter_dictionary_app/conversations/conversations-list.dart';
 import 'package:flutter_dictionary_app/shortStory/short-story-list.dart';
 
 class HomepageItems extends StatelessWidget {

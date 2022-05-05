@@ -5,12 +5,12 @@ import 'package:flutter_dictionary_app/conversations/conversations-list-detail.d
 import 'package:flutter_dictionary_app/favouriteword/favourite-list.dart';
 import 'package:flutter_dictionary_app/homepage/homepage.dart';
 import 'package:flutter_dictionary_app/idiom/idiom-list.dart';
+import 'package:flutter_dictionary_app/shortStory/short-story-list-detail.dart';
 import 'package:flutter_dictionary_app/splashpage.dart';
 import 'package:flutter_dictionary_app/translatetext/translate-text-page.dart';
 import 'package:flutter_dictionary_app/translateVA/translate_va.dart';
 import 'package:flutter_dictionary_app/word/word_details.dart';
 import 'package:flutter_dictionary_app/conversations/conversations-list.dart';
-import 'package:flutter_dictionary_app/conversations/conversations-list-detail.dart';
 import 'package:flutter_dictionary_app/shortStory/short-story-list.dart';
 
 final Map<String, WidgetBuilder> routes = {
@@ -26,4 +26,5 @@ final Map<String, WidgetBuilder> routes = {
   ConversationList.routeName: (context) => ConversationList(),
   ConversationListDetail.routeName: (context) => ConversationListDetail(),
   ShortStoryList.routeName: (context) => ShortStoryList(),
+  StoryDetail.routeName:(context) => StoryDetail(),
 };
