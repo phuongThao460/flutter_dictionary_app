@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/modules/dictionary.dart';
+import 'package:flutter_dictionary_app/modules/favourite-data.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class WordDetails extends StatefulWidget {
@@ -12,11 +13,13 @@ class WordDetails extends StatefulWidget {
 }
 
 class _WordDetailsState extends State<WordDetails> {
+  List<Dictionary> favWord = Favourite.dataDict;
+
   @override
   Widget build(BuildContext context) {
     final GetDetailFromList data =
         ModalRoute.of(context)!.settings.arguments as GetDetailFromList;
-
+    bool isSaved = Favourite.dataDict.contains(data.dicts);
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -31,13 +34,24 @@ class _WordDetailsState extends State<WordDetails> {
           ),
           leading: IconButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pop(context);
               },
               icon: const Icon(Icons.arrow_back_ios)),
           actions: [
             IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.star_border),
+              onPressed: () {
+                setState(() {
+                  if (isSaved) {
+                  Favourite.dataDict.remove(data.dicts);
+                } else {
+                  Favourite.dataDict.add(data.dicts);
+                }
+                });
+              },
+              icon: Icon(
+                isSaved ? Icons.star : Icons.star_border_outlined,
+                color: isSaved ? Colors.yellow : null,
+              ),
             )
           ],
           flexibleSpace: Container(

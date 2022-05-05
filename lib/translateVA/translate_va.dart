@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/modules/dbHelper.dart';
 import 'package:flutter_dictionary_app/modules/dictionary.dart';
+import 'package:flutter_dictionary_app/word/word_details.dart';
 
 class TranslateVA extends StatefulWidget {
   static String routeName = '/vadicts';
@@ -92,21 +93,27 @@ class DictionaryList extends StatelessWidget {
       child: ListView.builder(
           itemCount: dicts.length,
           itemBuilder: (context, index) {
-            return Card(
-              elevation: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${dicts[index].word}',
-                      style: const TextStyle(
-                        fontSize: 18,
+            return GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, WordDetails.routeName,
+                        arguments: GetDetailFromList(dicts: dicts[index]));
+              },
+              child: Card(
+                elevation: 0,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${dicts[index].word}',
+                        style: const TextStyle(
+                          fontSize: 18,
+                        ),
                       ),
-                    ),
-                    Text('${dicts[index].description}'),
-                  ],
+                      Text('${dicts[index].description}'),
+                    ],
+                  ),
                 ),
               ),
             );

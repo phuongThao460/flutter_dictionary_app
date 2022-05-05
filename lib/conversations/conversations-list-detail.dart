@@ -130,7 +130,8 @@ class _ConversationListDetailState extends State<ConversationListDetail> {
                     }
                   },
                 ),
-              )
+              ),
+              Text(conversationArgument.conversation.text)
             ],
           ),
         ));

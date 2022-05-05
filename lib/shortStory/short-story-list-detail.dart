@@ -15,15 +15,29 @@ class _StoryDetailState extends State<StoryDetail> {
     final StoryArgument argument =
         ModalRoute.of(context)!.settings.arguments as StoryArgument;
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Short Story"),
+        backgroundColor: Colors.transparent,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0xFF5F72BE), Color(0xFF9921E8)])),
+        ),
+      ),
       body: Container(
+        height: double.infinity,
         padding: const EdgeInsets.all(10.0),
-        child: Column(
+        child: ListView(
           children: [
             Text(
               argument.story.title,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-            Text(argument.story.story)
+            const SizedBox(height: 12,),
+            Text(argument.story.story,
+              style: const TextStyle(fontSize: 16))
           ],
         ),
       ),

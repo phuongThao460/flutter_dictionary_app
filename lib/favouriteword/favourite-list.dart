@@ -35,6 +35,8 @@ class _FavouriteListState extends State<FavouriteList> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setStringList(
         'idioms', favouritedatadetails.map((e) => jsonEncode(e)).toList());
+        prefs.setStringList(
+        'word', favoriteWord.map((e) => jsonEncode(e)).toList());
   }
 
   _getData() async {
@@ -45,6 +47,14 @@ class _FavouriteListState extends State<FavouriteList> {
       setState(() {
         favouritedatadetails =
             data.map((e) => Idiom.fromJson(json.decode(e))).toList();
+      });
+    }
+    if (prefs.getStringList('word') != null) {
+      print(prefs.getStringList('word'));
+      var data = (prefs.getStringList('word')) as List;
+      setState(() {
+        favoriteWord =
+            data.map((e) => Dictionary.fromJson(json.decode(e))).toList();
       });
     }
   }
@@ -80,7 +90,7 @@ class _FavouriteListState extends State<FavouriteList> {
         body: TabBarView(
           children: [
             //code truyen favourite vao
-            const Text('Volcabulary1'),
+            _listWord(favoriteWord),
             const Text('Grammar1'),
             _listIdioms(favouritedatadetails),
           ],
@@ -111,6 +121,34 @@ Widget _listIdioms(List<Idiom> favouritedatadetails) {
                 const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             leading: const Icon(Icons.note),
             title: Text(favouritedatadetails[index].text,
+                style: const TextStyle(fontSize: 16)),
+          ),
+        );
+      });
+}
+
+Widget _listWord(List<Dictionary> word) {
+  return ListView.builder(
+      itemCount: word.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Slidable(
+          actionPane: const SlidableDrawerActionPane(),
+          actions: const <Widget>[],
+          //tab phải
+          secondaryActions: const <Widget>[
+            IconSlideAction(
+              caption: 'Remove',
+              color: Color(0xFF9921E8),
+              icon: Icons.delete,
+              //onTap: () => _showSnackBar('Archive'),
+            )
+          ],
+          child: ListTile(
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            leading: const Icon(Icons.note),
+            title: Text(word[index].word, style: const TextStyle(fontSize: 16)),
+            subtitle: Text(word[index].description,
                 style: const TextStyle(fontSize: 16)),
           ),
         );
