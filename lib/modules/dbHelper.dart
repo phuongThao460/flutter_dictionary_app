@@ -8,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dictionary_app/modules/dictionary.dart';
 import 'package:flutter_dictionary_app/modules/grammar-data.dart';
 import 'package:flutter_dictionary_app/modules/idiom-data.dart';
+import 'package:flutter_dictionary_app/modules/conversation.dart';
+import 'package:flutter_dictionary_app/modules/short-story.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -111,6 +113,39 @@ class DBHelper {
       ));
     }
     
+    return data;
+  }
+
+  Future<List<ConversationDataDetail>> getConversationsData() async {
+    List<ConversationDataDetail> data = <ConversationDataDetail>[];
+    Database db = await openDB();
+    var list = await db.rawQuery('SELECT * FROM conversation');
+    for (var item in list.toList()) {
+      data.add(ConversationDataDetail(
+        id: item['id'] as int,
+        name: item['name'] as String,
+        text: item['text'] as String,
+        image: item['image'] as String,
+        audio: item['audio'] as String,
+      ));
+    }
+    db.close();
+    return data;
+  }
+
+  Future<List<ShortStoryDataDetail>> getStoryData() async {
+    List<ShortStoryDataDetail> data = <ShortStoryDataDetail>[];
+    Database db = await openDB();
+    var list = await db.rawQuery('SELECT * FROM short_story');
+    for (var item in list.toList()) {
+      data.add(ShortStoryDataDetail(
+        id: item['id'] as int,
+        title: item['title'] as String,
+        story: item['story'] as String,
+        image: item['image'] as String,
+      ));
+    }
+    db.close();
     return data;
   }
 }
