@@ -66,6 +66,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/cat-book.png
+    - assets/images/bag-cat.png
     - assets/dict_hh.db
     - assets/dict_hh.json
     - assets/images/favorite.png
