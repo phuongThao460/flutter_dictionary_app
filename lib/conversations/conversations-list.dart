@@ -60,7 +60,8 @@ class _ConversationListState extends State<ConversationList> {
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, ConversationListDetail.routeName, arguments: ConversationArgument(conversation: conversations[index]));
+                Navigator.pushNamed(context, ConversationListDetail.routeName,
+                    arguments: ConversationArgument(conversation: conversations[index]));
               },
               child: ListTile(
                 contentPadding: const EdgeInsets.all(8.0),
@@ -73,6 +74,7 @@ class _ConversationListState extends State<ConversationList> {
                   title: Text(conversations[index].name,
                       style: const TextStyle(fontSize: 16)),
                 ),
+                
             );
           }),
     );

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/modules/dbHelper.dart';
 import 'package:flutter_dictionary_app/modules/short-story.dart';
 import 'package:flutter_dictionary_app/shortStory/short-story-list-detail.dart';
-// import 'package:flutter_dictionary_app/conversations/short-story-list-detail.dart';
 
 List<ShortStory> storys = [];
 
@@ -60,7 +59,8 @@ class _ShortStoryListState extends State<ShortStoryList> {
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, StoryDetail.routeName, arguments: StoryArgument(story: storys[index]));
+                Navigator.pushNamed(context, StoryDetail.routeName,
+                    arguments: StoryArgument(story: storys[index]));
               },
               child: ListTile(
                 contentPadding:

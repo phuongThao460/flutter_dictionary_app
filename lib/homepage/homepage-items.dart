@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/Grammar/grammar-list.dart';
+import 'package:flutter_dictionary_app/conversations/conversations-list.dart';
 import 'package:flutter_dictionary_app/favouriteword/favourite-list.dart';
 import 'package:flutter_dictionary_app/idiom/idiom-list.dart';
 import 'package:flutter_dictionary_app/modules/card.dart';
@@ -33,11 +34,11 @@ class HomepageItems extends StatelessWidget {
               } else if (index == 1) {
                 Navigator.pushNamed(context, FavouriteList.routeName);
               } else if (index == 2) {
-                //Navigator.pushNamed(context, routeName)
+                Navigator.pushNamed(context, ShortStoryList.routeName);
               } else if (index == 3) {
                 Navigator.pushNamed(context, IdiomList.routeName);
               } else if (index == 4) {
-                Navigator.pushNamed(context, ShortStoryList.routeName);
+                Navigator.pushNamed(context, ConversationList.routeName);
               } else if (index == 5) {
                 Navigator.pushNamed(context, GrammarList.routeName);
               }
