@@ -25,6 +25,8 @@ class _ConversationListDetailState extends State<ConversationListDetail> {
   void initState(){
     super.initState();
 
+    setAudio();
+
     audioPlayer.onPlayerStateChanged.listen((state) { 
       setState(() {
         isPlaying = state == PlayerState.PLAYING;
@@ -42,6 +44,13 @@ class _ConversationListDetailState extends State<ConversationListDetail> {
         position = newPosition;
       });
     });
+  }
+
+  Future setAudio() async{
+    audioPlayer.setReleaseMode(ReleaseMode.LOOP);
+    final player = AudioCache(prefix: 'assets/');
+    final url = await player.load('audio/00 - Vocabulary');
+    audioPlayer.setUrl(url.path, isLocal: true);
   }
 
   @override
@@ -100,8 +109,8 @@ class _ConversationListDetailState extends State<ConversationListDetail> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 // children: [
-                  // Text(formatTime(position)),
-                  // Text(formatTime(duration - position)),
+                //   Text(formatTime(position)),
+                //   Text(formatTime(duration - position)),
                 // ],
               ),
               ),
