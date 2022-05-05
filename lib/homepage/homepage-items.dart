@@ -33,18 +33,21 @@ class HomepageItems extends StatelessWidget {
               if (index == 0) {
                 Navigator.pushNamed(context, TranslateVA.routeName);
               } else if (index == 1) {
-                Navigator.pushNamed(context, TranslateText.routeName);
+                Navigator.pushNamed(context, FavouriteList.routeName);
               } else if (index == 2) {
                 //Navigator.pushNamed(context, routeName)
               } else if (index == 3) {
-                Navigator.pushNamed(context, FavouriteList.routeName);
+                Navigator.pushNamed(context, IdiomList.routeName);
               } else if (index == 4) {
                 Navigator.pushNamed(context, ShortStoryList.routeName);
               } else if (index == 5) {
+<<<<<<< HEAD
                 Navigator.pushNamed(context, IdiomList.routeName);
               } else if (index == 6) {
                 Navigator.pushNamed(context, ConversationList.routeName);
               } else if (index == 7) {
+=======
+>>>>>>> a7e9dbafcf4f497df4c7aa7eb57fcbb7191cc29d
                 Navigator.pushNamed(context, GrammarList.routeName);
               }
             },
@@ -78,8 +81,8 @@ class CardItems extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 50,
-            width: 50,
+            height: card.heightImg,
+            width: card.widthImg,
             child: Image.asset(
               card.img,
               fit: BoxFit.fill,

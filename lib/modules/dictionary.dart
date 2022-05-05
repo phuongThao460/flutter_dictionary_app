@@ -22,4 +22,11 @@ class Dictionary {
         description: res['description'],
         pronounce: res['pronounce']);
   }
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'word': word,
+        'html': html,
+        'description': description,
+        'pronounce': pronounce,
+      };
 }

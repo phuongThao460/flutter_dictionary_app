@@ -1,5 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, must_be_immutable, unnecessary_string_interpolations
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/modules/dbHelper.dart';
 import 'package:flutter_dictionary_app/modules/dictionary.dart';
@@ -14,7 +16,7 @@ class HomeHeader extends StatefulWidget {
 
 class _HomeHeaderState extends State<HomeHeader> {
   DBHelper? _helper;
-  List<String> historySearch = [];
+  List<Dictionary> historySearch = [];
   var items = [];
   String keywords = "";
   SharedPreferences? prefs;
@@ -23,22 +25,22 @@ class _HomeHeaderState extends State<HomeHeader> {
     super.initState();
     _helper = DBHelper();
     _helper!.copyDB();
-    // _helper!.getAVDictionary().then((value) {
-    //   setState(() {
-    //     items = value;
-    //   });
-    // });
   }
 
-  _addSearchingWordToHistory(String words) async {
+  _addSearchingWordToHistory(Dictionary words) async {
     prefs = await SharedPreferences.getInstance();
-    historySearch.add(words);
-    prefs!.setStringList("Words", historySearch);
+    Map<String, dynamic> decodeOptions = jsonDecode(words.toString());
+    String user = jsonEncode(Dictionary.fromJson(decodeOptions));
+    prefs!.setString('dicts', user);
   }
 
   _getHistorySearching() async {
     prefs = await SharedPreferences.getInstance();
-    historySearch = prefs!.getStringList("Words")!;
+    Map<String, dynamic> decodeOptions =
+        jsonDecode(prefs!.getString('dicts') as String);
+    var word = Dictionary.fromJson(decodeOptions);
+    historySearch.add(word);
+    return historySearch;
   }
 
   @override
@@ -105,7 +107,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                     },
                     onSuggestionSelected: (Dictionary? dicts) {
                       final dictionary = dicts!;
-                      _addSearchingWordToHistory(dicts.word);
+                      _addSearchingWordToHistory(dictionary);
                       Navigator.pushNamed(context, WordDetails.routeName,
                           arguments: GetDetailFromList(dicts: dictionary));
                     }),

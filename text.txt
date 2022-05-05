@@ -1,1 +1,8 @@
 UPDATE SQLITE_SEQUENCE SET seq = <n> WHERE name = '<table>'
+
+  Future _addToHistory(Idiom idiom) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> decodeOptions = idiom.toJson();
+    String user = jsonEncode(Idiom.fromJson(decodeOptions));
+    print(idiomsHistory);
+  }
