@@ -5,7 +5,7 @@ import 'package:flutter_dictionary_app/modules/dbHelper.dart';
 import 'package:flutter_dictionary_app/modules/conversation.dart';
 import 'package:flutter_dictionary_app/conversations/conversations-list-detail.dart';
 
-List<ConversationDataDetail> conversations = [];
+List<Conversation> conversations = [];
 
 class ConversationList extends StatefulWidget {
   static String routeName = "/conversations";
@@ -26,7 +26,7 @@ class _ConversationListState extends State<ConversationList> {
   void _getData() async {
     _helper = DBHelper();
     _helper!.copyDB();
-    List<ConversationDataDetail> conversationList =
+    List<Conversation> conversationList =
         await _helper!.getConversationsData();
     if (conversationList.isNotEmpty) {
       setState(() {

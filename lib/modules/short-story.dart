@@ -2,15 +2,15 @@
 
 import 'package:flutter_dictionary_app/shortStory/short-story-list.dart';
 
-class ShortStoryDataDetail {
+class ShortStory {
   int id;
   String title;
   String story;
   String image;
-  ShortStoryDataDetail({required this.id, required this.title, required this.story, required this.image});
+  ShortStory({required this.id, required this.title, required this.story, required this.image});
   
-  factory ShortStoryDataDetail.fromJson(Map<String, dynamic> res) {
-    return new ShortStoryDataDetail(
+  factory ShortStory.fromJson(Map<String, dynamic> res) {
+    return new ShortStory(
         id: res['id'],
         title: res['title'],
         story: res['story'],
@@ -18,9 +18,9 @@ class ShortStoryDataDetail {
         );
   }
 
-  static List<ShortStoryDataDetail> init() {
-  List<ShortStoryDataDetail> shortStoryDataDetails = [
-  ShortStoryDataDetail(
+  static List<ShortStory> init() {
+  List<ShortStory> shortStoryDataDetails = [
+  ShortStory(
     id: 1,
     title:'introducin yourself',
     story: 'Hit the hay.',

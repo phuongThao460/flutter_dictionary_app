@@ -129,6 +129,6 @@ class _ConversationListDetailState extends State<ConversationListDetail> {
 }
 
 class ConversationArgument {
-  ConversationDataDetail conversation;
+  Conversation conversation;
   ConversationArgument({required this.conversation});
 }

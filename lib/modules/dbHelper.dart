@@ -6,15 +6,11 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:flutter_dictionary_app/modules/conversation.dart';
 import 'package:flutter_dictionary_app/modules/dictionary.dart';
 import 'package:flutter_dictionary_app/modules/grammar-data.dart';
 import 'package:flutter_dictionary_app/modules/idiom-data.dart';
-<<<<<<< HEAD
-import 'package:flutter_dictionary_app/modules/conversation.dart';
 import 'package:flutter_dictionary_app/modules/short-story.dart';
-=======
-import 'package:json_store/json_store.dart';
->>>>>>> a7e9dbafcf4f497df4c7aa7eb57fcbb7191cc29d
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -48,20 +44,6 @@ class DBHelper {
     String databasePath = join(appDocDir.path, 'dict_hh.db');
     File file = await File('${appDocDir.path}/dict_hh.json').create();
     return file.writeAsString(word);
-  }
-
-  saveJsonStore() async {
-    Database db = await openDB();
-    List<Dictionary> data = [];
-    Batch batch = await JsonStore().startBatch();
-    await Future.forEach(data, (Dictionary _dicts) async {
-      await JsonStore().setItem(
-        'messages-${_dicts.id}',
-        _dicts.toJson(),
-        batch: batch,
-      );
-    });
-    JsonStore().commitBatch(batch);
   }
 
   Future<List<Dictionary>> getSearchingWordFromAV(String keywords) async {
@@ -174,12 +156,12 @@ class DBHelper {
     return data;
   }
 
-  Future<List<ConversationDataDetail>> getConversationsData() async {
-    List<ConversationDataDetail> data = <ConversationDataDetail>[];
+  Future<List<Conversation>> getConversationsData() async {
+    List<Conversation> data = <Conversation>[];
     Database db = await openDB();
     var list = await db.rawQuery('SELECT * FROM conversation');
     for (var item in list.toList()) {
-      data.add(ConversationDataDetail(
+      data.add(Conversation(
         id: item['id'] as int,
         name: item['name'] as String,
         text: item['text'] as String,
@@ -191,12 +173,12 @@ class DBHelper {
     return data;
   }
 
-  Future<List<ShortStoryDataDetail>> getStoryData() async {
-    List<ShortStoryDataDetail> data = <ShortStoryDataDetail>[];
+  Future<List<ShortStory>> getStoryData() async {
+    List<ShortStory> data = <ShortStory>[];
     Database db = await openDB();
     var list = await db.rawQuery('SELECT * FROM short_story');
     for (var item in list.toList()) {
-      data.add(ShortStoryDataDetail(
+      data.add(ShortStory(
         id: item['id'] as int,
         title: item['title'] as String,
         story: item['story'] as String,

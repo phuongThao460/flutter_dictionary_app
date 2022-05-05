@@ -5,7 +5,7 @@ import 'package:flutter_dictionary_app/modules/dbHelper.dart';
 import 'package:flutter_dictionary_app/modules/short-story.dart';
 // import 'package:flutter_dictionary_app/conversations/short-story-list-detail.dart';
 
-List<ShortStoryDataDetail> storys = [];
+List<ShortStory> storys = [];
 
 class ShortStoryList extends StatefulWidget {
   static String routeName = "/shortStory";
@@ -26,7 +26,7 @@ class _ShortStoryListState extends State<ShortStoryList> {
   void _getData() async {
     _helper = DBHelper();
     _helper!.copyDB();
-    List<ShortStoryDataDetail> storyList = await _helper!.getStoryData();
+    List<ShortStory> storyList = await _helper!.getStoryData();
     if (storyList.isNotEmpty) {
       setState(() {
         storys = storyList;

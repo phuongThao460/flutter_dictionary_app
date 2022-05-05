@@ -41,13 +41,6 @@ class HomepageItems extends StatelessWidget {
               } else if (index == 4) {
                 Navigator.pushNamed(context, ShortStoryList.routeName);
               } else if (index == 5) {
-<<<<<<< HEAD
-                Navigator.pushNamed(context, IdiomList.routeName);
-              } else if (index == 6) {
-                Navigator.pushNamed(context, ConversationList.routeName);
-              } else if (index == 7) {
-=======
->>>>>>> a7e9dbafcf4f497df4c7aa7eb57fcbb7191cc29d
                 Navigator.pushNamed(context, GrammarList.routeName);
               }
             },
