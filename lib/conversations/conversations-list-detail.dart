@@ -3,6 +3,7 @@
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
 import 'package:flutter_dictionary_app/modules/conversation.dart';
 //import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -131,7 +132,7 @@ class _ConversationListDetailState extends State<ConversationListDetail> {
                   },
                 ),
               ),
-              Text(conversationArgument.conversation.text)
+              Text(conversationArgument.conversation.content)
             ],
           ),
         ));
@@ -139,6 +140,6 @@ class _ConversationListDetailState extends State<ConversationListDetail> {
 }
 
 class ConversationArgument {
-  Conversation conversation;
+  ConversationData conversation;
   ConversationArgument({required this.conversation});
 }

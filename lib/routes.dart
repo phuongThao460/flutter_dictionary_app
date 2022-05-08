@@ -9,14 +9,16 @@ import 'package:flutter_dictionary_app/shortStory/short-story-list-detail.dart';
 import 'package:flutter_dictionary_app/splashpage.dart';
 import 'package:flutter_dictionary_app/translatetext/translate-text-page.dart';
 import 'package:flutter_dictionary_app/translateVA/translate_va.dart';
-import 'package:flutter_dictionary_app/word/word_details.dart';
+import 'package:flutter_dictionary_app/word/word_av_details.dart';
 import 'package:flutter_dictionary_app/conversations/conversations-list.dart';
 import 'package:flutter_dictionary_app/shortStory/short-story-list.dart';
+import 'package:flutter_dictionary_app/word/word_va_details.dart';
 
 final Map<String, WidgetBuilder> routes = {
   Slpashpage.routeName: (context) => Slpashpage(),
   Homepage.routeName: (context) => Homepage(),
-  WordDetails.routeName: (context) => WordDetails(),
+  WordAVDetails.routeName: (context) => WordAVDetails(),
+  WordVADetails.routeName: (context) => WordVADetails(),
   TranslateVA.routeName: (context) => TranslateVA(),
   IdiomList.routeName: (context) => IdiomList(),
   GrammarList.routeName: (context) => GrammarList(),

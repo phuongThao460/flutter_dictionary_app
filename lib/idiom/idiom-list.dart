@@ -1,9 +1,9 @@
 // ignore_for_file: file_names, use_key_in_widget_constructors, prefer_typing_uninitialized_variables, iterable_contains_unrelated_type
 
 import 'package:flutter/material.dart';
-import 'package:flutter_dictionary_app/modules/dbHelper.dart';
+import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
 import 'package:flutter_dictionary_app/modules/favourite-data.dart';
-import 'package:flutter_dictionary_app/modules/idiom-data.dart';
+import 'package:provider/provider.dart';
 
 List<Idiom> idioms = [];
 
@@ -15,29 +15,11 @@ class IdiomList extends StatefulWidget {
 }
 
 class _IdiomListState extends State<IdiomList> {
-  DBHelper? _helper;
   bool isPress = false;
-  @override
-  void initState() {
-    super.initState();
-    _getData();
-  }
-
-  void _getData() async {
-    _helper = DBHelper();
-    _helper!.copyDB();
-    List<Idiom> idiomList = await _helper!.getIdiomsData();
-    if (idiomList.isNotEmpty) {
-      setState(() {
-        idioms = idiomList;
-      });
-    } else {
-      idioms = [];
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
+    final dao = Provider.of<DictionaryDao>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Idiom"),
@@ -49,34 +31,40 @@ class _IdiomListState extends State<IdiomList> {
                   colors: [Color(0xFF5F72BE), Color(0xFF9921E8)])),
         ),
       ),
-      body: ListView.separated(
-          separatorBuilder: (context, index) {
-            return const Divider(
-              color: Colors.black26,
-            );
-          },
-          itemCount: idioms.length,
-          itemBuilder: (context, index) {
-            Idiom data = idioms[index];
-            bool isSaved = Favourite.dataIdioms.contains(data);
-            return ListTile(
-              onTap: () {
-                setState(() {
-                  if (isSaved) {
-                    Favourite.dataIdioms.remove(data);
-                  } else {
-                    Favourite.dataIdioms.add(data);
-                  }
+      body: StreamBuilder(
+          stream: dao.getIdiom(),
+          builder: (context, AsyncSnapshot<List<Idiom>>snapshot) {
+            final idiom = snapshot.data ?? [];
+            return ListView.separated(
+                separatorBuilder: (context, index) {
+                  return const Divider(
+                    color: Colors.black26,
+                  );
+                },
+                itemCount: idiom.length,
+                itemBuilder: (context, index) {
+                  Idiom data = idiom[index];
+                  bool isSaved = Favourite.dataIdioms.contains(data);
+                  return ListTile(
+                    contentPadding: const EdgeInsets.only(left: 3.0, right: 3.0),
+                    onTap: () {
+                      setState(() {
+                        if (isSaved) {
+                          Favourite.dataIdioms.remove(data);
+                        } else {
+                          Favourite.dataIdioms.add(data);
+                        }
+                      });
+                    },
+                    leading: Icon(
+                      isSaved ? Icons.star : Icons.star_border_outlined,
+                      color: isSaved ? Colors.yellow : null,
+                    ),
+                    title: Text(idiom[index].sentence,
+                        style: const TextStyle(fontSize: 16)),
+                    subtitle: Text(idiom[index].meaning),
+                  );
                 });
-              },
-              leading: Icon(
-                isSaved ? Icons.star : Icons.star_border_outlined,
-                color: isSaved ? Colors.yellow : null,
-              ),
-              title: Text(idioms[index].text,
-                  style: const TextStyle(fontSize: 16)),
-              subtitle: Text(idioms[index].meaning),
-            );
           }),
     );
   }

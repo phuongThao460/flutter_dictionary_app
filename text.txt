@@ -2,6 +2,8 @@ UPDATE SQLITE_SEQUENCE SET seq = <n> WHERE name = '<table>'
 .android/avd/Nexus5.avd/config.ini => hw.keyboard=yes
 avdmanager create avd -n pixel -d 16 -k "system-images;android-30;google_apis;x86_64"
 avdmanager create avd --name "Nexus_5" --package "system-images;android-30;google_apis;x86_64"
+truy vấn theo index, dùng key - value để chứa data, 
+khi gõ một chữ sẽ mã hóa từ đó thành một số (key) tương ứng với value chứa key đó
   Future _addToHistory(Idiom idiom) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> decodeOptions = idiom.toJson();

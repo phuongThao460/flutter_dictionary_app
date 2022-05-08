@@ -1,8 +1,7 @@
 // ignore_for_file: file_names, use_key_in_widget_constructors, must_be_immutable
 //liet ke chi tiet cua grammar
 import 'package:flutter/material.dart';
-import 'package:flutter_dictionary_app/modules/grammar-data.dart';
-//import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
 
 class GrammarListDetail extends StatelessWidget {
   static String routeName = "/grammar-detail";
@@ -55,6 +54,6 @@ class GrammarListDetail extends StatelessWidget {
 }
 
 class GrammarArgument {
-  Grammar grammar;
+  GrammarData grammar;
   GrammarArgument({required this.grammar});
 }

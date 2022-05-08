@@ -3,9 +3,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
 import 'package:flutter_dictionary_app/modules/dictionary.dart';
 import 'package:flutter_dictionary_app/modules/favourite-data.dart';
-import 'package:flutter_dictionary_app/modules/idiom-data.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -120,7 +120,7 @@ Widget _listIdioms(List<Idiom> favouritedatadetails) {
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             leading: const Icon(Icons.note),
-            title: Text(favouritedatadetails[index].text,
+            title: Text(favouritedatadetails[index].sentence,
                 style: const TextStyle(fontSize: 16)),
           ),
         );

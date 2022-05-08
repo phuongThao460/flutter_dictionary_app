@@ -1,9 +1,9 @@
 // ignore_for_file: use_key_in_widget_constructors, unnecessary_new, unused_field, avoid_function_literals_in_foreach_calls, unnecessary_string_interpolations, must_be_immutable, avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:flutter_dictionary_app/modules/dbHelper.dart';
-import 'package:flutter_dictionary_app/modules/dictionary.dart';
-import 'package:flutter_dictionary_app/word/word_details.dart';
+import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
+import 'package:flutter_dictionary_app/word/word_va_details.dart';
+import 'package:provider/provider.dart';
 
 class TranslateVA extends StatefulWidget {
   static String routeName = '/vadicts';
@@ -16,25 +16,16 @@ class _TranslateVAState extends State<TranslateVA> {
       new GlobalKey<ScaffoldState>();
   final TextEditingController _searchingTextController =
       TextEditingController();
-  DBHelper? _helper;
-  final _listDict = [];
-  var items = [];
-  String keywords = "";
+  String keywords = "search";
 
   @override
   void initState() {
     super.initState();
-    _helper = DBHelper();
-    _helper!.copyDB();
-    // _helper!.getVADictionary().then((value) {
-    //   setState(() {
-    //     items = value;
-    //   });
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
+    final dao = Provider.of<DictionaryDao>(context);
     return Scaffold(
       key: _scaffoldState,
       appBar: AppBar(
@@ -66,7 +57,7 @@ class _TranslateVAState extends State<TranslateVA> {
             ),
           ),
           FutureBuilder(
-            future: _helper!.getSearchingWordFromVA(keywords),
+            future: dao.getFilteredItemsVA(keywords),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 print('error');
@@ -74,7 +65,7 @@ class _TranslateVAState extends State<TranslateVA> {
               var data = snapshot.data;
               return snapshot.hasData &&
                       _searchingTextController.text.isNotEmpty
-                  ? DictionaryList(dicts: data as List<Dictionary>)
+                  ? DictionaryList(dicts: data as List<VAData>)
                   : Container();
             },
           )
@@ -85,7 +76,7 @@ class _TranslateVAState extends State<TranslateVA> {
 }
 
 class DictionaryList extends StatelessWidget {
-  List<Dictionary> dicts;
+  List<VAData> dicts;
   DictionaryList({required this.dicts});
   @override
   Widget build(BuildContext context) {
@@ -95,8 +86,8 @@ class DictionaryList extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, WordDetails.routeName,
-                        arguments: GetDetailFromList(dicts: dicts[index]));
+                Navigator.pushNamed(context, WordVADetails.routeName,
+                    arguments: GetVADetailFromList(va: dicts[index]));
               },
               child: Card(
                 elevation: 0,

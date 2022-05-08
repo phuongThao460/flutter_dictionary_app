@@ -82,7 +82,7 @@ class CardItems extends StatelessWidget {
           ),
           Text(
             card.nameCard,
-            style: const TextStyle(fontSize: 15),
+            style: const TextStyle(fontSize: 13.55),
           )
         ],
       ),

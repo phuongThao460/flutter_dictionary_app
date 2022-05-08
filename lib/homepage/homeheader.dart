@@ -1,12 +1,12 @@
 // ignore_for_file: use_key_in_widget_constructors, must_be_immutable, unnecessary_string_interpolations
 
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_dictionary_app/modules/dbHelper.dart';
-import 'package:flutter_dictionary_app/modules/dictionary.dart';
-import 'package:flutter_dictionary_app/word/word_details.dart';
+import 'package:flutter_dictionary_app/dbHelper/dbHelper.dart';
+import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
+import 'package:flutter_dictionary_app/word/word_av_details.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeHeader extends StatefulWidget {
@@ -16,7 +16,7 @@ class HomeHeader extends StatefulWidget {
 
 class _HomeHeaderState extends State<HomeHeader> {
   DBHelper? _helper;
-  List<Dictionary> historySearch = [];
+  //List<Dictionary> historySearch = [];
   var items = [];
   String keywords = "";
   SharedPreferences? prefs;
@@ -27,21 +27,21 @@ class _HomeHeaderState extends State<HomeHeader> {
     _helper!.copyDB();
   }
 
-  _addSearchingWordToHistory(Dictionary words) async {
-    prefs = await SharedPreferences.getInstance();
-    Map<String, dynamic> decodeOptions = jsonDecode(words.toString());
-    String user = jsonEncode(Dictionary.fromJson(decodeOptions));
-    prefs!.setString('dicts', user);
-  }
+  // _addSearchingWordToHistory(Dictionary words) async {
+  //   prefs = await SharedPreferences.getInstance();
+  //   Map<String, dynamic> decodeOptions = jsonDecode(words.toString());
+  //   String user = jsonEncode(Dictionary.fromJson(decodeOptions));
+  //   prefs!.setString('dicts', user);
+  // }
 
-  _getHistorySearching() async {
-    prefs = await SharedPreferences.getInstance();
-    Map<String, dynamic> decodeOptions =
-        jsonDecode(prefs!.getString('dicts') as String);
-    var word = Dictionary.fromJson(decodeOptions);
-    historySearch.add(word);
-    return historySearch;
-  }
+  // _getHistorySearching() async {
+  //   prefs = await SharedPreferences.getInstance();
+  //   Map<String, dynamic> decodeOptions =
+  //       jsonDecode(prefs!.getString('dicts') as String);
+  //   var word = Dictionary.fromJson(decodeOptions);
+  //   historySearch.add(word);
+  //   return historySearch;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -71,46 +71,7 @@ class _HomeHeaderState extends State<HomeHeader> {
               child: Container(
                 height: 40,
                 alignment: Alignment.bottomCenter,
-                child: TypeAheadField<Dictionary>(
-                    debounceDuration: const Duration(milliseconds: 500),
-                    textFieldConfiguration: TextFieldConfiguration(
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(50.0)),
-                          filled: true,
-                          fillColor: Colors.white,
-                          contentPadding: const EdgeInsets.only(top: 12),
-                          hintText: "Enter ",
-                          prefixIcon: const Icon(Icons.search)),
-                    ),
-                    suggestionsCallback: historySearch.isNotEmpty
-                        ? _getHistorySearching()
-                        : _helper!.getSearchingWordFromAV,
-                    itemBuilder: (context, Dictionary? dicts) {
-                      final getWord = dicts!;
-                      return Card(
-                          elevation: 8,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Column(
-                              children: [
-                                Text(
-                                  '${getWord.word}',
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                Text('${getWord.description}'),
-                              ],
-                            ),
-                          ));
-                    },
-                    onSuggestionSelected: (Dictionary? dicts) {
-                      final dictionary = dicts!;
-                      _addSearchingWordToHistory(dictionary);
-                      Navigator.pushNamed(context, WordDetails.routeName,
-                          arguments: GetDetailFromList(dicts: dictionary));
-                    }),
+                child: _buildSearchBar(context)
               ),
             ),
           ],
@@ -119,9 +80,45 @@ class _HomeHeaderState extends State<HomeHeader> {
     ]);
   }
 }
-
+_buildSearchBar(BuildContext context) {
+  final dao = Provider.of<DictionaryDao>(context);
+  return TypeAheadField<AVData>(
+      debounceDuration: const Duration(milliseconds: 500),
+      textFieldConfiguration: TextFieldConfiguration(
+        decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(50.0)),
+            filled: true,
+            fillColor: Colors.white,
+            contentPadding: const EdgeInsets.only(top: 12),
+            hintText: "Enter ",
+            prefixIcon: const Icon(Icons.search)),
+      ),
+      suggestionsCallback: dao.getFilteredItemsAV,
+      itemBuilder: (context, AVData? dicts) {
+        final getWord = dicts!;
+        return Card(
+            elevation: 8,
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Column(
+                children: [
+                  Text(
+                    '${getWord.word}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  Text('${getWord.description}'),
+                ],
+              ),
+            ));
+      },
+      onSuggestionSelected: (AVData? dicts) {
+      });
+}
 class DictionaryList extends StatelessWidget {
-  List<Dictionary> dicts;
+  List<AVData> dicts;
   DictionaryList({required this.dicts});
   @override
   Widget build(BuildContext context) {
@@ -135,8 +132,8 @@ class DictionaryList extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, WordDetails.routeName,
-                        arguments: GetDetailFromList(dicts: dicts[index]));
+                    Navigator.pushNamed(context, WordAVDetails.routeName,
+                        arguments: GetAVDetailFromList(av: dicts[index]));
                   },
                   child: Card(
                     elevation: 8,
