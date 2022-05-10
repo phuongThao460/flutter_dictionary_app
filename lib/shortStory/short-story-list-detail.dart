@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
-import 'package:flutter_dictionary_app/modules/short-story.dart';
 
 class StoryDetail extends StatefulWidget {
   static String routeName = '/story-detail';
