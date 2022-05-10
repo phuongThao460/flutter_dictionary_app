@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
 
 class Body extends StatefulWidget {
@@ -67,9 +68,10 @@ class _BodyState extends State<Body> {
 
   Future setAudio() async {
     audioPlayer.setReleaseMode(ReleaseMode.LOOP);
-    final player = AudioCache(prefix: 'assets/audio/');
-    final url = await player.load(widget.conversationData.audio);
-    audioPlayer.setUrl(url.path, isLocal: true);
+    ByteData bytes =
+        await rootBundle.load("assets/audio/${widget.conversationData.audio}"); //load audio from assets
+    audiobytes =
+        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
   }
 
   @override
@@ -126,7 +128,7 @@ class _BodyState extends State<Body> {
                 if (isPlaying) {
                   await audioPlayer.pause();
                 } else {
-                  await audioPlayer.play(audioPlay);
+                  await audioPlayer.playBytes(audiobytes);
                 }
               },
             ),
