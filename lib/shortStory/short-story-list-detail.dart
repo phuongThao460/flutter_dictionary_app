@@ -33,8 +33,17 @@ class _StoryDetailState extends State<StoryDetail> {
           children: [
             Text(
               argument.story.title,
+              textAlign: TextAlign.center,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
+            ClipRRect(
+            child: Image.network(
+              argument.story.image,
+              fit: BoxFit.cover,
+              width: double.maxFinite,
+              height: 200,
+            ),
+          ),
             const SizedBox(height: 12,),
             Text(argument.story.story,
               style: const TextStyle(fontSize: 16))
