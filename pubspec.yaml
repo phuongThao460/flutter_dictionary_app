@@ -79,7 +79,13 @@ flutter:
     - assets/images/reading.jpg
     - assets/images/lookup.png
     - assets/conversations/hoi-thoai-tieng-anh.jpg
+    - assets/conversations/1-1.png
+    - assets/conversations/1-2.png
+    - assets/conversations/1-5.png
+    - assets/conversations/1-6.png
+    - assets/conversations/1-7.png
     - assets/audio/
+    
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

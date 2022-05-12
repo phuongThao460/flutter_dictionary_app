@@ -74,30 +74,32 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(10),
       child: ListView(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.asset(
-              widget.conversationData.image,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: 350,
-            ),
-          ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 10),
           Text(
             widget.conversationData.name,
+            textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
+            ),
+          ),
+          ClipRRect(
+            child: Image.asset(
+              widget.conversationData.image,
+              fit: BoxFit.cover,
+              width: double.maxFinite,
+              height: 200,
             ),
           ),
           Slider(
             min: 0,
             max: duration.inSeconds.toDouble(),
             value: position.inSeconds.toDouble(),
+            activeColor: Colors.blue[300],
+            inactiveColor: Color(0xFF9921E8),
             onChanged: (value) async {
               final position = Duration(seconds: value.toInt());
               await audioPlayer.seek(position);
@@ -115,10 +117,12 @@ class _BodyState extends State<Body> {
             ),
           ),
           CircleAvatar(
+            backgroundColor: Color(0xFF9921E8),
             radius: 35,
             child: IconButton(
               icon: Icon(
                 isPlaying ? Icons.pause : Icons.play_arrow,
+                color: Colors.white,
               ),
               iconSize: 50,
               onPressed: () async {
@@ -130,7 +134,23 @@ class _BodyState extends State<Body> {
               },
             ),
           ),
-          Text(widget.conversationData.content)
+          Padding(
+          padding: const EdgeInsets.all(10.0),
+          child:  Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+                  color: Colors.blue,
+            ),
+            child: Padding(padding: const EdgeInsets.all(10),
+            child: Text(widget.conversationData.content,
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                ),),
+              ),
+            ),
+          ),
         ],
       ),
     );
