@@ -21,6 +21,7 @@ class VAData extends DataClass implements Insertable<VAData> {
       required this.html,
       required this.description,
       required this.pronounce});
+  static List<VAData> historyVA = [];
   factory VAData.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return VAData(
@@ -57,15 +58,13 @@ class VAData extends DataClass implements Insertable<VAData> {
     );
   }
 
-  factory VAData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
+  factory VAData.fromJson(Map<String, dynamic> json,) {
     return VAData(
-      id: serializer.fromJson<int>(json['id']),
-      word: serializer.fromJson<String>(json['word']),
-      html: serializer.fromJson<String>(json['html']),
-      description: serializer.fromJson<String>(json['description']),
-      pronounce: serializer.fromJson<String>(json['pronounce']),
+      id: json['id'],
+      word: json['word'],
+      html: json['html'],
+      description: json['description'],
+      pronounce: json['pronounce'],
     );
   }
   @override
@@ -310,6 +309,7 @@ class AVData extends DataClass implements Insertable<AVData> {
       required this.html,
       required this.description,
       required this.pronounce});
+  static List<AVData> historyAV = [];
   factory AVData.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return AVData(
@@ -346,15 +346,14 @@ class AVData extends DataClass implements Insertable<AVData> {
     );
   }
 
-  factory AVData.fromJson(Map<String, dynamic> json, DictionaryDao dictionaryDao,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
+  factory AVData.fromJson(
+      Map<String, dynamic> json) {
     return AVData(
-      id: serializer.fromJson<int>(json['id']),
-      word: serializer.fromJson<String>(json['word']),
-      html: serializer.fromJson<String>(json['html']),
-      description: serializer.fromJson<String>(json['description']),
-      pronounce: serializer.fromJson<String>(json['pronounce']),
+      id: json['id'],
+      word: json['word'],
+      html: json['html'],
+      description: json['description'],
+      pronounce: json['pronounce'],
     );
   }
   @override

@@ -35,7 +35,7 @@ class _FavouriteListState extends State<FavouriteList> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setStringList(
         'idioms', favouritedatadetails.map((e) => jsonEncode(e)).toList());
-        prefs.setStringList(
+    prefs.setStringList(
         'word', favoriteWord.map((e) => jsonEncode(e)).toList());
   }
 

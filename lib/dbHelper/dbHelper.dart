@@ -134,7 +134,7 @@ class DBHelper {
       data.add(Conversation(
         id: item['id'] as int,
         name: item['name'] as String,
-        text: item['text'] as String,
+        content: item['content'] as String,
         image: item['image'] as String,
         audio: item['audio'] as String,
       ));

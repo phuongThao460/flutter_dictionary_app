@@ -19,7 +19,7 @@ class _BodyState extends State<Body> {
   final audioPlayer = AudioPlayer();
   var audioPlay;
   bool isPlaying = false;
-  late Uint8List audiobytes;
+  Uint8List? audiobytes;
 
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
@@ -40,14 +40,8 @@ class _BodyState extends State<Body> {
   }
 
   @override
-  void dispose() {
-    audioPlayer.dispose();
-    super.dispose();
-  }
-
-  @override
   void initState() {
-    super.initState();
+    if (!mounted) return;
     setAudio();
     audioPlayer.onPlayerStateChanged.listen((state) {
       setState(() {
@@ -64,14 +58,17 @@ class _BodyState extends State<Body> {
         position = newPosition;
       });
     });
+    super.initState();
   }
 
   Future setAudio() async {
     audioPlayer.setReleaseMode(ReleaseMode.LOOP);
-    ByteData bytes =
-        await rootBundle.load("assets/audio/${widget.conversationData.audio}"); //load audio from assets
-    audiobytes =
-        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+    ByteData bytes = await rootBundle.load(
+        "assets/audio/${widget.conversationData.audio}"); //load audio from assets
+    setState(() {
+      audiobytes =
+          bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+    });
   }
 
   @override
@@ -128,7 +125,7 @@ class _BodyState extends State<Body> {
                 if (isPlaying) {
                   await audioPlayer.pause();
                 } else {
-                  await audioPlayer.playBytes(audiobytes);
+                  await audioPlayer.playBytes(audiobytes!);
                 }
               },
             ),

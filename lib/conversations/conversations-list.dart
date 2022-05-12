@@ -1,7 +1,6 @@
 // ignore_for_file: file_names, use_key_in_widget_constructors, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
-import 'package:flutter_dictionary_app/dbHelper/dbHelper.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
 import 'package:flutter_dictionary_app/modules/conversation.dart';
 import 'package:flutter_dictionary_app/conversations/conversations-list-detail.dart';
@@ -17,26 +16,7 @@ class ConversationList extends StatefulWidget {
 }
 
 class _ConversationListState extends State<ConversationList> {
-  DBHelper? _helper;
   bool isPress = false;
-  @override
-  void initState() {
-    super.initState();
-    _getData();
-  }
-
-  void _getData() async {
-    _helper = DBHelper();
-    _helper!.copyDB();
-    List<Conversation> conversationList = await _helper!.getConversationsData();
-    if (conversationList.isNotEmpty) {
-      setState(() {
-        conversations = conversationList;
-      });
-    } else {
-      conversations = [];
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

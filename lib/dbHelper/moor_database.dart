@@ -49,7 +49,7 @@ class DictionaryDao extends DatabaseAccessor<AppDatabase>
       (select(av)..where((t) => t.word.like('$search%'))).get();
 
   Future<List<VAData>> getFilteredItemsVA(search) =>
-      (select(va)..where((t) => t.word.like(search))).get();
+      (select(va)..where((t) => t.word.like('$search%'))).get();
 
   
   Future<List<AVData>> getKursSymbol(String querySearch) {
@@ -67,19 +67,19 @@ class DictionaryDao extends DatabaseAccessor<AppDatabase>
     }).get();
   }
 
-  Stream<List<AVData>> getAllData() {
-    // select all categories and load how many associated entries there are for
-    // each category
-    return customSelect(
-      'SELECT * FROM av;',
-      readsFrom: {
-        av
-      }, // used for the stream: the stream will update when either table changes
-    ).watch().map((rows) {
-      // we get list of rows here. We just have to turn the raw data from the row into a
-      // CategoryWithCount. As we defined the Category table earlier, drift knows how to parse
-      // a category. The only thing left to do manually is extracting the amount
-      return rows.map((row) => AVData.fromJson(row.data, this)).toList();
-    });
-  }
+  // Stream<List<AVData>> getAllData() {
+  //   // select all categories and load how many associated entries there are for
+  //   // each category
+  //   return customSelect(
+  //     'SELECT * FROM av;',
+  //     readsFrom: {
+  //       av
+  //     }, // used for the stream: the stream will update when either table changes
+  //   ).watch().map((rows) {
+  //     // we get list of rows here. We just have to turn the raw data from the row into a
+  //     // CategoryWithCount. As we defined the Category table earlier, drift knows how to parse
+  //     // a category. The only thing left to do manually is extracting the amount
+  //     return rows.map((row) => AVData.fromJson(row.data, this)).toList();
+  //   });
+  // }
 }
