@@ -4,7 +4,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
-import 'package:flutter_dictionary_app/modules/dictionary.dart';
 import 'package:flutter_dictionary_app/modules/favourite-data.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,23 +17,33 @@ class FavouriteList extends StatefulWidget {
 
 class _FavouriteListState extends State<FavouriteList> {
   List<Idiom> favouritedatadetails = Favourite.dataIdioms;
-  List<Dictionary> favoriteWord = Favourite.dataDict;
+  List<AVData> favoriteWord = Favourite.dataDict;
 
   @override
   void initState() {
     super.initState();
     if (favouritedatadetails.isNotEmpty) {
-      _setData();
+      _setIdiomsData();
       _getData();
     } else {
       _getData();
     }
+    if (favoriteWord.isNotEmpty) {
+      _setWordData();
+      _getWordData();
+    } else {
+      _getWordData();
+    }
   }
 
-  _setData() async {
+  _setIdiomsData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setStringList(
         'idioms', favouritedatadetails.map((e) => jsonEncode(e)).toList());
+  }
+
+  _setWordData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setStringList(
         'word', favoriteWord.map((e) => jsonEncode(e)).toList());
   }
@@ -49,12 +58,16 @@ class _FavouriteListState extends State<FavouriteList> {
             data.map((e) => Idiom.fromJson(json.decode(e))).toList();
       });
     }
+  }
+
+  _getWordData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getStringList('word') != null) {
       print(prefs.getStringList('word'));
       var data = (prefs.getStringList('word')) as List;
       setState(() {
         favoriteWord =
-            data.map((e) => Dictionary.fromJson(json.decode(e))).toList();
+            data.map((e) => AVData.fromJson(json.decode(e))).toList();
       });
     }
   }
@@ -127,7 +140,7 @@ Widget _listIdioms(List<Idiom> favouritedatadetails) {
       });
 }
 
-Widget _listWord(List<Dictionary> word) {
+Widget _listWord(List<AVData> word) {
   return ListView.builder(
       itemCount: word.length,
       itemBuilder: (BuildContext context, int index) {

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
 import 'package:flutter_dictionary_app/modules/favourite-data.dart';
+import 'package:flutter_dictionary_app/translateVA/translate_va.dart';
 import 'package:flutter_dictionary_app/word/va/body.dart';
 
 class WordVADetails extends StatefulWidget {
@@ -37,6 +38,14 @@ class _WordVADetailssState extends State<WordVADetails> {
         actions: [
           IconButton(
             onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(context, TranslateVA.routeName, (Route<dynamic> route) => false).then((value) {
+                  bool isSaved = AVData.historyAV.contains(dataVA.va);
+                  return setState(() {
+                    if (!isSaved) {
+                      VAData.historyVA.add(dataVA.va);
+                    }
+                  });
+                });
               setState(() {
                 if (isSaved) {
                   //Favourite.dataDict.remove(data.dicts);

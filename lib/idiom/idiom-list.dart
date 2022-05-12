@@ -49,9 +49,7 @@ class _IdiomListState extends State<IdiomList> {
                     contentPadding: const EdgeInsets.only(left: 3.0, right: 3.0),
                     onTap: () {
                       setState(() {
-                        if (isSaved) {
-                          Favourite.dataIdioms.remove(data);
-                        } else {
+                        if (!isSaved) {
                           Favourite.dataIdioms.add(data);
                         }
                       });

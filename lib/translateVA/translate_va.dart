@@ -15,19 +15,23 @@ class TranslateVA extends StatefulWidget {
 }
 
 class _TranslateVAState extends State<TranslateVA> {
-  List<VAData> historyWords = VAData.historyVA;
+  List<VAData> historyVAWords = VAData.historyVA;
   SharedPreferences? prefs;
   final GlobalKey<ScaffoldState> _scaffoldState =
       new GlobalKey<ScaffoldState>();
   final TextEditingController _searchingTextController =
       TextEditingController();
   String keywords = "search";
-  
+
   @override
   void initState() {
     super.initState();
-    if (historyWords.isNotEmpty) {
-      _setData();
+    if (historyVAWords.isNotEmpty) {
+      setState(() {
+        _setData();
+        _getData();
+      });
+    } else {
       _getData();
     }
   }
@@ -35,7 +39,7 @@ class _TranslateVAState extends State<TranslateVA> {
   _setData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setStringList(
-        'historyVAWords', historyWords.map((e) => jsonEncode(e)).toList());
+        'historyVAWords', historyVAWords.map((e) => jsonEncode(e)).toList());
   }
 
   _getData() async {
@@ -43,22 +47,23 @@ class _TranslateVAState extends State<TranslateVA> {
     if (prefs.getStringList('historyVAWords') != null) {
       var data = (prefs.getStringList('historyVAWords')) as List;
       setState(() {
-        historyWords =
+        historyVAWords =
             data.map((e) => VAData.fromJson(json.decode(e))).toList();
       });
     }
-    return historyWords;
+    return historyVAWords;
   }
 
   @override
   Widget build(BuildContext context) {
     final dao = Provider.of<DictionaryDao>(context);
     Future<List<VAData>> _getSearchData(String name) async {
-      for (var element in historyWords) {
+      historyVAWords = await _getData() as List<VAData>;
+      for (var element in historyVAWords) {
         final e = element.word.toLowerCase();
         final queryWord = name.toLowerCase();
         if (e.contains(queryWord)) {
-          return historyWords.where((element) {
+          return historyVAWords.where((element) {
             return e.contains(queryWord);
           }).toList();
         }
@@ -106,7 +111,7 @@ class _TranslateVAState extends State<TranslateVA> {
               return snapshot.hasData &&
                       _searchingTextController.text.isNotEmpty
                   ? DictionaryList(dicts: data as List<VAData>)
-                  : DictionaryList(dicts: historyWords);
+                  : DictionaryList(dicts: historyVAWords);
             },
           )
         ],
@@ -115,19 +120,28 @@ class _TranslateVAState extends State<TranslateVA> {
   }
 }
 
-class DictionaryList extends StatelessWidget {
+class DictionaryList extends StatefulWidget {
   List<VAData> dicts;
   DictionaryList({required this.dicts});
+
+  @override
+  State<DictionaryList> createState() => _DictionaryListState();
+}
+
+class _DictionaryListState extends State<DictionaryList> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-          itemCount: dicts.length,
+          itemCount: widget.dicts.length,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
+                setState(() {
+                  VAData.historyVA.add(widget.dicts[index]);
+                });
                 Navigator.pushNamed(context, WordVADetails.routeName,
-                    arguments: GetVA(va: dicts[index]));
+                    arguments: GetVA(va: widget.dicts[index]));
               },
               child: Card(
                 elevation: 0,
@@ -137,12 +151,12 @@ class DictionaryList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${dicts[index].word}',
+                        '${widget.dicts[index].word}',
                         style: const TextStyle(
                           fontSize: 18,
                         ),
                       ),
-                      Text('${dicts[index].description}'),
+                      Text('${widget.dicts[index].description}'),
                     ],
                   ),
                 ),

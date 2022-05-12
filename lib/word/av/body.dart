@@ -12,23 +12,28 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  
   @override
   void initState() {
-    AVData.historyAV.add(widget.avData);
+    bool isSaved = AVData.historyAV.contains(widget.avData);
     super.initState();
+    setState(() {
+      if (!isSaved) {
+        AVData.historyAV.add(widget.avData);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: SizedBox(
-          width: double.maxFinite,
-          height: double.infinity,
-          child: _buildTab1(widget.avData.html),
-        ),
-      );
+      child: SizedBox(
+        width: double.maxFinite,
+        height: double.infinity,
+        child: _buildTab1(widget.avData.html),
+      ),
+    );
   }
+
   Widget _buildTab1(String dataHtml) {
     return SingleChildScrollView(
       child: Html(data: dataHtml),

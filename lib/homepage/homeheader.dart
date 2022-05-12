@@ -15,16 +15,16 @@ class HomeHeader extends StatefulWidget {
 }
 
 class _HomeHeaderState extends State<HomeHeader> {
-  SharedPreferences? prefs;
   List<AVData> historyWords = AVData.historyAV;
   TextEditingController searchTextController = new TextEditingController();
-
   @override
   void initState() {
     super.initState();
     if (historyWords.isNotEmpty) {
-      _setData();
-      _getData();
+      setState(() {
+        _setData();
+        _getData();
+      });
     }
   }
 
@@ -37,6 +37,7 @@ class _HomeHeaderState extends State<HomeHeader> {
   _getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getStringList('historyWords') != null) {
+      print(prefs.getStringList('historyWords'));
       var data = (prefs.getStringList('historyWords')) as List;
       setState(() {
         historyWords =
@@ -85,6 +86,7 @@ class _HomeHeaderState extends State<HomeHeader> {
   _buildSearchBar(BuildContext context, List<AVData> history) {
     final dao = Provider.of<DictionaryDao>(context);
     Future<List<AVData>> _getSearchData(String name) async {
+      historyWords = await _getData() as List<AVData>;
       for (var element in historyWords) {
         final e = element.word.toLowerCase();
         final queryWord = name.toLowerCase();
@@ -116,7 +118,7 @@ class _HomeHeaderState extends State<HomeHeader> {
         itemBuilder: (context, AVData dicts) {
           final getWord = dicts;
           return Card(
-              elevation: 8,
+              elevation: 2,
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Column(
@@ -134,7 +136,10 @@ class _HomeHeaderState extends State<HomeHeader> {
         },
         onSuggestionSelected: (AVData dicts) {
           final dictionary = dicts;
-          searchTextController.text = "";
+          searchTextController.clear();
+          setState(() {
+            _getData();
+          });
           Navigator.pushNamed(context, WordAVDetails.routeName,
               arguments: GetAVDetailFromList(av: dictionary));
         });
