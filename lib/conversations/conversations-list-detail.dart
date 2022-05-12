@@ -19,7 +19,7 @@ class _ConversationListDetailState extends State<ConversationListDetail> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(conversationArgument.conversation.name),
+          title: const Text("Conversation"),
           backgroundColor: Colors.transparent,
           flexibleSpace: Container(
             decoration: const BoxDecoration(

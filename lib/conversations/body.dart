@@ -135,17 +135,17 @@ class _BodyState extends State<Body> {
             ),
           ),
           Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.only(top:30.0),
           child:  Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-                  color: Colors.blue,
+                  color: Colors.grey[300],
             ),
             child: Padding(padding: const EdgeInsets.all(10),
             child: Text(widget.conversationData.content,
               textAlign: TextAlign.justify,
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 15,
                 ),),
               ),
