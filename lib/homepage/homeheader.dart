@@ -37,7 +37,6 @@ class _HomeHeaderState extends State<HomeHeader> {
   _getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getStringList('historyWords') != null) {
-      print(prefs.getStringList('historyWords'));
       var data = (prefs.getStringList('historyWords')) as List;
       setState(() {
         historyWords =

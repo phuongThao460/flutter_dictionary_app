@@ -1,6 +1,5 @@
 // ignore_for_file: use_key_in_widget_constructors, avoid_unnecessary_containers, sized_box_for_whitespace, iterable_contains_unrelated_type
 
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
@@ -33,11 +32,10 @@ class _WordAVDetailsState extends State<WordAVDetails> {
           ),
           leading: IconButton(
               onPressed: () {
-                
                 Navigator.pushNamedAndRemoveUntil(context, Homepage.routeName, (Route<dynamic> route) => false).then((value) {
-                  bool isSaved = AVData.historyAV.contains(dataAV.av);
+                  bool isSavedHistory = AVData.historyAV.contains(dataAV.av);
                   return setState(() {
-                    if (!isSaved) {
+                    if (!isSavedHistory) {
                       AVData.historyAV.add(dataAV.av);
                     }
                   });
@@ -47,8 +45,9 @@ class _WordAVDetailsState extends State<WordAVDetails> {
           actions: [
             IconButton(
               onPressed: () {
+                
                 setState(() {
-                  if (isSaved) {
+                  if (!isSaved) {
                     Favourite.dataDict.add(dataAV.av);
                   }
                 });

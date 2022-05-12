@@ -22,7 +22,6 @@ class _TranslateVAState extends State<TranslateVA> {
   final TextEditingController _searchingTextController =
       TextEditingController();
   String keywords = "search";
-
   @override
   void initState() {
     super.initState();
@@ -60,11 +59,11 @@ class _TranslateVAState extends State<TranslateVA> {
     Future<List<VAData>> _getSearchData(String name) async {
       historyVAWords = await _getData() as List<VAData>;
       for (var element in historyVAWords) {
-        final e = element.word.toLowerCase();
         final queryWord = name.toLowerCase();
-        if (e.contains(queryWord)) {
+        final e = element.word.toLowerCase().startsWith(queryWord);
+        if (e) {
           return historyVAWords.where((element) {
-            return e.contains(queryWord);
+            return e;
           }).toList();
         }
       }
@@ -138,7 +137,11 @@ class _DictionaryListState extends State<DictionaryList> {
             return GestureDetector(
               onTap: () {
                 setState(() {
-                  VAData.historyVA.add(widget.dicts[index]);
+                  bool isSavedHistory =
+                      widget.dicts.contains(widget.dicts[index]);
+                  if (!isSavedHistory) {
+                    VAData.historyVA.add(widget.dicts[index]);
+                  }
                 });
                 Navigator.pushNamed(context, WordVADetails.routeName,
                     arguments: GetVA(va: widget.dicts[index]));

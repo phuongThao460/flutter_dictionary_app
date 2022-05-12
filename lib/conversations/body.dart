@@ -99,7 +99,7 @@ class _BodyState extends State<Body> {
             max: duration.inSeconds.toDouble(),
             value: position.inSeconds.toDouble(),
             activeColor: Colors.blue[300],
-            inactiveColor: Color(0xFF9921E8),
+            inactiveColor: const Color(0xFF9921E8),
             onChanged: (value) async {
               final position = Duration(seconds: value.toInt());
               await audioPlayer.seek(position);
@@ -117,7 +117,7 @@ class _BodyState extends State<Body> {
             ),
           ),
           CircleAvatar(
-            backgroundColor: Color(0xFF9921E8),
+            backgroundColor: const Color(0xFF9921E8),
             radius: 35,
             child: IconButton(
               icon: Icon(
@@ -144,7 +144,7 @@ class _BodyState extends State<Body> {
             child: Padding(padding: const EdgeInsets.all(10),
             child: Text(widget.conversationData.content,
               textAlign: TextAlign.justify,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 15,
                 ),),

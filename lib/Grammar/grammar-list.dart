@@ -3,11 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/Grammar/grammar-list-detail.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
-import 'package:flutter_dictionary_app/modules/grammar-data.dart';
+import 'package:flutter_dictionary_app/modules/favourite-data.dart';
 import 'package:provider/provider.dart';
-
-//import 'package:flutter_slidable/flutter_slidable.dart';
-List<Grammar> grammar = [];
 
 class GrammarList extends StatefulWidget {
   static String routeName = "/grammar";
@@ -38,31 +35,46 @@ class _GrammarListState extends State<GrammarList> {
       ),
       body: StreamBuilder(
           stream: dao.getGrammar(),
-          builder: (context, AsyncSnapshot<List<GrammarData>>snapshot) {
+          builder: (context, AsyncSnapshot<List<GrammarData>> snapshot) {
             final data = snapshot.data ?? [];
             return ListView.builder(
                 itemCount: data.length,
                 itemBuilder: (BuildContext context, int index) {
+                  GrammarData grammarData = data[index];
+                  bool isSaved = Favourite.dataGram.contains(grammarData);
                   return GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, GrammarListDetail.routeName,
-                          arguments: GrammarArgument(grammar: data[index]));
-                    },
-                    child: Card(
-                        child: ListTile(
-                      //nhap code add favourite tai day
-                      leading: IconButton(
-                        icon: const Icon(Icons.star_border),
-                        onPressed: () {/* Your code */},
-                      ),
-                      title: Text(data[index].title,
-                          style: const TextStyle(fontSize: 16)),
-
-                      //subtitle: Text(
-                      //  grammardatadetail.define, style: const TextStyle(fontSize: 14),
-                      //  ),
-                    )),
-                  );
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, GrammarListDetail.routeName,
+                            arguments: GrammarArgument(grammar: data[index]));
+                      },
+                      child: Card(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: IconButton(
+                                onPressed: () {
+                                  if (!isSaved) {
+                                    setState(() {
+                                      Favourite.dataGram.add(data[index]);
+                                    });
+                                  }
+                                },
+                                icon: Icon(isSaved
+                                    ? Icons.star
+                                    : Icons.star_border_outlined),
+                                color: isSaved ? Colors.yellow : null,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: Text(data[index].title,
+                                  style: const TextStyle(fontSize: 16)),
+                            ),
+                          ],
+                        ),
+                      ));
                 });
           }),
     );
