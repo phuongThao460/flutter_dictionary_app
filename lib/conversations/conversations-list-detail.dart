@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/conversations/body.dart';
-import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
+import 'package:flutter_dictionary_app/modules/conversation.dart';
 
 class ConversationListDetail extends StatefulWidget {
   static String routeName = "/conversation-detail";
@@ -34,6 +34,6 @@ class _ConversationListDetailState extends State<ConversationListDetail> {
 }
 
 class ConversationArgument {
-  ConversationData conversation;
+  Conversation conversation;
   ConversationArgument({required this.conversation});
 }

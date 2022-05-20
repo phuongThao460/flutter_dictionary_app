@@ -5,10 +5,10 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
+import 'package:flutter_dictionary_app/modules/conversation.dart';
 
 class Body extends StatefulWidget {
-  ConversationData conversationData;
+  Conversation conversationData;
   Body({required this.conversationData});
 
   @override

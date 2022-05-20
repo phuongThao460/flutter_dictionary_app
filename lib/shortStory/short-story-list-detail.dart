@@ -1,7 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, file_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
+import 'package:flutter_dictionary_app/modules/short-story.dart';
 
 class StoryDetail extends StatefulWidget {
   static String routeName = '/story-detail';
@@ -55,6 +55,6 @@ class _StoryDetailState extends State<StoryDetail> {
 }
 
 class StoryArgument {
-  Short_StoryData story;
+  ShortStory story;
   StoryArgument({required this.story});
 }
