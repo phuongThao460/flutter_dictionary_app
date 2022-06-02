@@ -10,3 +10,19 @@ khi gõ một chữ sẽ mã hóa từ đó thành một số (key) tương ứn
     String user = jsonEncode(Idiom.fromJson(decodeOptions));
     print(idiomsHistory);
   }
+
+  Future<List<AVData>> getKursSymbol(String querySearch) {
+    return customSelect('SELECT * from av WHERE word LIKE ?',
+        variables: [Variable.withString(querySearch)],
+        readsFrom: {av}).map((QueryRow row) {
+      return AVData(
+        id: row.read<int>('id'),
+        word: row.read<String>('word'),
+        html: row.read<String>('html'),
+        pronounce: row.read<String>('pronounce'),
+        description: row.read<String>('description'),
+        favorite: row.read<int>('favorite'),
+        history: row.read<int>('history'),
+      );
+    }).get();
+  }

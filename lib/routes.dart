@@ -7,7 +7,6 @@ import 'package:flutter_dictionary_app/homepage/homepage.dart';
 import 'package:flutter_dictionary_app/idiom/idiom-list.dart';
 import 'package:flutter_dictionary_app/shortStory/short-story-list-detail.dart';
 import 'package:flutter_dictionary_app/splashpage.dart';
-import 'package:flutter_dictionary_app/translatetext/translate-text-page.dart';
 import 'package:flutter_dictionary_app/translateVA/translate_va.dart';
 import 'package:flutter_dictionary_app/word/av/word_av_details.dart';
 import 'package:flutter_dictionary_app/conversations/conversations-list.dart';
@@ -24,7 +23,6 @@ final Map<String, WidgetBuilder> routes = {
   GrammarList.routeName: (context) => GrammarList(),
   GrammarListDetail.routeName:(context) => GrammarListDetail(),
   FavouriteList.routeName: (context) => FavouriteList(),
-  TranslateText.routeName: (context) => TranslateText(),
   ConversationList.routeName: (context) => ConversationList(),
   ConversationListDetail.routeName: (context) => ConversationListDetail(),
   ShortStoryList.routeName: (context) => ShortStoryList(),

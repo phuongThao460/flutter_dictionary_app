@@ -20,11 +20,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider(
       create: (_) => AppDatabase().dictionaryDao,
+      dispose: (context, db) => AppDatabase().close(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-      initialRoute: Slpashpage.routeName,
-      routes: routes,
-      title: 'Cat Dictionary',
+        initialRoute: Slpashpage.routeName,
+        routes: routes,
+        title: 'Cat Dictionary',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

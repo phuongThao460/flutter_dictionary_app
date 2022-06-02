@@ -32,8 +32,8 @@ class _IdiomListState extends State<IdiomList> {
         ),
       ),
       body: StreamBuilder(
-          stream: dao.getIdiom(),
-          builder: (context, AsyncSnapshot<List<Idiom>>snapshot) {
+          stream: dao.getIdioms(),
+          builder: (context, AsyncSnapshot<List<Idiom>> snapshot) {
             final idiom = snapshot.data ?? [];
             return ListView.separated(
                 separatorBuilder: (context, index) {
@@ -46,13 +46,8 @@ class _IdiomListState extends State<IdiomList> {
                   Idiom data = idiom[index];
                   bool isSaved = Favourite.dataIdioms.contains(data);
                   return ListTile(
-                    contentPadding: const EdgeInsets.only(left: 3.0, right: 3.0),
                     onTap: () {
-                      setState(() {
-                        if (!isSaved) {
-                          Favourite.dataIdioms.add(data);
-                        }
-                      });
+                      dao.addFavIdioms(idiom[index].id);
                     },
                     leading: Icon(
                       isSaved ? Icons.star : Icons.star_border_outlined,

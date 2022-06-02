@@ -1,6 +1,5 @@
 // ignore_for_file: use_key_in_widget_constructors, unnecessary_new, unused_field, avoid_function_literals_in_foreach_calls, unnecessary_string_interpolations, must_be_immutable, avoid_print
 
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
@@ -15,61 +14,29 @@ class TranslateVA extends StatefulWidget {
 }
 
 class _TranslateVAState extends State<TranslateVA> {
-  List<VAData> historyVAWords = VAData.historyVA;
   SharedPreferences? prefs;
   final GlobalKey<ScaffoldState> _scaffoldState =
       new GlobalKey<ScaffoldState>();
   final TextEditingController _searchingTextController =
       TextEditingController();
   String keywords = "search";
-  @override
-  void initState() {
-    super.initState();
-    if (historyVAWords.isNotEmpty) {
-      setState(() {
-        _setData();
-        _getData();
-      });
-    } else {
-      _getData();
-    }
-  }
-
-  _setData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList(
-        'historyVAWords', historyVAWords.map((e) => jsonEncode(e)).toList());
-  }
-
-  _getData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getStringList('historyVAWords') != null) {
-      var data = (prefs.getStringList('historyVAWords')) as List;
-      setState(() {
-        historyVAWords =
-            data.map((e) => VAData.fromJson(json.decode(e))).toList();
-      });
-    }
-    return historyVAWords;
-  }
 
   @override
   Widget build(BuildContext context) {
     final dao = Provider.of<DictionaryDao>(context);
-    Future<List<VAData>> _getSearchData(String name) async {
-      historyVAWords = await _getData() as List<VAData>;
-      for (var element in historyVAWords) {
+  Future<List<VAData>> _getSearchData(String name) async {
+      final historyWords = await dao.historyWordVA();
+      for (var element in historyWords) {
+        final e = element.word.toLowerCase();
         final queryWord = name.toLowerCase();
-        final e = element.word.toLowerCase().startsWith(queryWord);
-        if (e) {
-          return historyVAWords.where((element) {
-            return e;
+        if (e.contains(queryWord)) {
+          return historyWords.where((element) {
+            return e.contains(queryWord);
           }).toList();
         }
       }
       return dao.getFilteredItemsVA(name);
     }
-
     return Scaffold(
       key: _scaffoldState,
       appBar: AppBar(
@@ -110,7 +77,7 @@ class _TranslateVAState extends State<TranslateVA> {
               return snapshot.hasData &&
                       _searchingTextController.text.isNotEmpty
                   ? DictionaryList(dicts: data as List<VAData>)
-                  : DictionaryList(dicts: historyVAWords);
+                  : Container();
             },
           )
         ],
@@ -136,13 +103,7 @@ class _DictionaryListState extends State<DictionaryList> {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                setState(() {
-                  bool isSavedHistory =
-                      widget.dicts.contains(widget.dicts[index]);
-                  if (!isSavedHistory) {
-                    VAData.historyVA.add(widget.dicts[index]);
-                  }
-                });
+                
                 Navigator.pushNamed(context, WordVADetails.routeName,
                     arguments: GetVA(va: widget.dicts[index]));
               },

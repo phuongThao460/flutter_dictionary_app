@@ -1,13 +1,11 @@
-// ignore_for_file: use_key_in_widget_constructors, must_be_immutable, unnecessary_string_interpolations, unnecessary_new, unnecessary_null_comparison, prefer_if_null_operators
-
-import 'dart:convert';
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable, unnecessary_string_interpolations, unnecessary_new, unnecessary_null_comparison, prefer_if_null_operators, unused_element
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
+import 'package:flutter_dictionary_app/homepage/searching.dart';
 import 'package:flutter_dictionary_app/word/av/word_av_details.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeHeader extends StatefulWidget {
   @override
@@ -15,36 +13,7 @@ class HomeHeader extends StatefulWidget {
 }
 
 class _HomeHeaderState extends State<HomeHeader> {
-  List<AVData> historyWords = AVData.historyAV;
   TextEditingController searchTextController = new TextEditingController();
-  @override
-  void initState() {
-    super.initState();
-    if (historyWords.isNotEmpty) {
-      setState(() {
-        _setData();
-        _getData();
-      });
-    }
-  }
-
-  _setData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList(
-        'historyWords', historyWords.map((e) => jsonEncode(e)).toList());
-  }
-
-  _getData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getStringList('historyWords') != null) {
-      var data = (prefs.getStringList('historyWords')) as List;
-      setState(() {
-        historyWords =
-            data.map((e) => AVData.fromJson(json.decode(e))).toList();
-      });
-    }
-    return historyWords;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,10 +40,25 @@ class _HomeHeaderState extends State<HomeHeader> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
-              child: Container(
-                  height: 40,
-                  alignment: Alignment.bottomCenter,
-                  child: _buildSearchBar(context, historyWords)),
+              child: GestureDetector(
+                  onTap: () {
+                    showSearch(context: context, delegate: Search());
+                  },
+                  child: Container(
+                    height: 40,
+                    alignment: Alignment.bottomCenter,
+                    child: TextField(
+                      enabled: false,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50.0)),
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: const EdgeInsets.only(top: 12),
+                          hintText: "Enter ",
+                          prefixIcon: const Icon(Icons.search)),
+                    ),
+                  )),
             ),
           ],
         ),
@@ -82,21 +66,8 @@ class _HomeHeaderState extends State<HomeHeader> {
     ]);
   }
 
-  _buildSearchBar(BuildContext context, List<AVData> history) {
+  _buildSearchBar(BuildContext context) {
     final dao = Provider.of<DictionaryDao>(context);
-    Future<List<AVData>> _getSearchData(String name) async {
-      historyWords = await _getData() as List<AVData>;
-      for (var element in historyWords) {
-        final e = element.word.toLowerCase();
-        final queryWord = name.toLowerCase();
-        if (e.contains(queryWord)) {
-          return historyWords.where((element) {
-            return e.contains(queryWord);
-          }).toList();
-        }
-      }
-      return dao.getFilteredItemsAV(name);
-    }
 
     return TypeAheadField<AVData>(
         getImmediateSuggestions: true,
@@ -113,7 +84,7 @@ class _HomeHeaderState extends State<HomeHeader> {
               hintText: "Enter ",
               prefixIcon: const Icon(Icons.search)),
         ),
-        suggestionsCallback: _getSearchData,
+        suggestionsCallback: dao.getFilteredItemsAV,
         itemBuilder: (context, AVData dicts) {
           final getWord = dicts;
           return Card(
@@ -136,9 +107,6 @@ class _HomeHeaderState extends State<HomeHeader> {
         onSuggestionSelected: (AVData dicts) {
           final dictionary = dicts;
           searchTextController.clear();
-          setState(() {
-            _getData();
-          });
           Navigator.pushNamed(context, WordAVDetails.routeName,
               arguments: GetAVDetailFromList(av: dictionary));
         });

@@ -12,16 +12,6 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  @override
-  void initState() {
-    bool isSaved = AVData.historyAV.contains(widget.avData);
-    super.initState();
-    setState(() {
-      if (!isSaved) {
-        AVData.historyAV.add(widget.avData);
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

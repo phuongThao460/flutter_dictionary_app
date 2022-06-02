@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
 import 'package:flutter_dictionary_app/modules/favourite-data.dart';
-import 'package:flutter_dictionary_app/translateVA/translate_va.dart';
 import 'package:flutter_dictionary_app/word/va/body.dart';
+import 'package:provider/provider.dart';
 
 class WordVADetails extends StatefulWidget {
   static String routeName = '/wordVA';
@@ -16,6 +16,7 @@ class WordVADetails extends StatefulWidget {
 class _WordVADetailssState extends State<WordVADetails> {
   @override
   Widget build(BuildContext context) {
+    final dao = Provider.of<DictionaryDao>(context);
     final GetVA dataVA = ModalRoute.of(context)!.settings.arguments as GetVA;
     bool isSaved = Favourite.dataVADict.contains(dataVA.va);
     return Scaffold(
@@ -31,22 +32,12 @@ class _WordVADetailssState extends State<WordVADetails> {
           leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
-                bool isSavedHistory = VAData.historyVA.contains(dataVA.va);
-                return setState(() {
-                  if (!isSavedHistory) {
-                    VAData.historyVA.add(dataVA.va);
-                  }
-                });
               },
               icon: const Icon(Icons.arrow_back_ios)),
           actions: [
             IconButton(
               onPressed: () {
-                setState(() {
-                  if (!isSaved) {
-                    Favourite.dataVADict.add(dataVA.va);
-                  }
-                });
+                dao.addFavVA(dataVA.va.id);
               },
               icon: Icon(
                 isSaved ? Icons.star : Icons.star_border_outlined,

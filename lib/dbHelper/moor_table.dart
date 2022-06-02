@@ -8,6 +8,8 @@ class AV extends Table {
   TextColumn get html => text()();
   TextColumn get description => text()();
   TextColumn get pronounce => text()();
+  IntColumn get favorite => integer()();
+  IntColumn get history => integer()();
 }
 
 class VA extends Table {
@@ -16,33 +18,22 @@ class VA extends Table {
   TextColumn get html => text()();
   TextColumn get description => text()();
   TextColumn get pronounce => text()();
-}
-
-class Short_Story extends Table {
-  IntColumn get id => integer()();
-  TextColumn get title => text()();
-  TextColumn get story => text()();
-  TextColumn get image => text()();
+  IntColumn get favorite => integer()();
+  IntColumn get history => integer()();
 }
 
 class Idioms extends Table {
-  IntColumn get id => integer()();
+  IntColumn get id => integer().autoIncrement()();
   TextColumn get sentence => text()();
   TextColumn get meaning => text()();
+  IntColumn get favorite => integer()();
 }
 
 class Grammar extends Table {
-  IntColumn get id => integer()();
+  IntColumn get id => integer().autoIncrement()();
   TextColumn get title => text()();
   TextColumn get structure => text()();
   TextColumn get define => text()();
   TextColumn get examples => text()();
-}
-
-class Conversation extends Table {
-  IntColumn get id => integer()();
-  TextColumn get name => text()();
-  TextColumn get content => text()();
-  TextColumn get image => text()();
-  TextColumn get audio => text()();
+  IntColumn get favorite => integer()();
 }

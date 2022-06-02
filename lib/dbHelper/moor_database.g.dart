@@ -1,7 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: camel_case_types
-
 part of 'moor_database.dart';
 
 // **************************************************************************
@@ -15,13 +13,16 @@ class VAData extends DataClass implements Insertable<VAData> {
   final String html;
   final String description;
   final String pronounce;
+  final int favorite;
+  final int history;
   VAData(
       {required this.id,
       required this.word,
       required this.html,
       required this.description,
-      required this.pronounce});
-  static List<VAData> historyVA = [];
+      required this.pronounce,
+      required this.favorite,
+      required this.history});
   factory VAData.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return VAData(
@@ -35,6 +36,10 @@ class VAData extends DataClass implements Insertable<VAData> {
           .mapFromDatabaseResponse(data['${effectivePrefix}description'])!,
       pronounce: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}pronounce'])!,
+      favorite: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}favorite'])!,
+      history: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}history'])!,
     );
   }
   @override
@@ -45,6 +50,8 @@ class VAData extends DataClass implements Insertable<VAData> {
     map['html'] = Variable<String>(html);
     map['description'] = Variable<String>(description);
     map['pronounce'] = Variable<String>(pronounce);
+    map['favorite'] = Variable<int>(favorite);
+    map['history'] = Variable<int>(history);
     return map;
   }
 
@@ -55,16 +62,22 @@ class VAData extends DataClass implements Insertable<VAData> {
       html: Value(html),
       description: Value(description),
       pronounce: Value(pronounce),
+      favorite: Value(favorite),
+      history: Value(history),
     );
   }
 
-  factory VAData.fromJson(Map<String, dynamic> json,) {
+  factory VAData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return VAData(
-      id: json['id'],
-      word: json['word'],
-      html: json['html'],
-      description: json['description'],
-      pronounce: json['pronounce'],
+      id: serializer.fromJson<int>(json['id']),
+      word: serializer.fromJson<String>(json['word']),
+      html: serializer.fromJson<String>(json['html']),
+      description: serializer.fromJson<String>(json['description']),
+      pronounce: serializer.fromJson<String>(json['pronounce']),
+      favorite: serializer.fromJson<int>(json['favorite']),
+      history: serializer.fromJson<int>(json['history']),
     );
   }
   @override
@@ -76,6 +89,8 @@ class VAData extends DataClass implements Insertable<VAData> {
       'html': serializer.toJson<String>(html),
       'description': serializer.toJson<String>(description),
       'pronounce': serializer.toJson<String>(pronounce),
+      'favorite': serializer.toJson<int>(favorite),
+      'history': serializer.toJson<int>(history),
     };
   }
 
@@ -84,13 +99,17 @@ class VAData extends DataClass implements Insertable<VAData> {
           String? word,
           String? html,
           String? description,
-          String? pronounce}) =>
+          String? pronounce,
+          int? favorite,
+          int? history}) =>
       VAData(
         id: id ?? this.id,
         word: word ?? this.word,
         html: html ?? this.html,
         description: description ?? this.description,
         pronounce: pronounce ?? this.pronounce,
+        favorite: favorite ?? this.favorite,
+        history: history ?? this.history,
       );
   @override
   String toString() {
@@ -99,13 +118,16 @@ class VAData extends DataClass implements Insertable<VAData> {
           ..write('word: $word, ')
           ..write('html: $html, ')
           ..write('description: $description, ')
-          ..write('pronounce: $pronounce')
+          ..write('pronounce: $pronounce, ')
+          ..write('favorite: $favorite, ')
+          ..write('history: $history')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, word, html, description, pronounce);
+  int get hashCode =>
+      Object.hash(id, word, html, description, pronounce, favorite, history);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -114,7 +136,9 @@ class VAData extends DataClass implements Insertable<VAData> {
           other.word == this.word &&
           other.html == this.html &&
           other.description == this.description &&
-          other.pronounce == this.pronounce);
+          other.pronounce == this.pronounce &&
+          other.favorite == this.favorite &&
+          other.history == this.history);
 }
 
 class VACompanion extends UpdateCompanion<VAData> {
@@ -123,12 +147,16 @@ class VACompanion extends UpdateCompanion<VAData> {
   final Value<String> html;
   final Value<String> description;
   final Value<String> pronounce;
+  final Value<int> favorite;
+  final Value<int> history;
   const VACompanion({
     this.id = const Value.absent(),
     this.word = const Value.absent(),
     this.html = const Value.absent(),
     this.description = const Value.absent(),
     this.pronounce = const Value.absent(),
+    this.favorite = const Value.absent(),
+    this.history = const Value.absent(),
   });
   VACompanion.insert({
     required int id,
@@ -136,17 +164,23 @@ class VACompanion extends UpdateCompanion<VAData> {
     required String html,
     required String description,
     required String pronounce,
+    required int favorite,
+    required int history,
   })  : id = Value(id),
         word = Value(word),
         html = Value(html),
         description = Value(description),
-        pronounce = Value(pronounce);
+        pronounce = Value(pronounce),
+        favorite = Value(favorite),
+        history = Value(history);
   static Insertable<VAData> custom({
     Expression<int>? id,
     Expression<String>? word,
     Expression<String>? html,
     Expression<String>? description,
     Expression<String>? pronounce,
+    Expression<int>? favorite,
+    Expression<int>? history,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -154,6 +188,8 @@ class VACompanion extends UpdateCompanion<VAData> {
       if (html != null) 'html': html,
       if (description != null) 'description': description,
       if (pronounce != null) 'pronounce': pronounce,
+      if (favorite != null) 'favorite': favorite,
+      if (history != null) 'history': history,
     });
   }
 
@@ -162,13 +198,17 @@ class VACompanion extends UpdateCompanion<VAData> {
       Value<String>? word,
       Value<String>? html,
       Value<String>? description,
-      Value<String>? pronounce}) {
+      Value<String>? pronounce,
+      Value<int>? favorite,
+      Value<int>? history}) {
     return VACompanion(
       id: id ?? this.id,
       word: word ?? this.word,
       html: html ?? this.html,
       description: description ?? this.description,
       pronounce: pronounce ?? this.pronounce,
+      favorite: favorite ?? this.favorite,
+      history: history ?? this.history,
     );
   }
 
@@ -190,6 +230,12 @@ class VACompanion extends UpdateCompanion<VAData> {
     if (pronounce.present) {
       map['pronounce'] = Variable<String>(pronounce.value);
     }
+    if (favorite.present) {
+      map['favorite'] = Variable<int>(favorite.value);
+    }
+    if (history.present) {
+      map['history'] = Variable<int>(history.value);
+    }
     return map;
   }
 
@@ -200,7 +246,9 @@ class VACompanion extends UpdateCompanion<VAData> {
           ..write('word: $word, ')
           ..write('html: $html, ')
           ..write('description: $description, ')
-          ..write('pronounce: $pronounce')
+          ..write('pronounce: $pronounce, ')
+          ..write('favorite: $favorite, ')
+          ..write('history: $history')
           ..write(')'))
         .toString();
   }
@@ -237,9 +285,19 @@ class $VATable extends VA with TableInfo<$VATable, VAData> {
   late final GeneratedColumn<String?> pronounce = GeneratedColumn<String?>(
       'pronounce', aliasedName, false,
       type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _favoriteMeta = const VerificationMeta('favorite');
+  @override
+  late final GeneratedColumn<int?> favorite = GeneratedColumn<int?>(
+      'favorite', aliasedName, false,
+      type: const IntType(), requiredDuringInsert: true);
+  final VerificationMeta _historyMeta = const VerificationMeta('history');
+  @override
+  late final GeneratedColumn<int?> history = GeneratedColumn<int?>(
+      'history', aliasedName, false,
+      type: const IntType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, word, html, description, pronounce];
+      [id, word, html, description, pronounce, favorite, history];
   @override
   String get aliasedName => _alias ?? 'va';
   @override
@@ -280,6 +338,18 @@ class $VATable extends VA with TableInfo<$VATable, VAData> {
     } else if (isInserting) {
       context.missing(_pronounceMeta);
     }
+    if (data.containsKey('favorite')) {
+      context.handle(_favoriteMeta,
+          favorite.isAcceptableOrUnknown(data['favorite']!, _favoriteMeta));
+    } else if (isInserting) {
+      context.missing(_favoriteMeta);
+    }
+    if (data.containsKey('history')) {
+      context.handle(_historyMeta,
+          history.isAcceptableOrUnknown(data['history']!, _historyMeta));
+    } else if (isInserting) {
+      context.missing(_historyMeta);
+    }
     return context;
   }
 
@@ -303,13 +373,16 @@ class AVData extends DataClass implements Insertable<AVData> {
   final String html;
   final String description;
   final String pronounce;
+  final int favorite;
+  final int history;
   AVData(
       {required this.id,
       required this.word,
       required this.html,
       required this.description,
-      required this.pronounce});
-  static List<AVData> historyAV = [];
+      required this.pronounce,
+      required this.favorite,
+      required this.history});
   factory AVData.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return AVData(
@@ -323,6 +396,10 @@ class AVData extends DataClass implements Insertable<AVData> {
           .mapFromDatabaseResponse(data['${effectivePrefix}description'])!,
       pronounce: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}pronounce'])!,
+      favorite: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}favorite'])!,
+      history: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}history'])!,
     );
   }
   @override
@@ -333,6 +410,8 @@ class AVData extends DataClass implements Insertable<AVData> {
     map['html'] = Variable<String>(html);
     map['description'] = Variable<String>(description);
     map['pronounce'] = Variable<String>(pronounce);
+    map['favorite'] = Variable<int>(favorite);
+    map['history'] = Variable<int>(history);
     return map;
   }
 
@@ -343,17 +422,22 @@ class AVData extends DataClass implements Insertable<AVData> {
       html: Value(html),
       description: Value(description),
       pronounce: Value(pronounce),
+      favorite: Value(favorite),
+      history: Value(history),
     );
   }
 
-  factory AVData.fromJson(
-      Map<String, dynamic> json) {
+  factory AVData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return AVData(
-      id: json['id'],
-      word: json['word'],
-      html: json['html'],
-      description: json['description'],
-      pronounce: json['pronounce'],
+      id: serializer.fromJson<int>(json['id']),
+      word: serializer.fromJson<String>(json['word']),
+      html: serializer.fromJson<String>(json['html']),
+      description: serializer.fromJson<String>(json['description']),
+      pronounce: serializer.fromJson<String>(json['pronounce']),
+      favorite: serializer.fromJson<int>(json['favorite']),
+      history: serializer.fromJson<int>(json['history']),
     );
   }
   @override
@@ -365,6 +449,8 @@ class AVData extends DataClass implements Insertable<AVData> {
       'html': serializer.toJson<String>(html),
       'description': serializer.toJson<String>(description),
       'pronounce': serializer.toJson<String>(pronounce),
+      'favorite': serializer.toJson<int>(favorite),
+      'history': serializer.toJson<int>(history),
     };
   }
 
@@ -373,13 +459,17 @@ class AVData extends DataClass implements Insertable<AVData> {
           String? word,
           String? html,
           String? description,
-          String? pronounce}) =>
+          String? pronounce,
+          int? favorite,
+          int? history}) =>
       AVData(
         id: id ?? this.id,
         word: word ?? this.word,
         html: html ?? this.html,
         description: description ?? this.description,
         pronounce: pronounce ?? this.pronounce,
+        favorite: favorite ?? this.favorite,
+        history: history ?? this.history,
       );
   @override
   String toString() {
@@ -388,13 +478,16 @@ class AVData extends DataClass implements Insertable<AVData> {
           ..write('word: $word, ')
           ..write('html: $html, ')
           ..write('description: $description, ')
-          ..write('pronounce: $pronounce')
+          ..write('pronounce: $pronounce, ')
+          ..write('favorite: $favorite, ')
+          ..write('history: $history')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, word, html, description, pronounce);
+  int get hashCode =>
+      Object.hash(id, word, html, description, pronounce, favorite, history);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -403,7 +496,9 @@ class AVData extends DataClass implements Insertable<AVData> {
           other.word == this.word &&
           other.html == this.html &&
           other.description == this.description &&
-          other.pronounce == this.pronounce);
+          other.pronounce == this.pronounce &&
+          other.favorite == this.favorite &&
+          other.history == this.history);
 }
 
 class AVCompanion extends UpdateCompanion<AVData> {
@@ -412,12 +507,16 @@ class AVCompanion extends UpdateCompanion<AVData> {
   final Value<String> html;
   final Value<String> description;
   final Value<String> pronounce;
+  final Value<int> favorite;
+  final Value<int> history;
   const AVCompanion({
     this.id = const Value.absent(),
     this.word = const Value.absent(),
     this.html = const Value.absent(),
     this.description = const Value.absent(),
     this.pronounce = const Value.absent(),
+    this.favorite = const Value.absent(),
+    this.history = const Value.absent(),
   });
   AVCompanion.insert({
     required int id,
@@ -425,17 +524,23 @@ class AVCompanion extends UpdateCompanion<AVData> {
     required String html,
     required String description,
     required String pronounce,
+    required int favorite,
+    required int history,
   })  : id = Value(id),
         word = Value(word),
         html = Value(html),
         description = Value(description),
-        pronounce = Value(pronounce);
+        pronounce = Value(pronounce),
+        favorite = Value(favorite),
+        history = Value(history);
   static Insertable<AVData> custom({
     Expression<int>? id,
     Expression<String>? word,
     Expression<String>? html,
     Expression<String>? description,
     Expression<String>? pronounce,
+    Expression<int>? favorite,
+    Expression<int>? history,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -443,6 +548,8 @@ class AVCompanion extends UpdateCompanion<AVData> {
       if (html != null) 'html': html,
       if (description != null) 'description': description,
       if (pronounce != null) 'pronounce': pronounce,
+      if (favorite != null) 'favorite': favorite,
+      if (history != null) 'history': history,
     });
   }
 
@@ -451,13 +558,17 @@ class AVCompanion extends UpdateCompanion<AVData> {
       Value<String>? word,
       Value<String>? html,
       Value<String>? description,
-      Value<String>? pronounce}) {
+      Value<String>? pronounce,
+      Value<int>? favorite,
+      Value<int>? history}) {
     return AVCompanion(
       id: id ?? this.id,
       word: word ?? this.word,
       html: html ?? this.html,
       description: description ?? this.description,
       pronounce: pronounce ?? this.pronounce,
+      favorite: favorite ?? this.favorite,
+      history: history ?? this.history,
     );
   }
 
@@ -479,6 +590,12 @@ class AVCompanion extends UpdateCompanion<AVData> {
     if (pronounce.present) {
       map['pronounce'] = Variable<String>(pronounce.value);
     }
+    if (favorite.present) {
+      map['favorite'] = Variable<int>(favorite.value);
+    }
+    if (history.present) {
+      map['history'] = Variable<int>(history.value);
+    }
     return map;
   }
 
@@ -489,7 +606,9 @@ class AVCompanion extends UpdateCompanion<AVData> {
           ..write('word: $word, ')
           ..write('html: $html, ')
           ..write('description: $description, ')
-          ..write('pronounce: $pronounce')
+          ..write('pronounce: $pronounce, ')
+          ..write('favorite: $favorite, ')
+          ..write('history: $history')
           ..write(')'))
         .toString();
   }
@@ -526,9 +645,19 @@ class $AVTable extends AV with TableInfo<$AVTable, AVData> {
   late final GeneratedColumn<String?> pronounce = GeneratedColumn<String?>(
       'pronounce', aliasedName, false,
       type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _favoriteMeta = const VerificationMeta('favorite');
+  @override
+  late final GeneratedColumn<int?> favorite = GeneratedColumn<int?>(
+      'favorite', aliasedName, false,
+      type: const IntType(), requiredDuringInsert: true);
+  final VerificationMeta _historyMeta = const VerificationMeta('history');
+  @override
+  late final GeneratedColumn<int?> history = GeneratedColumn<int?>(
+      'history', aliasedName, false,
+      type: const IntType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, word, html, description, pronounce];
+      [id, word, html, description, pronounce, favorite, history];
   @override
   String get aliasedName => _alias ?? 'av';
   @override
@@ -569,6 +698,18 @@ class $AVTable extends AV with TableInfo<$AVTable, AVData> {
     } else if (isInserting) {
       context.missing(_pronounceMeta);
     }
+    if (data.containsKey('favorite')) {
+      context.handle(_favoriteMeta,
+          favorite.isAcceptableOrUnknown(data['favorite']!, _favoriteMeta));
+    } else if (isInserting) {
+      context.missing(_favoriteMeta);
+    }
+    if (data.containsKey('history')) {
+      context.handle(_historyMeta,
+          history.isAcceptableOrUnknown(data['history']!, _historyMeta));
+    } else if (isInserting) {
+      context.missing(_historyMeta);
+    }
     return context;
   }
 
@@ -592,12 +733,14 @@ class GrammarData extends DataClass implements Insertable<GrammarData> {
   final String structure;
   final String define;
   final String examples;
+  final int favorite;
   GrammarData(
       {required this.id,
       required this.title,
       required this.structure,
       required this.define,
-      required this.examples});
+      required this.examples,
+      required this.favorite});
   factory GrammarData.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return GrammarData(
@@ -611,6 +754,8 @@ class GrammarData extends DataClass implements Insertable<GrammarData> {
           .mapFromDatabaseResponse(data['${effectivePrefix}define'])!,
       examples: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}examples'])!,
+      favorite: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}favorite'])!,
     );
   }
   @override
@@ -621,6 +766,7 @@ class GrammarData extends DataClass implements Insertable<GrammarData> {
     map['structure'] = Variable<String>(structure);
     map['define'] = Variable<String>(define);
     map['examples'] = Variable<String>(examples);
+    map['favorite'] = Variable<int>(favorite);
     return map;
   }
 
@@ -631,6 +777,7 @@ class GrammarData extends DataClass implements Insertable<GrammarData> {
       structure: Value(structure),
       define: Value(define),
       examples: Value(examples),
+      favorite: Value(favorite),
     );
   }
 
@@ -643,6 +790,7 @@ class GrammarData extends DataClass implements Insertable<GrammarData> {
       structure: serializer.fromJson<String>(json['structure']),
       define: serializer.fromJson<String>(json['define']),
       examples: serializer.fromJson<String>(json['examples']),
+      favorite: serializer.fromJson<int>(json['favorite']),
     );
   }
   @override
@@ -654,6 +802,7 @@ class GrammarData extends DataClass implements Insertable<GrammarData> {
       'structure': serializer.toJson<String>(structure),
       'define': serializer.toJson<String>(define),
       'examples': serializer.toJson<String>(examples),
+      'favorite': serializer.toJson<int>(favorite),
     };
   }
 
@@ -662,13 +811,15 @@ class GrammarData extends DataClass implements Insertable<GrammarData> {
           String? title,
           String? structure,
           String? define,
-          String? examples}) =>
+          String? examples,
+          int? favorite}) =>
       GrammarData(
         id: id ?? this.id,
         title: title ?? this.title,
         structure: structure ?? this.structure,
         define: define ?? this.define,
         examples: examples ?? this.examples,
+        favorite: favorite ?? this.favorite,
       );
   @override
   String toString() {
@@ -677,13 +828,15 @@ class GrammarData extends DataClass implements Insertable<GrammarData> {
           ..write('title: $title, ')
           ..write('structure: $structure, ')
           ..write('define: $define, ')
-          ..write('examples: $examples')
+          ..write('examples: $examples, ')
+          ..write('favorite: $favorite')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, title, structure, define, examples);
+  int get hashCode =>
+      Object.hash(id, title, structure, define, examples, favorite);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -692,7 +845,8 @@ class GrammarData extends DataClass implements Insertable<GrammarData> {
           other.title == this.title &&
           other.structure == this.structure &&
           other.define == this.define &&
-          other.examples == this.examples);
+          other.examples == this.examples &&
+          other.favorite == this.favorite);
 }
 
 class GrammarCompanion extends UpdateCompanion<GrammarData> {
@@ -701,30 +855,34 @@ class GrammarCompanion extends UpdateCompanion<GrammarData> {
   final Value<String> structure;
   final Value<String> define;
   final Value<String> examples;
+  final Value<int> favorite;
   const GrammarCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
     this.structure = const Value.absent(),
     this.define = const Value.absent(),
     this.examples = const Value.absent(),
+    this.favorite = const Value.absent(),
   });
   GrammarCompanion.insert({
-    required int id,
+    this.id = const Value.absent(),
     required String title,
     required String structure,
     required String define,
     required String examples,
-  })  : id = Value(id),
-        title = Value(title),
+    required int favorite,
+  })  : title = Value(title),
         structure = Value(structure),
         define = Value(define),
-        examples = Value(examples);
+        examples = Value(examples),
+        favorite = Value(favorite);
   static Insertable<GrammarData> custom({
     Expression<int>? id,
     Expression<String>? title,
     Expression<String>? structure,
     Expression<String>? define,
     Expression<String>? examples,
+    Expression<int>? favorite,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -732,6 +890,7 @@ class GrammarCompanion extends UpdateCompanion<GrammarData> {
       if (structure != null) 'structure': structure,
       if (define != null) 'define': define,
       if (examples != null) 'examples': examples,
+      if (favorite != null) 'favorite': favorite,
     });
   }
 
@@ -740,13 +899,15 @@ class GrammarCompanion extends UpdateCompanion<GrammarData> {
       Value<String>? title,
       Value<String>? structure,
       Value<String>? define,
-      Value<String>? examples}) {
+      Value<String>? examples,
+      Value<int>? favorite}) {
     return GrammarCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
       structure: structure ?? this.structure,
       define: define ?? this.define,
       examples: examples ?? this.examples,
+      favorite: favorite ?? this.favorite,
     );
   }
 
@@ -768,6 +929,9 @@ class GrammarCompanion extends UpdateCompanion<GrammarData> {
     if (examples.present) {
       map['examples'] = Variable<String>(examples.value);
     }
+    if (favorite.present) {
+      map['favorite'] = Variable<int>(favorite.value);
+    }
     return map;
   }
 
@@ -778,7 +942,8 @@ class GrammarCompanion extends UpdateCompanion<GrammarData> {
           ..write('title: $title, ')
           ..write('structure: $structure, ')
           ..write('define: $define, ')
-          ..write('examples: $examples')
+          ..write('examples: $examples, ')
+          ..write('favorite: $favorite')
           ..write(')'))
         .toString();
   }
@@ -793,7 +958,9 @@ class $GrammarTable extends Grammar with TableInfo<$GrammarTable, GrammarData> {
   @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
+      type: const IntType(),
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
   late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
@@ -814,9 +981,14 @@ class $GrammarTable extends Grammar with TableInfo<$GrammarTable, GrammarData> {
   late final GeneratedColumn<String?> examples = GeneratedColumn<String?>(
       'examples', aliasedName, false,
       type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _favoriteMeta = const VerificationMeta('favorite');
+  @override
+  late final GeneratedColumn<int?> favorite = GeneratedColumn<int?>(
+      'favorite', aliasedName, false,
+      type: const IntType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, title, structure, define, examples];
+      [id, title, structure, define, examples, favorite];
   @override
   String get aliasedName => _alias ?? 'grammar';
   @override
@@ -828,8 +1000,6 @@ class $GrammarTable extends Grammar with TableInfo<$GrammarTable, GrammarData> {
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
     }
     if (data.containsKey('title')) {
       context.handle(
@@ -855,11 +1025,17 @@ class $GrammarTable extends Grammar with TableInfo<$GrammarTable, GrammarData> {
     } else if (isInserting) {
       context.missing(_examplesMeta);
     }
+    if (data.containsKey('favorite')) {
+      context.handle(_favoriteMeta,
+          favorite.isAcceptableOrUnknown(data['favorite']!, _favoriteMeta));
+    } else if (isInserting) {
+      context.missing(_favoriteMeta);
+    }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   GrammarData map(Map<String, dynamic> data, {String? tablePrefix}) {
     return GrammarData.fromData(data,
@@ -872,299 +1048,16 @@ class $GrammarTable extends Grammar with TableInfo<$GrammarTable, GrammarData> {
   }
 }
 
-class ConversationData extends DataClass
-    implements Insertable<ConversationData> {
-  final int id;
-  final String name;
-  final String content;
-  final String image;
-  final String audio;
-  ConversationData(
-      {required this.id,
-      required this.name,
-      required this.content,
-      required this.image,
-      required this.audio});
-  factory ConversationData.fromData(Map<String, dynamic> data,
-      {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return ConversationData(
-      id: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      name: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}name'])!,
-      content: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}content'])!,
-      image: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}image'])!,
-      audio: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}audio'])!,
-    );
-  }
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['name'] = Variable<String>(name);
-    map['content'] = Variable<String>(content);
-    map['image'] = Variable<String>(image);
-    map['audio'] = Variable<String>(audio);
-    return map;
-  }
-
-  ConversationCompanion toCompanion(bool nullToAbsent) {
-    return ConversationCompanion(
-      id: Value(id),
-      name: Value(name),
-      content: Value(content),
-      image: Value(image),
-      audio: Value(audio),
-    );
-  }
-
-  factory ConversationData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ConversationData(
-      id: serializer.fromJson<int>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
-      content: serializer.fromJson<String>(json['content']),
-      image: serializer.fromJson<String>(json['image']),
-      audio: serializer.fromJson<String>(json['audio']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'name': serializer.toJson<String>(name),
-      'content': serializer.toJson<String>(content),
-      'image': serializer.toJson<String>(image),
-      'audio': serializer.toJson<String>(audio),
-    };
-  }
-
-  ConversationData copyWith(
-          {int? id,
-          String? name,
-          String? content,
-          String? image,
-          String? audio}) =>
-      ConversationData(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        content: content ?? this.content,
-        image: image ?? this.image,
-        audio: audio ?? this.audio,
-      );
-  @override
-  String toString() {
-    return (StringBuffer('ConversationData(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('content: $content, ')
-          ..write('image: $image, ')
-          ..write('audio: $audio')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, name, content, image, audio);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ConversationData &&
-          other.id == this.id &&
-          other.name == this.name &&
-          other.content == this.content &&
-          other.image == this.image &&
-          other.audio == this.audio);
-}
-
-class ConversationCompanion extends UpdateCompanion<ConversationData> {
-  final Value<int> id;
-  final Value<String> name;
-  final Value<String> content;
-  final Value<String> image;
-  final Value<String> audio;
-  const ConversationCompanion({
-    this.id = const Value.absent(),
-    this.name = const Value.absent(),
-    this.content = const Value.absent(),
-    this.image = const Value.absent(),
-    this.audio = const Value.absent(),
-  });
-  ConversationCompanion.insert({
-    required int id,
-    required String name,
-    required String content,
-    required String image,
-    required String audio,
-  })  : id = Value(id),
-        name = Value(name),
-        content = Value(content),
-        image = Value(image),
-        audio = Value(audio);
-  static Insertable<ConversationData> custom({
-    Expression<int>? id,
-    Expression<String>? name,
-    Expression<String>? content,
-    Expression<String>? image,
-    Expression<String>? audio,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (name != null) 'name': name,
-      if (content != null) 'content': content,
-      if (image != null) 'image': image,
-      if (audio != null) 'audio': audio,
-    });
-  }
-
-  ConversationCompanion copyWith(
-      {Value<int>? id,
-      Value<String>? name,
-      Value<String>? content,
-      Value<String>? image,
-      Value<String>? audio}) {
-    return ConversationCompanion(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      content: content ?? this.content,
-      image: image ?? this.image,
-      audio: audio ?? this.audio,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (content.present) {
-      map['content'] = Variable<String>(content.value);
-    }
-    if (image.present) {
-      map['image'] = Variable<String>(image.value);
-    }
-    if (audio.present) {
-      map['audio'] = Variable<String>(audio.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ConversationCompanion(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('content: $content, ')
-          ..write('image: $image, ')
-          ..write('audio: $audio')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $ConversationTable extends Conversation
-    with TableInfo<$ConversationTable, ConversationData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $ConversationTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
-      'id', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
-  final VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
-      'name', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _contentMeta = const VerificationMeta('content');
-  @override
-  late final GeneratedColumn<String?> content = GeneratedColumn<String?>(
-      'content', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _imageMeta = const VerificationMeta('image');
-  @override
-  late final GeneratedColumn<String?> image = GeneratedColumn<String?>(
-      'image', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _audioMeta = const VerificationMeta('audio');
-  @override
-  late final GeneratedColumn<String?> audio = GeneratedColumn<String?>(
-      'audio', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns => [id, name, content, image, audio];
-  @override
-  String get aliasedName => _alias ?? 'conversation';
-  @override
-  String get actualTableName => 'conversation';
-  @override
-  VerificationContext validateIntegrity(Insertable<ConversationData> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('content')) {
-      context.handle(_contentMeta,
-          content.isAcceptableOrUnknown(data['content']!, _contentMeta));
-    } else if (isInserting) {
-      context.missing(_contentMeta);
-    }
-    if (data.containsKey('image')) {
-      context.handle(
-          _imageMeta, image.isAcceptableOrUnknown(data['image']!, _imageMeta));
-    } else if (isInserting) {
-      context.missing(_imageMeta);
-    }
-    if (data.containsKey('audio')) {
-      context.handle(
-          _audioMeta, audio.isAcceptableOrUnknown(data['audio']!, _audioMeta));
-    } else if (isInserting) {
-      context.missing(_audioMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
-  @override
-  ConversationData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return ConversationData.fromData(data,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
-  }
-
-  @override
-  $ConversationTable createAlias(String alias) {
-    return $ConversationTable(attachedDatabase, alias);
-  }
-}
-
 class Idiom extends DataClass implements Insertable<Idiom> {
   final int id;
   final String sentence;
   final String meaning;
-  Idiom({required this.id, required this.sentence, required this.meaning});
+  final int favorite;
+  Idiom(
+      {required this.id,
+      required this.sentence,
+      required this.meaning,
+      required this.favorite});
   factory Idiom.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return Idiom(
@@ -1174,6 +1067,8 @@ class Idiom extends DataClass implements Insertable<Idiom> {
           .mapFromDatabaseResponse(data['${effectivePrefix}sentence'])!,
       meaning: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}meaning'])!,
+      favorite: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}favorite'])!,
     );
   }
   @override
@@ -1182,6 +1077,7 @@ class Idiom extends DataClass implements Insertable<Idiom> {
     map['id'] = Variable<int>(id);
     map['sentence'] = Variable<String>(sentence);
     map['meaning'] = Variable<String>(meaning);
+    map['favorite'] = Variable<int>(favorite);
     return map;
   }
 
@@ -1190,6 +1086,7 @@ class Idiom extends DataClass implements Insertable<Idiom> {
       id: Value(id),
       sentence: Value(sentence),
       meaning: Value(meaning),
+      favorite: Value(favorite),
     );
   }
 
@@ -1200,6 +1097,7 @@ class Idiom extends DataClass implements Insertable<Idiom> {
       id: serializer.fromJson<int>(json['id']),
       sentence: serializer.fromJson<String>(json['sentence']),
       meaning: serializer.fromJson<String>(json['meaning']),
+      favorite: serializer.fromJson<int>(json['favorite']),
     );
   }
   @override
@@ -1209,69 +1107,83 @@ class Idiom extends DataClass implements Insertable<Idiom> {
       'id': serializer.toJson<int>(id),
       'sentence': serializer.toJson<String>(sentence),
       'meaning': serializer.toJson<String>(meaning),
+      'favorite': serializer.toJson<int>(favorite),
     };
   }
 
-  Idiom copyWith({int? id, String? sentence, String? meaning}) => Idiom(
+  Idiom copyWith({int? id, String? sentence, String? meaning, int? favorite}) =>
+      Idiom(
         id: id ?? this.id,
         sentence: sentence ?? this.sentence,
         meaning: meaning ?? this.meaning,
+        favorite: favorite ?? this.favorite,
       );
   @override
   String toString() {
     return (StringBuffer('Idiom(')
           ..write('id: $id, ')
           ..write('sentence: $sentence, ')
-          ..write('meaning: $meaning')
+          ..write('meaning: $meaning, ')
+          ..write('favorite: $favorite')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, sentence, meaning);
+  int get hashCode => Object.hash(id, sentence, meaning, favorite);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Idiom &&
           other.id == this.id &&
           other.sentence == this.sentence &&
-          other.meaning == this.meaning);
+          other.meaning == this.meaning &&
+          other.favorite == this.favorite);
 }
 
 class IdiomsCompanion extends UpdateCompanion<Idiom> {
   final Value<int> id;
   final Value<String> sentence;
   final Value<String> meaning;
+  final Value<int> favorite;
   const IdiomsCompanion({
     this.id = const Value.absent(),
     this.sentence = const Value.absent(),
     this.meaning = const Value.absent(),
+    this.favorite = const Value.absent(),
   });
   IdiomsCompanion.insert({
-    required int id,
+    this.id = const Value.absent(),
     required String sentence,
     required String meaning,
-  })  : id = Value(id),
-        sentence = Value(sentence),
-        meaning = Value(meaning);
+    required int favorite,
+  })  : sentence = Value(sentence),
+        meaning = Value(meaning),
+        favorite = Value(favorite);
   static Insertable<Idiom> custom({
     Expression<int>? id,
     Expression<String>? sentence,
     Expression<String>? meaning,
+    Expression<int>? favorite,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (sentence != null) 'sentence': sentence,
       if (meaning != null) 'meaning': meaning,
+      if (favorite != null) 'favorite': favorite,
     });
   }
 
   IdiomsCompanion copyWith(
-      {Value<int>? id, Value<String>? sentence, Value<String>? meaning}) {
+      {Value<int>? id,
+      Value<String>? sentence,
+      Value<String>? meaning,
+      Value<int>? favorite}) {
     return IdiomsCompanion(
       id: id ?? this.id,
       sentence: sentence ?? this.sentence,
       meaning: meaning ?? this.meaning,
+      favorite: favorite ?? this.favorite,
     );
   }
 
@@ -1287,6 +1199,9 @@ class IdiomsCompanion extends UpdateCompanion<Idiom> {
     if (meaning.present) {
       map['meaning'] = Variable<String>(meaning.value);
     }
+    if (favorite.present) {
+      map['favorite'] = Variable<int>(favorite.value);
+    }
     return map;
   }
 
@@ -1295,7 +1210,8 @@ class IdiomsCompanion extends UpdateCompanion<Idiom> {
     return (StringBuffer('IdiomsCompanion(')
           ..write('id: $id, ')
           ..write('sentence: $sentence, ')
-          ..write('meaning: $meaning')
+          ..write('meaning: $meaning, ')
+          ..write('favorite: $favorite')
           ..write(')'))
         .toString();
   }
@@ -1310,7 +1226,9 @@ class $IdiomsTable extends Idioms with TableInfo<$IdiomsTable, Idiom> {
   @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
+      type: const IntType(),
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _sentenceMeta = const VerificationMeta('sentence');
   @override
   late final GeneratedColumn<String?> sentence = GeneratedColumn<String?>(
@@ -1321,8 +1239,13 @@ class $IdiomsTable extends Idioms with TableInfo<$IdiomsTable, Idiom> {
   late final GeneratedColumn<String?> meaning = GeneratedColumn<String?>(
       'meaning', aliasedName, false,
       type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _favoriteMeta = const VerificationMeta('favorite');
   @override
-  List<GeneratedColumn> get $columns => [id, sentence, meaning];
+  late final GeneratedColumn<int?> favorite = GeneratedColumn<int?>(
+      'favorite', aliasedName, false,
+      type: const IntType(), requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, sentence, meaning, favorite];
   @override
   String get aliasedName => _alias ?? 'idioms';
   @override
@@ -1334,8 +1257,6 @@ class $IdiomsTable extends Idioms with TableInfo<$IdiomsTable, Idiom> {
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
     }
     if (data.containsKey('sentence')) {
       context.handle(_sentenceMeta,
@@ -1349,11 +1270,17 @@ class $IdiomsTable extends Idioms with TableInfo<$IdiomsTable, Idiom> {
     } else if (isInserting) {
       context.missing(_meaningMeta);
     }
+    if (data.containsKey('favorite')) {
+      context.handle(_favoriteMeta,
+          favorite.isAcceptableOrUnknown(data['favorite']!, _favoriteMeta));
+    } else if (isInserting) {
+      context.missing(_favoriteMeta);
+    }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Idiom map(Map<String, dynamic> data, {String? tablePrefix}) {
     return Idiom.fromData(data,
@@ -1366,269 +1293,17 @@ class $IdiomsTable extends Idioms with TableInfo<$IdiomsTable, Idiom> {
   }
 }
 
-class Short_StoryData extends DataClass implements Insertable<Short_StoryData> {
-  final int id;
-  final String title;
-  final String story;
-  final String image;
-  Short_StoryData(
-      {required this.id,
-      required this.title,
-      required this.story,
-      required this.image});
-  factory Short_StoryData.fromData(Map<String, dynamic> data,
-      {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return Short_StoryData(
-      id: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      title: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}title'])!,
-      story: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}story'])!,
-      image: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}image'])!,
-    );
-  }
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['title'] = Variable<String>(title);
-    map['story'] = Variable<String>(story);
-    map['image'] = Variable<String>(image);
-    return map;
-  }
-
-  Short_StoryCompanion toCompanion(bool nullToAbsent) {
-    return Short_StoryCompanion(
-      id: Value(id),
-      title: Value(title),
-      story: Value(story),
-      image: Value(image),
-    );
-  }
-
-  factory Short_StoryData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Short_StoryData(
-      id: serializer.fromJson<int>(json['id']),
-      title: serializer.fromJson<String>(json['title']),
-      story: serializer.fromJson<String>(json['story']),
-      image: serializer.fromJson<String>(json['image']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'title': serializer.toJson<String>(title),
-      'story': serializer.toJson<String>(story),
-      'image': serializer.toJson<String>(image),
-    };
-  }
-
-  Short_StoryData copyWith(
-          {int? id, String? title, String? story, String? image}) =>
-      Short_StoryData(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        story: story ?? this.story,
-        image: image ?? this.image,
-      );
-  @override
-  String toString() {
-    return (StringBuffer('Short_StoryData(')
-          ..write('id: $id, ')
-          ..write('title: $title, ')
-          ..write('story: $story, ')
-          ..write('image: $image')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, title, story, image);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is Short_StoryData &&
-          other.id == this.id &&
-          other.title == this.title &&
-          other.story == this.story &&
-          other.image == this.image);
-}
-
-class Short_StoryCompanion extends UpdateCompanion<Short_StoryData> {
-  final Value<int> id;
-  final Value<String> title;
-  final Value<String> story;
-  final Value<String> image;
-  const Short_StoryCompanion({
-    this.id = const Value.absent(),
-    this.title = const Value.absent(),
-    this.story = const Value.absent(),
-    this.image = const Value.absent(),
-  });
-  Short_StoryCompanion.insert({
-    required int id,
-    required String title,
-    required String story,
-    required String image,
-  })  : id = Value(id),
-        title = Value(title),
-        story = Value(story),
-        image = Value(image);
-  static Insertable<Short_StoryData> custom({
-    Expression<int>? id,
-    Expression<String>? title,
-    Expression<String>? story,
-    Expression<String>? image,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (title != null) 'title': title,
-      if (story != null) 'story': story,
-      if (image != null) 'image': image,
-    });
-  }
-
-  Short_StoryCompanion copyWith(
-      {Value<int>? id,
-      Value<String>? title,
-      Value<String>? story,
-      Value<String>? image}) {
-    return Short_StoryCompanion(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      story: story ?? this.story,
-      image: image ?? this.image,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (title.present) {
-      map['title'] = Variable<String>(title.value);
-    }
-    if (story.present) {
-      map['story'] = Variable<String>(story.value);
-    }
-    if (image.present) {
-      map['image'] = Variable<String>(image.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('Short_StoryCompanion(')
-          ..write('id: $id, ')
-          ..write('title: $title, ')
-          ..write('story: $story, ')
-          ..write('image: $image')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $Short_StoryTable extends Short_Story
-    with TableInfo<$Short_StoryTable, Short_StoryData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $Short_StoryTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
-      'id', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
-  final VerificationMeta _titleMeta = const VerificationMeta('title');
-  @override
-  late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
-      'title', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _storyMeta = const VerificationMeta('story');
-  @override
-  late final GeneratedColumn<String?> story = GeneratedColumn<String?>(
-      'story', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _imageMeta = const VerificationMeta('image');
-  @override
-  late final GeneratedColumn<String?> image = GeneratedColumn<String?>(
-      'image', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns => [id, title, story, image];
-  @override
-  String get aliasedName => _alias ?? 'short_story';
-  @override
-  String get actualTableName => 'short_story';
-  @override
-  VerificationContext validateIntegrity(Insertable<Short_StoryData> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    if (data.containsKey('title')) {
-      context.handle(
-          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
-    } else if (isInserting) {
-      context.missing(_titleMeta);
-    }
-    if (data.containsKey('story')) {
-      context.handle(
-          _storyMeta, story.isAcceptableOrUnknown(data['story']!, _storyMeta));
-    } else if (isInserting) {
-      context.missing(_storyMeta);
-    }
-    if (data.containsKey('image')) {
-      context.handle(
-          _imageMeta, image.isAcceptableOrUnknown(data['image']!, _imageMeta));
-    } else if (isInserting) {
-      context.missing(_imageMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
-  @override
-  Short_StoryData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return Short_StoryData.fromData(data,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
-  }
-
-  @override
-  $Short_StoryTable createAlias(String alias) {
-    return $Short_StoryTable(attachedDatabase, alias);
-  }
-}
-
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   late final $VATable va = $VATable(this);
   late final $AVTable av = $AVTable(this);
   late final $GrammarTable grammar = $GrammarTable(this);
-  late final $ConversationTable conversation = $ConversationTable(this);
   late final $IdiomsTable idioms = $IdiomsTable(this);
-  late final $Short_StoryTable shortStory = $Short_StoryTable(this);
   late final DictionaryDao dictionaryDao = DictionaryDao(this as AppDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [va, av, grammar, conversation, idioms, shortStory];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [va, av, grammar, idioms];
 }
 
 // **************************************************************************
@@ -1639,7 +1314,94 @@ mixin _$DictionaryDaoMixin on DatabaseAccessor<AppDatabase> {
   $VATable get va => attachedDatabase.va;
   $AVTable get av => attachedDatabase.av;
   $GrammarTable get grammar => attachedDatabase.grammar;
-  $ConversationTable get conversation => attachedDatabase.conversation;
   $IdiomsTable get idioms => attachedDatabase.idioms;
-  $Short_StoryTable get shortStory => attachedDatabase.shortStory;
+  Future<int> addFavoriteGrammar(int var1) {
+    return customUpdate(
+      'UPDATE grammar SET favorite = 1 WHERE id = ?',
+      variables: [Variable<int>(var1)],
+      updates: {grammar},
+      updateKind: UpdateKind.update,
+    );
+  }
+
+  Future<int> addFavoriteWordAV(int var1) {
+    return customUpdate(
+      'UPDATE av SET favorite = 1 WHERE id = ?',
+      variables: [Variable<int>(var1)],
+      updates: {av},
+      updateKind: UpdateKind.update,
+    );
+  }
+
+  Future<int> addFavoriteWordVA(int var1) {
+    return customUpdate(
+      'UPDATE va SET favorite = 1 WHERE id = ?',
+      variables: [Variable<int>(var1)],
+      updates: {va},
+      updateKind: UpdateKind.update,
+    );
+  }
+
+  Future<int> addFavoriteIdioms(int var1) {
+    return customUpdate(
+      'UPDATE idioms SET favorite = 1 WHERE id = ?',
+      variables: [Variable<int>(var1)],
+      updates: {idioms},
+      updateKind: UpdateKind.update,
+    );
+  }
+
+  Future<int> removeFavoriteGrammar(int var1) {
+    return customUpdate(
+      'UPDATE grammar SET favorite = 0 WHERE id = ?',
+      variables: [Variable<int>(var1)],
+      updates: {grammar},
+      updateKind: UpdateKind.update,
+    );
+  }
+
+  Future<int> removeFavoriteWordAV(int var1) {
+    return customUpdate(
+      'UPDATE av SET favorite = 0 WHERE id = ?',
+      variables: [Variable<int>(var1)],
+      updates: {av},
+      updateKind: UpdateKind.update,
+    );
+  }
+
+  Future<int> removeFavoriteIdioms(int var1) {
+    return customUpdate(
+      'UPDATE idioms SET favorite = 0 WHERE id = ?',
+      variables: [Variable<int>(var1)],
+      updates: {idioms},
+      updateKind: UpdateKind.update,
+    );
+  }
+
+  Future<int> removeFavoriteWordVA(int var1) {
+    return customUpdate(
+      'UPDATE va SET favorite = 0 WHERE id = ?',
+      variables: [Variable<int>(var1)],
+      updates: {va},
+      updateKind: UpdateKind.update,
+    );
+  }
+
+  Future<int> historySearchAV(int var1) {
+    return customUpdate(
+      'UPDATE av SET history = 1 WHERE id = ?',
+      variables: [Variable<int>(var1)],
+      updates: {av},
+      updateKind: UpdateKind.update,
+    );
+  }
+
+  Future<int> historySearchVA(int var1) {
+    return customUpdate(
+      'UPDATE va SET history = 1 WHERE id = ?',
+      variables: [Variable<int>(var1)],
+      updates: {va},
+      updateKind: UpdateKind.update,
+    );
+  }
 }

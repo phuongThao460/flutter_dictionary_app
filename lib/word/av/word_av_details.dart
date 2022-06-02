@@ -1,11 +1,11 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_unnecessary_containers, sized_box_for_whitespace, iterable_contains_unrelated_type
-
+// ignore_for_file: use_key_in_widget_constructors, avoid_unnecessary_containers, sized_box_for_whitespace, iterable_contains_unrelated_type, unnecessary_new
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
 import 'package:flutter_dictionary_app/homepage/homepage.dart';
 import 'package:flutter_dictionary_app/modules/favourite-data.dart';
 import 'package:flutter_dictionary_app/word/av/body.dart';
+import 'package:provider/provider.dart';
 
 class WordAVDetails extends StatefulWidget {
   static String routeName = '/wordAV';
@@ -15,9 +15,9 @@ class WordAVDetails extends StatefulWidget {
 }
 
 class _WordAVDetailsState extends State<WordAVDetails> {
-
   @override
   Widget build(BuildContext context) {
+    final dao = Provider.of<DictionaryDao>(context);
     final GetAVDetailFromList dataAV =
         ModalRoute.of(context)!.settings.arguments as GetAVDetailFromList;
     bool isSaved = Favourite.dataDict.contains(dataAV.av);
@@ -32,25 +32,14 @@ class _WordAVDetailsState extends State<WordAVDetails> {
           ),
           leading: IconButton(
               onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(context, Homepage.routeName, (Route<dynamic> route) => false).then((value) {
-                  bool isSavedHistory = AVData.historyAV.contains(dataAV.av);
-                  return setState(() {
-                    if (!isSavedHistory) {
-                      AVData.historyAV.add(dataAV.av);
-                    }
-                  });
-                });
+                Navigator.pushNamedAndRemoveUntil(context, Homepage.routeName,
+                    (Route<dynamic> route) => false).then((value) {});
               },
               icon: const Icon(Icons.arrow_back_ios)),
           actions: [
             IconButton(
               onPressed: () {
-                
-                setState(() {
-                  if (!isSaved) {
-                    Favourite.dataDict.add(dataAV.av);
-                  }
-                });
+                dao.addFavAV(dataAV.av.id);
               },
               icon: Icon(
                 isSaved ? Icons.star : Icons.star_border_outlined,

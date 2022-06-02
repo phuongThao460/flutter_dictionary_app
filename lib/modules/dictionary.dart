@@ -1,6 +1,5 @@
 // ignore_for_file: unnecessary_new
 
-import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
 
 class Dictionary {
   int id;
