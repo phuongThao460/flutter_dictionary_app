@@ -63,7 +63,7 @@ class _GrammarListState extends State<GrammarList> {
                                           .addFavoriteGrammar(data[index].id)
                                           .then((value) {
                                         if (value > 0) {
-                                          print(saved);
+                                          
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(const SnackBar(
                                                   content: Text(

@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
-import 'package:flutter_dictionary_app/idiom/idiom-list.dart';
 import 'package:flutter_dictionary_app/modules/dictionary.dart';
 import 'package:flutter_dictionary_app/modules/favourite-data.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -25,7 +24,7 @@ class _FavouriteListState extends State<FavouriteList> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           flexibleSpace: Container(
@@ -42,7 +41,8 @@ class _FavouriteListState extends State<FavouriteList> {
             labelColor: Color(0xFFFFFFFF),
             indicatorColor: Color(0xFFDCAEFA),
             tabs: [
-              Tab(text: 'Words'),
+              Tab(text: 'AV'),
+              Tab(text: 'VA'),
               Tab(text: 'Grammars'),
               Tab(text: 'Idioms'),
             ],
@@ -52,7 +52,8 @@ class _FavouriteListState extends State<FavouriteList> {
         ),
         body: TabBarView(
           children: [
-            _listWord(context),
+            _listWordAV(context),
+            _listWordVA(context),
             _listGrammar(context),
             _listIdioms(context),
           ],
@@ -102,53 +103,16 @@ class _FavouriteListState extends State<FavouriteList> {
   Widget _listIdioms(BuildContext context) {
     final dao = Provider.of<DictionaryDao>(context);
     return StreamBuilder(
-      stream: dao.favoriteIdioms(),
-      builder: (context, AsyncSnapshot<List<Idiom>> snapshot) {
-        if (snapshot.hasError) {
+        stream: dao.favoriteIdioms(),
+        builder: (context, AsyncSnapshot<List<Idiom>> snapshot) {
+          if (snapshot.hasError) {
             print(snapshot.error);
           }
           var data = snapshot.data ?? [];
-        return ListView.builder(
-            itemCount: data.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Slidable(
-                actionPane: const SlidableDrawerActionPane(),
-                actions: const <Widget>[],
-                //tab phải
-                secondaryActions: [
-                  IconSlideAction(
-                    caption: 'Remove',
-                    color: const Color(0xFF9921E8),
-                    icon: Icons.delete,
-                    onTap: () => dao.removeFavIdioms(data[index].id),
-                  )
-                ],
-                child: ListTile(
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  leading: const Icon(Icons.note),
-                  title: Text(data[index].sentence,
-                      style: const TextStyle(fontSize: 16)),
-                ),
-              );
-            });
-      }
-    );
-  }
-
-  Widget _listWord(BuildContext context) {
-    final dao = Provider.of<DictionaryDao>(context);
-    return StreamBuilder(
-      stream: dao.favoriteWordVA(),
-      builder: (context, AsyncSnapshot<List<VAData>> snapshot) {
-        if (snapshot.hasError) {
-            print(snapshot.error);
-          }
-          var data = snapshot.data ?? [];
-        return ListView.builder(
-            itemCount: data.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Slidable(
+          return ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Slidable(
                   actionPane: const SlidableDrawerActionPane(),
                   actions: const <Widget>[],
                   //tab phải
@@ -157,20 +121,92 @@ class _FavouriteListState extends State<FavouriteList> {
                       caption: 'Remove',
                       color: const Color(0xFF9921E8),
                       icon: Icons.delete,
-                      onTap: () => dao.removeFavVA(data[index].id),
+                      onTap: () => dao.removeFavIdioms(data[index].id),
                     )
                   ],
                   child: ListTile(
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
                     leading: const Icon(Icons.note),
-                    title: Text(data[index].word,
+                    title: Text(data[index].sentence,
                         style: const TextStyle(fontSize: 16)),
-                    subtitle: Text(data[index].description,
-                        style: const TextStyle(fontSize: 16)),
-                  ));
-            });
-      }
-    );
+                  ),
+                );
+              });
+        });
+  }
+
+  Widget _listWordAV(BuildContext context) {
+    final dao = Provider.of<DictionaryDao>(context);
+    return StreamBuilder(
+        stream: dao.favoriteWordAV(),
+        builder: (context, AsyncSnapshot<List<AVData>> snapshot) {
+          if (snapshot.hasError) {
+            print(snapshot.error);
+          }
+          var av = snapshot.data ?? [];
+          return ListView.builder(
+              itemCount: av.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Slidable(
+                    actionPane: const SlidableDrawerActionPane(),
+                    actions: const <Widget>[],
+                    //tab phải
+                    secondaryActions: [
+                      IconSlideAction(
+                        caption: 'Remove',
+                        color: const Color(0xFF9921E8),
+                        icon: Icons.delete,
+                        onTap: () => dao.removeFavAV(av[index].id),
+                      )
+                    ],
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      leading: const Icon(Icons.note),
+                      title: Text(av[index].word,
+                          style: const TextStyle(fontSize: 16)),
+                      subtitle: Text(av[index].description,
+                          style: const TextStyle(fontSize: 16)),
+                    ));
+              });
+        });
+  }
+
+  Widget _listWordVA(BuildContext context) {
+    final dao = Provider.of<DictionaryDao>(context);
+    return StreamBuilder(
+        stream: dao.favoriteWordVA(),
+        builder: (context, AsyncSnapshot<List<VAData>> snapshot) {
+          if (snapshot.hasError) {
+            print(snapshot.error);
+          }
+          var va = snapshot.data ?? [];
+          return ListView.builder(
+              itemCount: va.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Slidable(
+                    actionPane: const SlidableDrawerActionPane(),
+                    actions: const <Widget>[],
+                    //tab phải
+                    secondaryActions: [
+                      IconSlideAction(
+                        caption: 'Remove',
+                        color: const Color(0xFF9921E8),
+                        icon: Icons.delete,
+                        onTap: () => dao.removeFavVA(va[index].id),
+                      )
+                    ],
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      leading: const Icon(Icons.note),
+                      title: Text(va[index].word,
+                          style: const TextStyle(fontSize: 16)),
+                      subtitle: Text(va[index].description,
+                          style: const TextStyle(fontSize: 16)),
+                    ));
+              });
+        });
   }
 }

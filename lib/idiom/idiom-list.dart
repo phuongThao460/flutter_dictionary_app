@@ -1,8 +1,9 @@
 // ignore_for_file: file_names, use_key_in_widget_constructors, prefer_typing_uninitialized_variables, iterable_contains_unrelated_type
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
-import 'package:flutter_dictionary_app/modules/favourite-data.dart';
 import 'package:provider/provider.dart';
 
 List<Idiom> idioms = [];
@@ -43,15 +44,25 @@ class _IdiomListState extends State<IdiomList> {
                 },
                 itemCount: idiom.length,
                 itemBuilder: (context, index) {
-                  Idiom data = idiom[index];
-                  bool isSaved = Favourite.dataIdioms.contains(data);
+                  var isSaved = idiom[index].favorite;
                   return ListTile(
-                    onTap: () {
-                      dao.addFavIdioms(idiom[index].id);
+                    onTap: () async {
+                      dao.addFavoriteIdioms(idiom[index].id).then((value) {
+                        if (value > 0) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content:
+                                      Text('Add to favorite successfull')));
+                        }
+                      }).catchError((onError) {
+                        log(onError.toString());
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(onError.toString())));
+                      });
                     },
                     leading: Icon(
-                      isSaved ? Icons.star : Icons.star_border_outlined,
-                      color: isSaved ? Colors.yellow : null,
+                      isSaved == 1 ? Icons.star : Icons.star_border_outlined,
+                      color: isSaved == 1 ? Colors.yellow : null,
                     ),
                     title: Text(idiom[index].sentence,
                         style: const TextStyle(fontSize: 16)),

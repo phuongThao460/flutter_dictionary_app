@@ -18,7 +18,7 @@ class _WordVADetailssState extends State<WordVADetails> {
   Widget build(BuildContext context) {
     final dao = Provider.of<DictionaryDao>(context);
     final GetVA dataVA = ModalRoute.of(context)!.settings.arguments as GetVA;
-    bool isSaved = Favourite.dataVADict.contains(dataVA.va);
+    var isSaved = dataVA.va.favorite;
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -40,8 +40,8 @@ class _WordVADetailssState extends State<WordVADetails> {
                 dao.addFavVA(dataVA.va.id);
               },
               icon: Icon(
-                isSaved ? Icons.star : Icons.star_border_outlined,
-                color: isSaved ? Colors.yellow : null,
+                isSaved == 1 ? Icons.star : Icons.star_border_outlined,
+                color: isSaved == 1 ? Colors.yellow : null,
               ),
             )
           ],

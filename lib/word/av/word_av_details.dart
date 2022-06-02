@@ -20,7 +20,7 @@ class _WordAVDetailsState extends State<WordAVDetails> {
     final dao = Provider.of<DictionaryDao>(context);
     final GetAVDetailFromList dataAV =
         ModalRoute.of(context)!.settings.arguments as GetAVDetailFromList;
-    bool isSaved = Favourite.dataDict.contains(dataAV.av);
+    var isSaved = dataAV.av.favorite;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -42,8 +42,8 @@ class _WordAVDetailsState extends State<WordAVDetails> {
                 dao.addFavAV(dataAV.av.id);
               },
               icon: Icon(
-                isSaved ? Icons.star : Icons.star_border_outlined,
-                color: isSaved ? Colors.yellow : null,
+                isSaved == 1 ? Icons.star : Icons.star_border_outlined,
+                color: isSaved == 1 ? Colors.yellow : null,
               ),
             )
           ],
