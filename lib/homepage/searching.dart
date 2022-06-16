@@ -80,10 +80,10 @@ class Search extends SearchDelegate {
         if (snapshot.hasError) {
           log('error');
         }
-        var data = snapshot.data as List<AVData>;
+        var data = snapshot.data ?? [];
 
-        return snapshot.hasData && data.isNotEmpty
-            ? DictionaryList(dicts: data)
+        return snapshot.hasData
+            ? DictionaryList(dicts: data as List<AVData>)
             : Container(
                 child: const Card(
                   elevation: 0,
@@ -109,34 +109,46 @@ class _DictionaryListState extends State<DictionaryList> {
   @override
   Widget build(BuildContext context) {
     final dao = Provider.of<DictionaryDao>(context);
-    return ListView.builder(
-        itemCount: widget.dicts.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              dao.historyAV(widget.dicts[index].id);
-              Navigator.pushNamed(context, WordAVDetails.routeName,
-                  arguments: GetAVDetailFromList(av: widget.dicts[index]));
-            },
-            child: Card(
-              elevation: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.dicts[index].word,
-                      style: const TextStyle(
-                        fontSize: 18,
+    if (widget.dicts.isEmpty) {
+      return Container(
+        child: const Card(
+          elevation: 0,
+          child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: SizedBox(
+                  width: double.maxFinite, child: Text('No Data was found'))),
+        ),
+      );
+    } else {
+      return ListView.builder(
+          itemCount: widget.dicts.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                dao.historyAV(widget.dicts[index].id);
+                Navigator.pushNamed(context, WordAVDetails.routeName,
+                    arguments: GetAVDetailFromList(av: widget.dicts[index]));
+              },
+              child: Card(
+                elevation: 0,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.dicts[index].word,
+                        style: const TextStyle(
+                          fontSize: 18,
+                        ),
                       ),
-                    ),
-                    Text(widget.dicts[index].description),
-                  ],
+                      Text(widget.dicts[index].description),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        });
+            );
+          });
+    }
   }
 }

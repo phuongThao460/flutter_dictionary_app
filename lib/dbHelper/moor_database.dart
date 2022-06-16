@@ -59,6 +59,8 @@ class DictionaryDao extends DatabaseAccessor<AppDatabase>
   //get all data from db
   Stream<List<GrammarData>> getGrammar() => select(grammar).watch();
   Stream<List<Idiom>> getIdioms() => select(idioms).watch();
+  Stream<List<AVData>> getAV() => select(av).watch();
+  Stream<List<VAData>> getVA() => select(va).watch();
 
   //searching
   Future<List<AVData>> getFilteredItemsAV(search) =>
@@ -68,19 +70,21 @@ class DictionaryDao extends DatabaseAccessor<AppDatabase>
 
   //get list favorite
   Stream<List<GrammarData>> favoriteData() =>
-      (select(grammar)..where((tbl) => tbl.favorite.equals(1))).watch();
+      (select(grammar)..where((tbl) => tbl.favorite.equals(true))).watch();
   Stream<List<Idiom>> favoriteIdioms() =>
-      (select(idioms)..where((tbl) => tbl.favorite.equals(1))).watch();
+      (select(idioms)..where((tbl) => tbl.favorite.equals(true))).watch();
   Stream<List<AVData>> favoriteWordAV() =>
-      (select(av)..where((tbl) => tbl.favorite.equals(1))).watch();
+      (select(av)..where((tbl) => tbl.favorite.equals(true))).watch();
+      Future<List<AVData>> favoriteWordAVF() =>
+      (select(av)..where((tbl) => tbl.favorite.equals(true))).get();
   Stream<List<VAData>> favoriteWordVA() =>
-      (select(va)..where((tbl) => tbl.favorite.equals(1))).watch();
+      (select(va)..where((tbl) => tbl.favorite.equals(true))).watch();
 
   //get history searching
   Future<List<AVData>> historyWordAV() =>
-      (select(av)..where((tbl) => tbl.history.equals(1))).get();
+      (select(av)..where((tbl) => tbl.history.equals(true))).get();
   Future<List<VAData>> historyWordVA() =>
-      (select(va)..where((tbl) => tbl.history.equals(1))).get();
+      (select(va)..where((tbl) => tbl.history.equals(true))).get();
 
 //add history
   Future historyAV(int id) {

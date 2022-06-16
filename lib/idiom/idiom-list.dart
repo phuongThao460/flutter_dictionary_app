@@ -39,7 +39,7 @@ class _IdiomListState extends State<IdiomList> {
             return ListView.separated(
                 separatorBuilder: (context, index) {
                   return const Divider(
-                    color: Colors.black26,
+                    color: Color.fromARGB(66, 255, 142, 142),
                   );
                 },
                 itemCount: idiom.length,
@@ -61,8 +61,8 @@ class _IdiomListState extends State<IdiomList> {
                       });
                     },
                     leading: Icon(
-                      isSaved == 1 ? Icons.star : Icons.star_border_outlined,
-                      color: isSaved == 1 ? Colors.yellow : null,
+                      isSaved ? Icons.star : Icons.star_border_outlined,
+                      color: isSaved ? Colors.yellow : null,
                     ),
                     title: Text(idiom[index].sentence,
                         style: const TextStyle(fontSize: 16)),

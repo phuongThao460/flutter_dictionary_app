@@ -8,8 +8,8 @@ class AV extends Table {
   TextColumn get html => text()();
   TextColumn get description => text()();
   TextColumn get pronounce => text()();
-  IntColumn get favorite => integer()();
-  IntColumn get history => integer()();
+  BoolColumn get favorite => boolean()();
+  BoolColumn get history => boolean()();
 }
 
 class VA extends Table {
@@ -18,15 +18,15 @@ class VA extends Table {
   TextColumn get html => text()();
   TextColumn get description => text()();
   TextColumn get pronounce => text()();
-  IntColumn get favorite => integer()();
-  IntColumn get history => integer()();
+  BoolColumn get favorite => boolean()();
+  BoolColumn get history => boolean()();
 }
 
 class Idioms extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get sentence => text()();
   TextColumn get meaning => text()();
-  IntColumn get favorite => integer()();
+  BoolColumn get favorite => boolean()();
 }
 
 class Grammar extends Table {
@@ -35,5 +35,5 @@ class Grammar extends Table {
   TextColumn get structure => text()();
   TextColumn get define => text()();
   TextColumn get examples => text()();
-  IntColumn get favorite => integer()();
+  BoolColumn get favorite => boolean()();
 }

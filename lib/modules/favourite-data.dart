@@ -9,4 +9,5 @@ class Favourite {
   static List<GrammarData> dataGram = [];
   static List<Dictionary> dicts = [];
   static List<VAData> dataVADict = [];
+  static List<AVData> dataAVDict = [];
 }

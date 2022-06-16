@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
-import 'package:flutter_dictionary_app/homepage/homepage.dart';
 import 'package:flutter_dictionary_app/modules/favourite-data.dart';
 import 'package:flutter_dictionary_app/word/av/body.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +19,7 @@ class _WordAVDetailsState extends State<WordAVDetails> {
     final dao = Provider.of<DictionaryDao>(context);
     final GetAVDetailFromList dataAV =
         ModalRoute.of(context)!.settings.arguments as GetAVDetailFromList;
-    var isSaved = dataAV.av.favorite;
+    
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -32,20 +31,27 @@ class _WordAVDetailsState extends State<WordAVDetails> {
           ),
           leading: IconButton(
               onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(context, Homepage.routeName,
-                    (Route<dynamic> route) => false).then((value) {});
+                Navigator.pop(context);
               },
               icon: const Icon(Icons.arrow_back_ios)),
           actions: [
-            IconButton(
-              onPressed: () {
-                dao.addFavAV(dataAV.av.id);
-              },
-              icon: Icon(
-                isSaved == 1 ? Icons.star : Icons.star_border_outlined,
-                color: isSaved == 1 ? Colors.yellow : null,
-              ),
-            )
+            FutureBuilder(
+                future: dao.favoriteWordAVF(),
+                builder: (context, AsyncSnapshot<List<AVData>> snapshot) {
+                  final listData = snapshot.data ?? [];
+                  final constanin = listData.contains(dataAV.av);
+                  bool isSaved = Favourite.dataAVDict.contains(dataAV.av);
+                  return IconButton(
+                    onPressed: () {
+                      dao.addFavoriteWordAV(dataAV.av.id);
+
+                    },
+                    icon: Icon(
+                      constanin ? Icons.star : Icons.star_border_outlined,
+                      color: constanin ? Colors.yellow : null,
+                    ),
+                  );
+                })
           ],
           flexibleSpace: Container(
             padding: const EdgeInsets.only(bottom: 20),

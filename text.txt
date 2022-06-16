@@ -1,4 +1,6 @@
 UPDATE SQLITE_SEQUENCE SET seq = <n> WHERE name = '<table>'
+
+flutter pub run build_runner build
 .android/avd/Nexus5.avd/config.ini => hw.keyboard=yes
 avdmanager create avd -n pixel -d 16 -k "system-images;android-30;google_apis;x86_64"
 avdmanager create avd --name "Nexus_5" --package "system-images;android-30;google_apis;x86_64"

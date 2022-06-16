@@ -77,10 +77,10 @@ class _GrammarListState extends State<GrammarList> {
                                                     Text(onError.toString())));
                                       });
                                     },
-                                    icon: Icon(saved == 1
+                                    icon: Icon(saved
                                         ? Icons.star
                                         : Icons.star_border_outlined),
-                                    color: saved == 1 ? Colors.yellow : null,
+                                    color: saved ? Colors.yellow : null,
                                   ),
                                 ),
                                 Expanded(

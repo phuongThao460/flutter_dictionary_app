@@ -1,6 +1,5 @@
 // ignore_for_file: use_key_in_widget_constructors, unnecessary_new, unused_field, avoid_function_literals_in_foreach_calls, unnecessary_string_interpolations, must_be_immutable, avoid_print
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
 import 'package:flutter_dictionary_app/word/va/word_va_details.dart';
@@ -24,19 +23,7 @@ class _TranslateVAState extends State<TranslateVA> {
   @override
   Widget build(BuildContext context) {
     final dao = Provider.of<DictionaryDao>(context);
-  Future<List<VAData>> _getSearchData(String name) async {
-      final historyWords = await dao.historyWordVA();
-      for (var element in historyWords) {
-        final e = element.word.toLowerCase();
-        final queryWord = name.toLowerCase();
-        if (e.contains(queryWord)) {
-          return historyWords.where((element) {
-            return e.contains(queryWord);
-          }).toList();
-        }
-      }
-      return dao.getFilteredItemsVA(name);
-    }
+
     return Scaffold(
       key: _scaffoldState,
       appBar: AppBar(
@@ -57,9 +44,7 @@ class _TranslateVAState extends State<TranslateVA> {
               controller: _searchingTextController,
               onChanged: (value) {
                 keywords = value;
-                setState(() {
-                  //_listDict = _helper!.getSearchingWord(value) as List;
-                });
+                setState(() {});
               },
               decoration: const InputDecoration(
                   hintText: 'Search...',
@@ -68,16 +53,24 @@ class _TranslateVAState extends State<TranslateVA> {
             ),
           ),
           FutureBuilder(
-            future: _getSearchData(keywords),
+            future: keywords.isEmpty || _searchingTextController.text.isEmpty
+                ? dao.historyWordVA()
+                : dao.getFilteredItemsVA(keywords),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 print('error');
               }
               var data = snapshot.data;
-              return snapshot.hasData &&
-                      _searchingTextController.text.isNotEmpty
+              return snapshot.hasData
                   ? DictionaryList(dicts: data as List<VAData>)
-                  : Container();
+                  : const SizedBox(
+                      child: Card(
+                        elevation: 0,
+                        child: Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Text('No Data was found')),
+                      ),
+                    );
             },
           )
         ],
@@ -97,36 +90,49 @@ class DictionaryList extends StatefulWidget {
 class _DictionaryListState extends State<DictionaryList> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-          itemCount: widget.dicts.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                
-                Navigator.pushNamed(context, WordVADetails.routeName,
-                    arguments: GetVA(va: widget.dicts[index]));
-              },
-              child: Card(
-                elevation: 0,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${widget.dicts[index].word}',
-                        style: const TextStyle(
-                          fontSize: 18,
+    final dao = Provider.of<DictionaryDao>(context);
+    if (widget.dicts.isEmpty) {
+      return Container(
+        child: const Card(
+          elevation: 0,
+          child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: SizedBox(
+                  width: double.maxFinite, child: Text('No Data was found'))),
+        ),
+      );
+    } else {
+      return Expanded(
+        child: ListView.builder(
+            itemCount: widget.dicts.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  dao.historyVA(widget.dicts[index].id);
+                  Navigator.pushNamed(context, WordVADetails.routeName,
+                      arguments: GetVA(va: widget.dicts[index]));
+                },
+                child: Card(
+                  elevation: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${widget.dicts[index].word}',
+                          style: const TextStyle(
+                            fontSize: 18,
+                          ),
                         ),
-                      ),
-                      Text('${widget.dicts[index].description}'),
-                    ],
+                        Text('${widget.dicts[index].description}'),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          }),
-    );
+              );
+            }),
+      );
+    }
   }
 }

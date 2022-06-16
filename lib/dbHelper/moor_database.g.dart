@@ -13,8 +13,8 @@ class VAData extends DataClass implements Insertable<VAData> {
   final String html;
   final String description;
   final String pronounce;
-  final int favorite;
-  final int history;
+  final bool favorite;
+  final bool history;
   VAData(
       {required this.id,
       required this.word,
@@ -36,9 +36,9 @@ class VAData extends DataClass implements Insertable<VAData> {
           .mapFromDatabaseResponse(data['${effectivePrefix}description'])!,
       pronounce: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}pronounce'])!,
-      favorite: const IntType()
+      favorite: const BoolType()
           .mapFromDatabaseResponse(data['${effectivePrefix}favorite'])!,
-      history: const IntType()
+      history: const BoolType()
           .mapFromDatabaseResponse(data['${effectivePrefix}history'])!,
     );
   }
@@ -50,8 +50,8 @@ class VAData extends DataClass implements Insertable<VAData> {
     map['html'] = Variable<String>(html);
     map['description'] = Variable<String>(description);
     map['pronounce'] = Variable<String>(pronounce);
-    map['favorite'] = Variable<int>(favorite);
-    map['history'] = Variable<int>(history);
+    map['favorite'] = Variable<bool>(favorite);
+    map['history'] = Variable<bool>(history);
     return map;
   }
 
@@ -76,8 +76,8 @@ class VAData extends DataClass implements Insertable<VAData> {
       html: serializer.fromJson<String>(json['html']),
       description: serializer.fromJson<String>(json['description']),
       pronounce: serializer.fromJson<String>(json['pronounce']),
-      favorite: serializer.fromJson<int>(json['favorite']),
-      history: serializer.fromJson<int>(json['history']),
+      favorite: serializer.fromJson<bool>(json['favorite']),
+      history: serializer.fromJson<bool>(json['history']),
     );
   }
   @override
@@ -89,8 +89,8 @@ class VAData extends DataClass implements Insertable<VAData> {
       'html': serializer.toJson<String>(html),
       'description': serializer.toJson<String>(description),
       'pronounce': serializer.toJson<String>(pronounce),
-      'favorite': serializer.toJson<int>(favorite),
-      'history': serializer.toJson<int>(history),
+      'favorite': serializer.toJson<bool>(favorite),
+      'history': serializer.toJson<bool>(history),
     };
   }
 
@@ -100,8 +100,8 @@ class VAData extends DataClass implements Insertable<VAData> {
           String? html,
           String? description,
           String? pronounce,
-          int? favorite,
-          int? history}) =>
+          bool? favorite,
+          bool? history}) =>
       VAData(
         id: id ?? this.id,
         word: word ?? this.word,
@@ -147,8 +147,8 @@ class VACompanion extends UpdateCompanion<VAData> {
   final Value<String> html;
   final Value<String> description;
   final Value<String> pronounce;
-  final Value<int> favorite;
-  final Value<int> history;
+  final Value<bool> favorite;
+  final Value<bool> history;
   const VACompanion({
     this.id = const Value.absent(),
     this.word = const Value.absent(),
@@ -164,8 +164,8 @@ class VACompanion extends UpdateCompanion<VAData> {
     required String html,
     required String description,
     required String pronounce,
-    required int favorite,
-    required int history,
+    required bool favorite,
+    required bool history,
   })  : id = Value(id),
         word = Value(word),
         html = Value(html),
@@ -179,8 +179,8 @@ class VACompanion extends UpdateCompanion<VAData> {
     Expression<String>? html,
     Expression<String>? description,
     Expression<String>? pronounce,
-    Expression<int>? favorite,
-    Expression<int>? history,
+    Expression<bool>? favorite,
+    Expression<bool>? history,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -199,8 +199,8 @@ class VACompanion extends UpdateCompanion<VAData> {
       Value<String>? html,
       Value<String>? description,
       Value<String>? pronounce,
-      Value<int>? favorite,
-      Value<int>? history}) {
+      Value<bool>? favorite,
+      Value<bool>? history}) {
     return VACompanion(
       id: id ?? this.id,
       word: word ?? this.word,
@@ -231,10 +231,10 @@ class VACompanion extends UpdateCompanion<VAData> {
       map['pronounce'] = Variable<String>(pronounce.value);
     }
     if (favorite.present) {
-      map['favorite'] = Variable<int>(favorite.value);
+      map['favorite'] = Variable<bool>(favorite.value);
     }
     if (history.present) {
-      map['history'] = Variable<int>(history.value);
+      map['history'] = Variable<bool>(history.value);
     }
     return map;
   }
@@ -287,14 +287,18 @@ class $VATable extends VA with TableInfo<$VATable, VAData> {
       type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _favoriteMeta = const VerificationMeta('favorite');
   @override
-  late final GeneratedColumn<int?> favorite = GeneratedColumn<int?>(
+  late final GeneratedColumn<bool?> favorite = GeneratedColumn<bool?>(
       'favorite', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
+      type: const BoolType(),
+      requiredDuringInsert: true,
+      defaultConstraints: 'CHECK (favorite IN (0, 1))');
   final VerificationMeta _historyMeta = const VerificationMeta('history');
   @override
-  late final GeneratedColumn<int?> history = GeneratedColumn<int?>(
+  late final GeneratedColumn<bool?> history = GeneratedColumn<bool?>(
       'history', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
+      type: const BoolType(),
+      requiredDuringInsert: true,
+      defaultConstraints: 'CHECK (history IN (0, 1))');
   @override
   List<GeneratedColumn> get $columns =>
       [id, word, html, description, pronounce, favorite, history];
@@ -373,8 +377,8 @@ class AVData extends DataClass implements Insertable<AVData> {
   final String html;
   final String description;
   final String pronounce;
-  final int favorite;
-  final int history;
+  final bool favorite;
+  final bool history;
   AVData(
       {required this.id,
       required this.word,
@@ -396,9 +400,9 @@ class AVData extends DataClass implements Insertable<AVData> {
           .mapFromDatabaseResponse(data['${effectivePrefix}description'])!,
       pronounce: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}pronounce'])!,
-      favorite: const IntType()
+      favorite: const BoolType()
           .mapFromDatabaseResponse(data['${effectivePrefix}favorite'])!,
-      history: const IntType()
+      history: const BoolType()
           .mapFromDatabaseResponse(data['${effectivePrefix}history'])!,
     );
   }
@@ -410,8 +414,8 @@ class AVData extends DataClass implements Insertable<AVData> {
     map['html'] = Variable<String>(html);
     map['description'] = Variable<String>(description);
     map['pronounce'] = Variable<String>(pronounce);
-    map['favorite'] = Variable<int>(favorite);
-    map['history'] = Variable<int>(history);
+    map['favorite'] = Variable<bool>(favorite);
+    map['history'] = Variable<bool>(history);
     return map;
   }
 
@@ -436,8 +440,8 @@ class AVData extends DataClass implements Insertable<AVData> {
       html: serializer.fromJson<String>(json['html']),
       description: serializer.fromJson<String>(json['description']),
       pronounce: serializer.fromJson<String>(json['pronounce']),
-      favorite: serializer.fromJson<int>(json['favorite']),
-      history: serializer.fromJson<int>(json['history']),
+      favorite: serializer.fromJson<bool>(json['favorite']),
+      history: serializer.fromJson<bool>(json['history']),
     );
   }
   @override
@@ -449,8 +453,8 @@ class AVData extends DataClass implements Insertable<AVData> {
       'html': serializer.toJson<String>(html),
       'description': serializer.toJson<String>(description),
       'pronounce': serializer.toJson<String>(pronounce),
-      'favorite': serializer.toJson<int>(favorite),
-      'history': serializer.toJson<int>(history),
+      'favorite': serializer.toJson<bool>(favorite),
+      'history': serializer.toJson<bool>(history),
     };
   }
 
@@ -460,8 +464,8 @@ class AVData extends DataClass implements Insertable<AVData> {
           String? html,
           String? description,
           String? pronounce,
-          int? favorite,
-          int? history}) =>
+          bool? favorite,
+          bool? history}) =>
       AVData(
         id: id ?? this.id,
         word: word ?? this.word,
@@ -507,8 +511,8 @@ class AVCompanion extends UpdateCompanion<AVData> {
   final Value<String> html;
   final Value<String> description;
   final Value<String> pronounce;
-  final Value<int> favorite;
-  final Value<int> history;
+  final Value<bool> favorite;
+  final Value<bool> history;
   const AVCompanion({
     this.id = const Value.absent(),
     this.word = const Value.absent(),
@@ -524,8 +528,8 @@ class AVCompanion extends UpdateCompanion<AVData> {
     required String html,
     required String description,
     required String pronounce,
-    required int favorite,
-    required int history,
+    required bool favorite,
+    required bool history,
   })  : id = Value(id),
         word = Value(word),
         html = Value(html),
@@ -539,8 +543,8 @@ class AVCompanion extends UpdateCompanion<AVData> {
     Expression<String>? html,
     Expression<String>? description,
     Expression<String>? pronounce,
-    Expression<int>? favorite,
-    Expression<int>? history,
+    Expression<bool>? favorite,
+    Expression<bool>? history,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -559,8 +563,8 @@ class AVCompanion extends UpdateCompanion<AVData> {
       Value<String>? html,
       Value<String>? description,
       Value<String>? pronounce,
-      Value<int>? favorite,
-      Value<int>? history}) {
+      Value<bool>? favorite,
+      Value<bool>? history}) {
     return AVCompanion(
       id: id ?? this.id,
       word: word ?? this.word,
@@ -591,10 +595,10 @@ class AVCompanion extends UpdateCompanion<AVData> {
       map['pronounce'] = Variable<String>(pronounce.value);
     }
     if (favorite.present) {
-      map['favorite'] = Variable<int>(favorite.value);
+      map['favorite'] = Variable<bool>(favorite.value);
     }
     if (history.present) {
-      map['history'] = Variable<int>(history.value);
+      map['history'] = Variable<bool>(history.value);
     }
     return map;
   }
@@ -647,14 +651,18 @@ class $AVTable extends AV with TableInfo<$AVTable, AVData> {
       type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _favoriteMeta = const VerificationMeta('favorite');
   @override
-  late final GeneratedColumn<int?> favorite = GeneratedColumn<int?>(
+  late final GeneratedColumn<bool?> favorite = GeneratedColumn<bool?>(
       'favorite', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
+      type: const BoolType(),
+      requiredDuringInsert: true,
+      defaultConstraints: 'CHECK (favorite IN (0, 1))');
   final VerificationMeta _historyMeta = const VerificationMeta('history');
   @override
-  late final GeneratedColumn<int?> history = GeneratedColumn<int?>(
+  late final GeneratedColumn<bool?> history = GeneratedColumn<bool?>(
       'history', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
+      type: const BoolType(),
+      requiredDuringInsert: true,
+      defaultConstraints: 'CHECK (history IN (0, 1))');
   @override
   List<GeneratedColumn> get $columns =>
       [id, word, html, description, pronounce, favorite, history];
@@ -733,7 +741,7 @@ class GrammarData extends DataClass implements Insertable<GrammarData> {
   final String structure;
   final String define;
   final String examples;
-  final int favorite;
+  final bool favorite;
   GrammarData(
       {required this.id,
       required this.title,
@@ -754,7 +762,7 @@ class GrammarData extends DataClass implements Insertable<GrammarData> {
           .mapFromDatabaseResponse(data['${effectivePrefix}define'])!,
       examples: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}examples'])!,
-      favorite: const IntType()
+      favorite: const BoolType()
           .mapFromDatabaseResponse(data['${effectivePrefix}favorite'])!,
     );
   }
@@ -766,7 +774,7 @@ class GrammarData extends DataClass implements Insertable<GrammarData> {
     map['structure'] = Variable<String>(structure);
     map['define'] = Variable<String>(define);
     map['examples'] = Variable<String>(examples);
-    map['favorite'] = Variable<int>(favorite);
+    map['favorite'] = Variable<bool>(favorite);
     return map;
   }
 
@@ -790,7 +798,7 @@ class GrammarData extends DataClass implements Insertable<GrammarData> {
       structure: serializer.fromJson<String>(json['structure']),
       define: serializer.fromJson<String>(json['define']),
       examples: serializer.fromJson<String>(json['examples']),
-      favorite: serializer.fromJson<int>(json['favorite']),
+      favorite: serializer.fromJson<bool>(json['favorite']),
     );
   }
   @override
@@ -802,7 +810,7 @@ class GrammarData extends DataClass implements Insertable<GrammarData> {
       'structure': serializer.toJson<String>(structure),
       'define': serializer.toJson<String>(define),
       'examples': serializer.toJson<String>(examples),
-      'favorite': serializer.toJson<int>(favorite),
+      'favorite': serializer.toJson<bool>(favorite),
     };
   }
 
@@ -812,7 +820,7 @@ class GrammarData extends DataClass implements Insertable<GrammarData> {
           String? structure,
           String? define,
           String? examples,
-          int? favorite}) =>
+          bool? favorite}) =>
       GrammarData(
         id: id ?? this.id,
         title: title ?? this.title,
@@ -855,7 +863,7 @@ class GrammarCompanion extends UpdateCompanion<GrammarData> {
   final Value<String> structure;
   final Value<String> define;
   final Value<String> examples;
-  final Value<int> favorite;
+  final Value<bool> favorite;
   const GrammarCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
@@ -870,7 +878,7 @@ class GrammarCompanion extends UpdateCompanion<GrammarData> {
     required String structure,
     required String define,
     required String examples,
-    required int favorite,
+    required bool favorite,
   })  : title = Value(title),
         structure = Value(structure),
         define = Value(define),
@@ -882,7 +890,7 @@ class GrammarCompanion extends UpdateCompanion<GrammarData> {
     Expression<String>? structure,
     Expression<String>? define,
     Expression<String>? examples,
-    Expression<int>? favorite,
+    Expression<bool>? favorite,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -900,7 +908,7 @@ class GrammarCompanion extends UpdateCompanion<GrammarData> {
       Value<String>? structure,
       Value<String>? define,
       Value<String>? examples,
-      Value<int>? favorite}) {
+      Value<bool>? favorite}) {
     return GrammarCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
@@ -930,7 +938,7 @@ class GrammarCompanion extends UpdateCompanion<GrammarData> {
       map['examples'] = Variable<String>(examples.value);
     }
     if (favorite.present) {
-      map['favorite'] = Variable<int>(favorite.value);
+      map['favorite'] = Variable<bool>(favorite.value);
     }
     return map;
   }
@@ -983,9 +991,11 @@ class $GrammarTable extends Grammar with TableInfo<$GrammarTable, GrammarData> {
       type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _favoriteMeta = const VerificationMeta('favorite');
   @override
-  late final GeneratedColumn<int?> favorite = GeneratedColumn<int?>(
+  late final GeneratedColumn<bool?> favorite = GeneratedColumn<bool?>(
       'favorite', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
+      type: const BoolType(),
+      requiredDuringInsert: true,
+      defaultConstraints: 'CHECK (favorite IN (0, 1))');
   @override
   List<GeneratedColumn> get $columns =>
       [id, title, structure, define, examples, favorite];
@@ -1052,7 +1062,7 @@ class Idiom extends DataClass implements Insertable<Idiom> {
   final int id;
   final String sentence;
   final String meaning;
-  final int favorite;
+  final bool favorite;
   Idiom(
       {required this.id,
       required this.sentence,
@@ -1067,7 +1077,7 @@ class Idiom extends DataClass implements Insertable<Idiom> {
           .mapFromDatabaseResponse(data['${effectivePrefix}sentence'])!,
       meaning: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}meaning'])!,
-      favorite: const IntType()
+      favorite: const BoolType()
           .mapFromDatabaseResponse(data['${effectivePrefix}favorite'])!,
     );
   }
@@ -1077,7 +1087,7 @@ class Idiom extends DataClass implements Insertable<Idiom> {
     map['id'] = Variable<int>(id);
     map['sentence'] = Variable<String>(sentence);
     map['meaning'] = Variable<String>(meaning);
-    map['favorite'] = Variable<int>(favorite);
+    map['favorite'] = Variable<bool>(favorite);
     return map;
   }
 
@@ -1097,7 +1107,7 @@ class Idiom extends DataClass implements Insertable<Idiom> {
       id: serializer.fromJson<int>(json['id']),
       sentence: serializer.fromJson<String>(json['sentence']),
       meaning: serializer.fromJson<String>(json['meaning']),
-      favorite: serializer.fromJson<int>(json['favorite']),
+      favorite: serializer.fromJson<bool>(json['favorite']),
     );
   }
   @override
@@ -1107,11 +1117,12 @@ class Idiom extends DataClass implements Insertable<Idiom> {
       'id': serializer.toJson<int>(id),
       'sentence': serializer.toJson<String>(sentence),
       'meaning': serializer.toJson<String>(meaning),
-      'favorite': serializer.toJson<int>(favorite),
+      'favorite': serializer.toJson<bool>(favorite),
     };
   }
 
-  Idiom copyWith({int? id, String? sentence, String? meaning, int? favorite}) =>
+  Idiom copyWith(
+          {int? id, String? sentence, String? meaning, bool? favorite}) =>
       Idiom(
         id: id ?? this.id,
         sentence: sentence ?? this.sentence,
@@ -1145,7 +1156,7 @@ class IdiomsCompanion extends UpdateCompanion<Idiom> {
   final Value<int> id;
   final Value<String> sentence;
   final Value<String> meaning;
-  final Value<int> favorite;
+  final Value<bool> favorite;
   const IdiomsCompanion({
     this.id = const Value.absent(),
     this.sentence = const Value.absent(),
@@ -1156,7 +1167,7 @@ class IdiomsCompanion extends UpdateCompanion<Idiom> {
     this.id = const Value.absent(),
     required String sentence,
     required String meaning,
-    required int favorite,
+    required bool favorite,
   })  : sentence = Value(sentence),
         meaning = Value(meaning),
         favorite = Value(favorite);
@@ -1164,7 +1175,7 @@ class IdiomsCompanion extends UpdateCompanion<Idiom> {
     Expression<int>? id,
     Expression<String>? sentence,
     Expression<String>? meaning,
-    Expression<int>? favorite,
+    Expression<bool>? favorite,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -1178,7 +1189,7 @@ class IdiomsCompanion extends UpdateCompanion<Idiom> {
       {Value<int>? id,
       Value<String>? sentence,
       Value<String>? meaning,
-      Value<int>? favorite}) {
+      Value<bool>? favorite}) {
     return IdiomsCompanion(
       id: id ?? this.id,
       sentence: sentence ?? this.sentence,
@@ -1200,7 +1211,7 @@ class IdiomsCompanion extends UpdateCompanion<Idiom> {
       map['meaning'] = Variable<String>(meaning.value);
     }
     if (favorite.present) {
-      map['favorite'] = Variable<int>(favorite.value);
+      map['favorite'] = Variable<bool>(favorite.value);
     }
     return map;
   }
@@ -1241,9 +1252,11 @@ class $IdiomsTable extends Idioms with TableInfo<$IdiomsTable, Idiom> {
       type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _favoriteMeta = const VerificationMeta('favorite');
   @override
-  late final GeneratedColumn<int?> favorite = GeneratedColumn<int?>(
+  late final GeneratedColumn<bool?> favorite = GeneratedColumn<bool?>(
       'favorite', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
+      type: const BoolType(),
+      requiredDuringInsert: true,
+      defaultConstraints: 'CHECK (favorite IN (0, 1))');
   @override
   List<GeneratedColumn> get $columns => [id, sentence, meaning, favorite];
   @override

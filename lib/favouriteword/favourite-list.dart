@@ -36,6 +36,7 @@ class _FavouriteListState extends State<FavouriteList> {
                     colors: [Color(0xFF5F72BE), Color(0xFF9921E8)])),
           ),
           bottom: const TabBar(
+            isScrollable: true,
             labelStyle: TextStyle(fontWeight: FontWeight.bold),
             unselectedLabelColor: Color(0xFFDCAEFA),
             labelColor: Color(0xFFFFFFFF),
