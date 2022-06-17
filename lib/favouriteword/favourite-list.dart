@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
 import 'package:flutter_dictionary_app/modules/dictionary.dart';
 import 'package:flutter_dictionary_app/modules/favourite-data.dart';
+import 'package:flutter_dictionary_app/my_flutter_app_icons.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
+
 
 class FavouriteList extends StatefulWidget {
   static String routeName = "/favorites";
@@ -92,7 +94,7 @@ class _FavouriteListState extends State<FavouriteList> {
                   child: ListTile(
                     contentPadding: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 10),
-                    leading: const Icon(Icons.note),
+                    leading: const Icon(MyFlutterApp.cat),
                     title: Text(data[index].title,
                         style: const TextStyle(fontSize: 16)),
                   ),
@@ -127,8 +129,8 @@ class _FavouriteListState extends State<FavouriteList> {
                   ],
                   child: ListTile(
                     contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    leading: const Icon(Icons.note),
+                        horizontal: 13, vertical: 10),
+                    leading: const Icon(MyFlutterApp.cat),
                     title: Text(data[index].sentence,
                         style: const TextStyle(fontSize: 16)),
                   ),
@@ -164,7 +166,7 @@ class _FavouriteListState extends State<FavouriteList> {
                     child: ListTile(
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      leading: const Icon(Icons.note),
+                      leading: const Icon(MyFlutterApp.cat),
                       title: Text(av[index].word,
                           style: const TextStyle(fontSize: 16)),
                       subtitle: Text(av[index].description,
@@ -201,7 +203,7 @@ class _FavouriteListState extends State<FavouriteList> {
                     child: ListTile(
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
-                      leading: const Icon(Icons.note),
+                      leading: const Icon(MyFlutterApp.cat),
                       title: Text(va[index].word,
                           style: const TextStyle(fontSize: 16)),
                       subtitle: Text(va[index].description,
