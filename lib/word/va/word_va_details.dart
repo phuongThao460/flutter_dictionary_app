@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dictionary_app/dbHelper/moor_database.dart';
+import 'package:flutter_dictionary_app/modules/favourite-data.dart';
 import 'package:flutter_dictionary_app/word/va/body.dart';
 import 'package:provider/provider.dart';
 
@@ -19,12 +20,13 @@ class _WordVADetailssState extends State<WordVADetails> {
   Widget build(BuildContext context) {
     final dao = Provider.of<DictionaryDao>(context);
     final GetVA dataVA = ModalRoute.of(context)!.settings.arguments as GetVA;
-    bool isPress = false;
+    List<VAData> fav = Favourite.dataVADict;
     return StreamBuilder(
         stream: dao.favoriteWordVA(),
         builder: (context, AsyncSnapshot<List<VAData>> snapshot) {
-          final datava = snapshot.data ?? [];
-          var isSaved = datava.contains(dataVA.va);
+          final data = snapshot.data ?? [];
+                  final constanin = fav.contains(dataVA.va);
+                  bool isSaved = data.contains(dataVA.va);
           return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
@@ -43,12 +45,13 @@ class _WordVADetailssState extends State<WordVADetails> {
                 actions: [
                   IconButton(
                     onPressed: () async {
-                      setState(() {
-                        isPress = true;
-                      });
+                      if (!constanin) {
+                        setState(() {
+                          fav.add(dataVA.va);
+                        });
+                      }
                       dao.addFavoriteWordVA(dataVA.va.id).then((value) {
                           if (value > 0) {
-                            print(isPress);
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content:
@@ -61,10 +64,10 @@ class _WordVADetailssState extends State<WordVADetails> {
                         });
                     },
                     icon: Icon(
-                      isSaved || isPress
+                      isSaved || constanin
                           ? Icons.star
                           : Icons.star_border_outlined,
-                      color: isSaved || isPress ? Colors.yellow : null,
+                      color: isSaved || constanin ? Colors.yellow : null,
                     ),
                   )
                 ],

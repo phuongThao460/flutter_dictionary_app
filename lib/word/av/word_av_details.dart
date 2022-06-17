@@ -19,7 +19,7 @@ class _WordAVDetailsState extends State<WordAVDetails> {
     final dao = Provider.of<DictionaryDao>(context);
     final GetAVDetailFromList dataAV =
         ModalRoute.of(context)!.settings.arguments as GetAVDetailFromList;
-    
+    List<AVData> fav = Favourite.dataAVDict;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -35,20 +35,24 @@ class _WordAVDetailsState extends State<WordAVDetails> {
               },
               icon: const Icon(Icons.arrow_back_ios)),
           actions: [
-            FutureBuilder(
-                future: dao.favoriteWordAVF(),
+            StreamBuilder(
+                stream: dao.favoriteWordAV(),
                 builder: (context, AsyncSnapshot<List<AVData>> snapshot) {
-                  final listData = snapshot.data ?? [];
-                  final constanin = listData.contains(dataAV.av);
-                  bool isSaved = Favourite.dataAVDict.contains(dataAV.av);
+                  final data = snapshot.data ?? [];
+                  final constanin = fav.contains(dataAV.av);
+                  bool isSaved = data.contains(dataAV.av);
                   return IconButton(
                     onPressed: () {
                       dao.addFavoriteWordAV(dataAV.av.id);
-
+                      if (!constanin) {
+                        setState(() {
+                          fav.add(dataAV.av);
+                        });
+                      }
                     },
                     icon: Icon(
-                      constanin ? Icons.star : Icons.star_border_outlined,
-                      color: constanin ? Colors.yellow : null,
+                      constanin || isSaved ? Icons.star : Icons.star_border_outlined,
+                      color: constanin || isSaved ? Colors.yellow : null,
                     ),
                   );
                 })
